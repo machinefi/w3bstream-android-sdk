@@ -1,0 +1,3 @@
+rootProject.name = "pebble-android"
+include ':app'
+include ':core'

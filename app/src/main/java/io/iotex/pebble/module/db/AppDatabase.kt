@@ -1,0 +1,25 @@
+package io.iotex.pebble.module.db
+
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import com.blankj.utilcode.util.Utils
+
+@Database(
+    entities = [],
+    version = 1,
+    exportSchema = false
+)
+abstract class AppDatabase : RoomDatabase() {
+
+    companion object {
+
+        val mInstance by lazy {
+            Room.databaseBuilder(Utils.getApp(), AppDatabase::class.java, "pebble_db")
+                .addMigrations()
+                .build()
+        }
+    }
+
+
+}
