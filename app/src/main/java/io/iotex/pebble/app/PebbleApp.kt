@@ -2,13 +2,28 @@ package io.iotex.pebble.app
 
 import android.content.Context
 import androidx.multidex.MultiDex
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import io.iotex.core.base.BaseApplication
 import io.iotex.pebble.di.component.DaggerAppComponent
+import io.iotex.pebble.module.mqtt.MqttHelper
+import io.iotex.pebble.utils.KeyStoreUtil
 import io.reactivex.plugins.RxJavaPlugins
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import timber.log.Timber
+import java.security.Security
 
 class PebbleApp : BaseApplication() {
+
+    init {
+        System.loadLibrary("TrustWalletCore")
+
+        val bouncyCastleProvider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
+        if (bouncyCastleProvider != null) {
+            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
+        }
+        Security.addProvider(BouncyCastleProvider())
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -16,6 +31,8 @@ class PebbleApp : BaseApplication() {
         DaggerAppComponent.builder()
                 .build()
                 .inject(this)
+
+        KeyStoreUtil.initKeyStore()
 
         RxJavaPlugins.setErrorHandler { t: Throwable? ->
             Timber.e(t)
@@ -25,6 +42,10 @@ class PebbleApp : BaseApplication() {
 
         if (AppUtils.isAppDebug()) {
             Timber.plant(Timber.DebugTree())
+        }
+
+        if (AppUtils.isAppForeground()) {
+            MqttHelper.connect()
         }
     }
 

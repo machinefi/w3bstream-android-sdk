@@ -2,20 +2,27 @@ package io.iotex.pebble.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.iotex.pebble.pages.CreatePebbleActivity
-import io.iotex.pebble.pages.MainActivity
-import io.iotex.pebble.pages.SplashActivity
+import io.iotex.pebble.pages.*
 
 @Module
 abstract class ActivityModule {
 
     @ContributesAndroidInjector
-    abstract fun mainActivity(): MainActivity
-
-    @ContributesAndroidInjector
     abstract fun splashActivity(): SplashActivity
 
     @ContributesAndroidInjector
-    abstract fun createPebbleActivity(): CreatePebbleActivity
+    abstract fun createActivity(): CreateActivity
+
+    @ContributesAndroidInjector
+    abstract fun devicePanelActivity(): DevicePanelActivity
+
+    @ContributesAndroidInjector
+    abstract fun aboutActivity(): AboutActivity
+
+    @ContributesAndroidInjector
+    abstract fun historyActivity(): HistoryActivity
+
+    @ContributesAndroidInjector
+    abstract fun settingActivity(): SettingActivity
 
 }

@@ -9,9 +9,8 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
-        versionCode 1
         versionName "1.0"
         multiDexEnabled true
 
@@ -45,25 +44,28 @@ dependencies {
     //core
     api 'androidx.core:core-ktx:1.6.0'
     api 'androidx.appcompat:appcompat:1.3.1'
-//    api 'android.arch.lifecycle:runtime:2.1.0'
-//    api 'android.arch.lifecycle:extensions:2.1.0'
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     //noinspection LifecycleAnnotationProcessorWithJava8
-//    kapt 'android.arch.lifecycle:compiler:2.1.0'
-//    api 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
-//    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1'
-    api "androidx.room:room-runtime:2.4.0"
-    kapt "androidx.room:room-compiler:2.4.0"
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.3.1'
+    api 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1'
+    api "androidx.room:room-runtime:2.1.0"
+    api "androidx.room:room-ktx:2.1.0-rc01"
+    kapt "androidx.room:room-compiler:2.1.0"
+    api "android.arch.persistence.room:rxjava2:1.1.1"
 
     // tools
     api 'com.squareup.okhttp3:okhttp:4.9.0'
     api 'com.jakewharton.timber:timber:4.7.1'
     api 'com.fasterxml.jackson.core:jackson-core:2.10.0.pr1'
     api 'com.fasterxml.jackson.core:jackson-annotations:2.10.0.pr1'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
     api 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     api 'com.github.bumptech.glide:okhttp3-integration:4.9.0'
     api 'jp.wasabeef:glide-transformations:3.0.1'
-    api 'com.blankj:utilcodex:1.25.9'
+    api 'com.blankj:utilcodex:1.31.0'
     api 'androidx.multidex:multidex:2.0.1'
     api 'com.google.code.gson:gson:2.8.8'
     api 'org.greenrobot:eventbus:3.1.1'

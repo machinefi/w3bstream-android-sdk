@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id "com.google.protobuf"
 }
 
 android {
@@ -11,11 +12,11 @@ android {
 
     defaultConfig {
         applicationId "io.iotex.pebble"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,16 +33,57 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/java'
+            }
+            proto {
+                srcDirs 'src/main/proto'
+            }
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        // Download from repositories
+        artifact = 'com.google.protobuf:protoc:3.2.0'
+    }
+    plugins {
+        javalite {
+            // The codegen for lite comes as a separate artifact
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+            }
+        }
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':core')
 
-    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
-    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.1'
-
     kapt 'com.google.dagger:dagger-compiler:2.35.1'
     kapt 'com.google.dagger:dagger-android-processor:2.35.1'
+    kapt "androidx.room:room-compiler:2.1.0"
 
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+    implementation 'org.passay:passay:1.5.0'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.59'
+    implementation 'com.lambdaworks:scrypt:1.4.0'
+    implementation 'org.slf4j:slf4j-android:1.7.25'
+    implementation("com.trustwallet:wallet-core:2.6.3") {
+        exclude group: "io.grpc", module: "grpc-protobuf"
+    }
+    implementation 'com.google.protobuf:protobuf-java:3.0.0'
+    implementation 'com.google.protobuf:protoc:3.0.0'
+    implementation platform('com.google.firebase:firebase-bom:29.0.3')
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 }

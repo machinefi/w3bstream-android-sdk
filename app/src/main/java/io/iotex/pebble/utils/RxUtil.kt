@@ -7,6 +7,7 @@ import android.widget.TextView
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Observer
+import io.reactivex.SingleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -22,11 +23,18 @@ class RxUtil {
             return TextChangeObservable(view)
         }
 
-        fun <T> applySchedulers(): ObservableTransformer<T, T> {
-            return ObservableTransformer<Any, Any> {
+        fun <T> observableSchedulers(): ObservableTransformer<T, T> {
+            return ObservableTransformer<T, T> {
                 it.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-            } as ObservableTransformer<T, T>
+            }
+        }
+
+        fun <T> singleSchedulers(): SingleTransformer<T, T> {
+            return SingleTransformer<T, T> {
+                it.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+            }
         }
     }
 

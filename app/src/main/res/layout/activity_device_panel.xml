@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_800"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/status"
+            android:textColor="@color/gray_300"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mTvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/gray_300"
+            android:textSize="14sp"
+            tools:text="Confirmed" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/mIvDeviceOff"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_pebble_off" />
+
+    <ImageView
+        android:id="@+id/mIvDeviceOn"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_pebble_on"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/mIvPowerOff"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_power_off" />
+
+    <ImageView
+        android:id="@+id/mIvPowerOn"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/ic_power_on"
+        android:visibility="gone" />
+
+</LinearLayout>
