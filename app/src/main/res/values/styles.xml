@@ -1,0 +1,58 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/teal_800</item>
+        <item name="colorPrimaryDark">@color/teal_800</item>
+        <item name="colorAccent">@color/teal_800</item>
+        <item name="android:buttonStyle">@style/AppTheme.buttonStyle</item>
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+        <item name="colorControlActivated">#FF4633</item>
+        <item name="colorControlNormal">#EEEEEE</item>
+        <item name="android:windowNoTitle">true</item>
+<!--        <item name="android:background">@color/teal_800</item>-->
+    </style>
+
+    <style name="AppTheme.buttonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@color/teal_800</item>
+    </style>
+
+    <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+    <style name="app_launcher" parent="AppTheme">
+        <item name="android:windowBackground">@mipmap/home</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="CommonDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowSoftInputMode">stateVisible|adjustPan</item>
+    </style>
+
+    <style name="SwitchTheme" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/switch_text</item>
+        <item name="colorSwitchThumbNormal">@color/white_alpha_30</item>
+        <item name="colorControlActivated">@color/purple_200</item>
+        <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LoadingProgress" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/loading_progress</item>
+        <item name="android:minHeight">6dp</item>
+        <item name="android:maxHeight">6dp</item>
+    </style>
+</resources>

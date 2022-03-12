@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mLlRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:layout_marginStart="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@mipmap/bg_dialog_01"
+    android:gravity="center_horizontal"
+    android:minHeight="160dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/mIvClose"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mTvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:textColor="@color/green_400"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/sign_wallet_label" />
+
+    <TextView
+        android:id="@+id/mTvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="36dp"
+        android:fontFamily="@font/space_grotesk_light"
+        android:gravity="center"
+        android:lineHeight="22dp"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/mTvConfirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mTvTitle"
+        tools:text="@string/sign_wallet_tips" />
+
+    <TextView
+        android:id="@+id/mTvConfirm"
+        android:layout_width="275dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/shape_green400_r100"
+        android:gravity="center"
+        android:text="@string/confirm"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

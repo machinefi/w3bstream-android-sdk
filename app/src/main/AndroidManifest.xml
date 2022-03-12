@@ -9,25 +9,26 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name=".app.PebbleApp"
         android:allowBackup="true"
-        android:exported="false"
         android:icon="@mipmap/ic_pebble_large"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_pebble_large"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Pebbleandroid">
+        android:theme="@style/AppTheme">
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
         <activity
             android:name=".pages.SplashActivity"
-            android:screenOrientation="portrait">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/app_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,6 +53,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".pages.CreateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.WalletConnectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.OwnershipActivity"
+            android:label="@string/ownership"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.TransferOwnershipActivity"
+            android:label="@string/transfer_ownership"
             android:screenOrientation="portrait" />
 
     </application>

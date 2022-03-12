@@ -1,71 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_800"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:background="@mipmap/bg">
 
-    <include layout="@layout/include_bar" />
+    <include
+        android:id="@+id/mTitleBar"
+        layout="@layout/include_bar" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/mTvTips"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textColor="@color/gray_300"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/mTvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/gray_300"
-            android:textSize="14sp"
-            tools:text="Confirmed" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/mIvDeviceOff"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:adjustViewBounds="true"
-        android:src="@mipmap/ic_pebble_off" />
-
-    <ImageView
-        android:id="@+id/mIvDeviceOn"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
-        android:adjustViewBounds="true"
-        android:src="@mipmap/ic_pebble_on"
-        android:visibility="gone" />
+        android:layout_below="@+id/mTitleBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:lineHeight="41dp"
+        android:text="@string/tips_pebble"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
 
     <ImageView
         android:id="@+id/mIvPowerOff"
-        android:layout_width="64dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_below="@+id/mTvTips"
+        android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:src="@mipmap/ic_power_off" />
+        android:src="@mipmap/diamond" />
 
-    <ImageView
-        android:id="@+id/mIvPowerOn"
-        android:layout_width="64dp"
+    <Switch
+        android:id="@+id/mSwitch"
+        android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:adjustViewBounds="true"
-        android:src="@mipmap/ic_power_on"
-        android:visibility="gone" />
+        android:layout_above="@+id/mTvActivate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:showText="true"
+        android:switchTextAppearance="@style/SwitchTheme"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        android:thumb="@drawable/switch_rectangle_thumb_selector"
+        android:track="@drawable/switch_rectangle_track_selector"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/mTvActivate"
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/shape_stroke_white_r100"
+        android:fontFamily="@font/space_grotesk_light"
+        android:gravity="center"
+        android:text="@string/activate_device"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</RelativeLayout>

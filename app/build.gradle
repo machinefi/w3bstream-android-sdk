@@ -4,16 +4,16 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id "com.google.protobuf"
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdk 32
 
     defaultConfig {
         applicationId "io.iotex.pebble"
-        minSdkVersion 23
-        targetSdkVersion 30
+        minSdk 23
+        targetSdk 32
         versionCode 1
         versionName "1.0"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
@@ -22,7 +22,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,6 +33,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    configurations {
+        all*.exclude module: 'bcprov-jdk15to18'
     }
     sourceSets {
         main {
@@ -86,4 +90,6 @@ dependencies {
     implementation 'com.google.protobuf:protoc:3.0.0'
     implementation platform('com.google.firebase:firebase-bom:29.0.3')
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation 'dev.pinkroom:walletconnectkit:0.3.1'
+    implementation 'org.web3j:core:4.8.2'
 }

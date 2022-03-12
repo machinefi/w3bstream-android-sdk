@@ -10,7 +10,7 @@
         android:id="@+id/mPlaceholder"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/gray_800" />
+        android:background="@color/teal_600" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mPubToolbar"
@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
             android:textColor="@color/white"
             android:textSize="17sp"
             tools:text="title" />

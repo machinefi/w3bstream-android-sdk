@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginEnd="42dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="IMEI"
+            android:textColor="@color/white_alpha_70"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/mTvImei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="100000000000207"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="42dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="SN"
+            android:textColor="@color/white_alpha_70"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/mTvSN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="CE13F82DEC"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="42dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="SN"
+            android:textColor="@color/white_alpha_70"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/mTvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_light"
+            android:includeFontPadding="false"
+            android:text="@string/address"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/shape_stroke_white_r100"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:text="@string/transfer_ownership"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/shape_green400_r100"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

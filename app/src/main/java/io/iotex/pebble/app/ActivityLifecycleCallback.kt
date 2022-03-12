@@ -17,7 +17,7 @@ class ActivityLifecycleCallback : ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
         BarUtils.setStatusBarLightMode(p0, false)
-        BarUtils.setStatusBarColor(p0, ColorUtils.getColor(R.color.gray_800))
+        BarUtils.setStatusBarColor(p0, ColorUtils.getColor(R.color.teal_800))
     }
 
     override fun onActivityStarted(activity: Activity) {

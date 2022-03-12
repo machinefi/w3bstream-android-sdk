@@ -11,7 +11,7 @@ import io.iotex.pebble.module.viewmodel.WalletVM
 import io.iotex.pebble.pages.binder.*
 import kotlinx.android.synthetic.main.activity_history.*
 
-class HistoryActivity : BaseActivity(), OnLoadMoreListener {
+class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListener {
 
     private val mWalletVM by lazy {
         ViewModelProvider(this)[WalletVM::class.java]
@@ -25,10 +25,6 @@ class HistoryActivity : BaseActivity(), OnLoadMoreListener {
 
     private val mImei by lazy {
         intent.getStringExtra(KEY_IMEI) ?: ""
-    }
-
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_history
     }
 
     override fun initView(savedInstanceState: Bundle?) {

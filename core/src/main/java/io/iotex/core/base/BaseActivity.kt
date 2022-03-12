@@ -10,8 +10,7 @@ import dagger.android.HasAndroidInjector
 import io.iotex.core.base.service.IActivity
 import javax.inject.Inject
 
-
-abstract class BaseActivity : AppCompatActivity(), IActivity, HasAndroidInjector {
+abstract class BaseActivity(private val layoutId: Int) : AppCompatActivity(), IActivity, HasAndroidInjector {
 
     @Inject
     lateinit var mVmFactory: ViewModelProvider.Factory
@@ -19,19 +18,11 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, HasAndroidInjector
     @Inject
     lateinit var mAndroidInjector: DispatchingAndroidInjector<Any>
 
-//    protected val mLoadingDialog by lazy {
-//        LoadingDailog.Builder(this)
-//                .setMessage("加载中...")
-//                .setCancelable(false)
-//                .setCancelOutside(true).create()
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         beforeInflate(savedInstanceState)
         super.onCreate(savedInstanceState)
 
-        val layoutId = layoutResourceID(savedInstanceState)
         if (layoutId > 0) {
             setContentView(layoutId)
         }
@@ -51,7 +42,6 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, HasAndroidInjector
     }
 
     override fun onDetachedFromWindow() {
-//        mLoadingDialog.dismiss()
         super.onDetachedFromWindow()
     }
 }

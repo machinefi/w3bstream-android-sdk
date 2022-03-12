@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_800"
+    android:background="@mipmap/bg"
     android:orientation="vertical">
 
     <include layout="@layout/include_bar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/gray_700"
+        android:layout_height="50dp"
+        android:background="@color/black_alpha_20"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
@@ -32,7 +32,8 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvGps"
             android:text="@string/gps"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/white"
+            android:fontFamily="@font/space_grotesk_light"
             android:textSize="14sp" />
 
         <com.suke.widget.SwitchButton
@@ -41,21 +42,21 @@
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            app:sb_background="@color/gray_900"
+            app:sb_background="@color/teal_800"
             app:sb_checked="true"
-            app:sb_checked_color="@color/green_300"
+            app:sb_checked_color="@color/teal_800"
             app:sb_checkline_width="0dp"
             app:sb_show_indicator="false"
-            app:sb_uncheck_color="@color/gray_900" />
+            app:sb_uncheck_color="@color/teal_800" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/mRlGpsPrecision"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@color/gray_700"
+        android:background="@color/teal_800"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
@@ -74,8 +75,9 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvGpsPrecisionIcon"
+            android:fontFamily="@font/space_grotesk_light"
             android:text="@string/gps_precision"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
@@ -86,7 +88,7 @@
             android:layout_marginEnd="8dp"
             android:layout_toStartOf="@+id/mIvGpsPrecisionArrow"
             android:text="@string/gps"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <ImageView
@@ -102,9 +104,9 @@
     <RelativeLayout
         android:id="@+id/mRlFrequency"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@color/gray_700"
+        android:background="@color/teal_800"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
@@ -124,7 +126,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvFrequencyIcon"
             android:text="@string/submit_frequency"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/white"
             android:textSize="14sp" />
 
         <TextView
@@ -134,7 +136,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_toStartOf="@+id/mTvFrequencyArrow"
-            android:textColor="@color/gray_300"
+            android:textColor="@color/white"
             android:textSize="14sp"
             tools:text="5 min" />
 

@@ -14,15 +14,14 @@ import io.iotex.pebble.module.viewmodel.WalletVM
 import io.iotex.pebble.utils.DeviceHelper
 import io.iotex.pebble.utils.extension.setGone
 import io.iotex.pebble.utils.extension.setVisible
-import io.iotex.pebble.widget.ConfirmDialog
+import io.iotex.pebble.widget.PromptDialog
 import io.iotex.pebble.widget.DeviceMenuDialog
 import kotlinx.android.synthetic.main.activity_device_panel.*
 import kotlinx.android.synthetic.main.include_bar.*
-import org.jetbrains.anko.contentView
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 
-class DevicePanelActivity : BaseActivity() {
+class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     private val mWalletVM by lazy {
         ViewModelProvider(this)[WalletVM::class.java]
@@ -31,13 +30,9 @@ class DevicePanelActivity : BaseActivity() {
     private var mDevice: DeviceEntry? = null
 
     private val mConfirmDialog by lazy {
-        ConfirmDialog(this).setPositiveButton("Confirm") {
+        PromptDialog(this).setPositiveButton("Confirm") {
             confirm()
         }
-    }
-
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_device_panel
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -71,9 +66,9 @@ class DevicePanelActivity : BaseActivity() {
             pressPowerOff()
         }
 
-        mIvPowerOn.setOnClickListener {
-            pressPowerOn()
-        }
+//        mIvPowerOn.setOnClickListener {
+//            pressPowerOn()
+//        }
     }
 
     override fun onStart() {
@@ -88,7 +83,7 @@ class DevicePanelActivity : BaseActivity() {
             DEVICE_STATUS_CONFIRM -> getString(R.string.confirmed)
             else -> getString(R.string.unregister)
         }
-        mTvStatus.text = statusText
+//        mTvStatus.text = statusText
     }
 
     private fun pressPowerOff() {
@@ -96,10 +91,10 @@ class DevicePanelActivity : BaseActivity() {
             .permission(PermissionConstants.LOCATION)
             .callback(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {
-                    mIvDeviceOff.setGone()
+//                    mIvDeviceOff.setGone()
                     mIvPowerOff.setGone()
-                    mIvDeviceOn.setVisible()
-                    mIvPowerOn.setVisible()
+//                    mIvDeviceOn.setVisible()
+//                    mIvPowerOn.setVisible()
 
                     mDevice?.let { device ->
                         DeviceHelper.powerOn(device)
@@ -118,10 +113,10 @@ class DevicePanelActivity : BaseActivity() {
     }
 
     private fun pressPowerOn() {
-        mIvDeviceOff.setVisible()
+//        mIvDeviceOff.setVisible()
         mIvPowerOff.setVisible()
-        mIvDeviceOn.setGone()
-        mIvPowerOn.setGone()
+//        mIvDeviceOn.setGone()
+//        mIvPowerOn.setGone()
 
         mDevice?.let { device ->
             DeviceHelper.powerOff(device.imei)

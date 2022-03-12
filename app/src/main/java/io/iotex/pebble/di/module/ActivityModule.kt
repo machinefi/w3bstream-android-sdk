@@ -25,4 +25,16 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract fun settingActivity(): SettingActivity
 
+    @ContributesAndroidInjector
+    abstract fun walletConnectActivity(): WalletConnectActivity
+
+    @ContributesAndroidInjector
+    abstract fun ownershipActivity(): OwnershipActivity
+
+    @ContributesAndroidInjector
+    abstract fun transferOwnershipActivity(): TransferOwnershipActivity
+
+    @ContributesAndroidInjector
+    abstract fun nftListActivity(): NftListActivity
+
 }

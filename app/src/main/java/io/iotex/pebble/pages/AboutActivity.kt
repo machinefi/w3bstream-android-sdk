@@ -10,14 +10,10 @@ import io.iotex.pebble.utils.extension.ellipsis
 import io.iotex.pebble.utils.extension.toast
 import kotlinx.android.synthetic.main.activity_about.*
 
-class AboutActivity: BaseActivity() {
+class AboutActivity: BaseActivity(R.layout.activity_about) {
 
     private val mDevice by lazy {
         intent.getSerializableExtra(KEY_DEVICE) as? DeviceEntry
-    }
-
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_about
     }
 
     override fun initView(savedInstanceState: Bundle?) {

@@ -12,11 +12,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.uiThread
 import java.util.*
 
-class CreateActivity: BaseActivity() {
-
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_create
-    }
+class CreateActivity: BaseActivity(R.layout.activity_create) {
 
     override fun initView(savedInstanceState: Bundle?) {
         mBtnCreate.setOnClickListener {

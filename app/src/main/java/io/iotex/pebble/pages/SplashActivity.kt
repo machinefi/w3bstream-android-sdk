@@ -8,14 +8,15 @@ import io.iotex.pebble.R
 import io.iotex.pebble.module.viewmodel.WalletVM
 import org.jetbrains.anko.startActivity
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity(R.layout.activity_splash) {
 
     private val mWalletVM by lazy {
         ViewModelProvider(this)[WalletVM::class.java]
     }
 
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_splash
+    override fun beforeInflate(savedInstanceState: Bundle?) {
+        super.beforeInflate(savedInstanceState)
+        window.setBackgroundDrawable(null)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -26,15 +27,15 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun registerObserver() {
-        mWalletVM.mDeviceListLiveData.observe(this, {
+        mWalletVM.mDeviceListLiveData.observe(this) {
             if (!it.isNullOrEmpty()) {
-                startActivity<DevicePanelActivity>(
-                    DevicePanelActivity.KEY_DEVICE to it[0]
-                )
+//                startActivity<WalletConnectActivity>(
+//                    DevicePanelActivity.KEY_DEVICE to it[0]
+//                )
             } else {
-                startActivity<CreateActivity>()
+//                startActivity<CreateActivity>()
             }
-            finish()
-        })
+//            finish()
+        }
     }
 }

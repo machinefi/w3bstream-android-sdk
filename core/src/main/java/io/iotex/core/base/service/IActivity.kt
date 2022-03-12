@@ -4,8 +4,6 @@ import android.os.Bundle
 
 interface IActivity {
 
-    fun layoutResourceID(savedInstanceState: Bundle?): Int
-
     fun beforeInflate(savedInstanceState: Bundle?)
 
     fun initView(savedInstanceState: Bundle?)

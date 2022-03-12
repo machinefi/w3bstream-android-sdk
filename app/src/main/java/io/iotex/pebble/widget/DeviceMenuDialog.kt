@@ -16,9 +16,9 @@ import org.jetbrains.anko.startActivity
 class DeviceMenuDialog {
 
     private val mPopupWindow: PopupWindow
-    private lateinit var mLlHistory: View
-    private lateinit var mLlAbout: View
-    private lateinit var mLlSetting: View
+    private val mLlHistory: View
+    private val mLlAbout: View
+    private val mLlSetting: View
 
     init {
         val layout =

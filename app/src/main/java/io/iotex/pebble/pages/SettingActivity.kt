@@ -14,7 +14,7 @@ import io.iotex.pebble.utils.INTERVAL_SEND_DATA
 import io.iotex.pebble.utils.getPickerBuilder
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class SettingActivity: BaseActivity() {
+class SettingActivity: BaseActivity(R.layout.activity_setting) {
 
     private val mDevice by lazy {
         intent.getSerializableExtra(AboutActivity.KEY_DEVICE) as? DeviceEntry
@@ -38,10 +38,6 @@ class SettingActivity: BaseActivity() {
         PickerItemData("1 km", 1000),
         PickerItemData("10 km", 10000)
     )
-
-    override fun layoutResourceID(savedInstanceState: Bundle?): Int {
-        return R.layout.activity_setting
-    }
 
     override fun initView(savedInstanceState: Bundle?) {
         mSbGps.isChecked = SPUtils.getInstance().getBoolean(SP_KEY_GPS_CHECKED, true)
