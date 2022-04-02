@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg">
+
+    <include
+        android:id="@+id/mTitleBar"
+        layout="@layout/include_bar" />
+
+    <TextView
+        android:id="@+id/mTvTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTitleBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineHeight="41dp"
+        android:text="@string/completed"
+        android:textColor="@color/white"
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/mTvTips02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTvTips"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:lineHeight="26dp"
+        android:text="@string/activated_registered_successfully"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/mTvTips01"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTvTips02"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-20dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/diamond_04" />
+
+    <TextView
+        android:id="@+id/mTvAuthorize"
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_above="@+id/mTvBackHome"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="17dp"
+        android:background="@drawable/shape_stroke_white_r100"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:text="@string/authorize_to_pop"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/mTvBackHome"
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_above="@+id/mTvExternalLink"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/shape_stroke_white_r100"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:text="@string/back_to_home"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/mTvExternalLink"
+        android:layout_width="315dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
+        android:background="@mipmap/bg04"
+        android:fontFamily="@font/space_grotesk_light"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:text="@string/external_link"
+        android:textColor="@color/green_300"
+        android:textSize="14sp" />
+
+</RelativeLayout>

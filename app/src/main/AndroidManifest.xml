@@ -25,7 +25,7 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
         <activity
-            android:name=".pages.SplashActivity"
+            android:name=".pages.activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/app_launcher">
@@ -36,34 +36,44 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".pages.DevicePanelActivity"
+            android:name=".pages.activity.DevicePanelActivity"
             android:label="@string/device"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.AboutActivity"
+            android:name=".pages.activity.AboutActivity"
             android:label="@string/about"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.SettingActivity"
+            android:name=".pages.activity.SettingActivity"
             android:label="@string/settings"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.HistoryActivity"
+            android:name=".pages.activity.HistoryActivity"
             android:label="@string/history"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.CreateActivity"
+            android:name=".pages.activity.CreateActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.WalletConnectActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.OwnershipActivity"
+            android:name=".pages.activity.OwnershipActivity"
             android:label="@string/ownership"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.TransferOwnershipActivity"
+            android:name=".pages.activity.TransferOwnershipActivity"
             android:label="@string/transfer_ownership"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.activity.NftListActivity"
+            android:label="@string/meta_pebble_nfts"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.activity.NftDetailActivity"
+            android:label="@string/meta_pebble_nft"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".pages.activity.ActivateCompleteActivity"
+            android:label="@string/device"
             android:screenOrientation="portrait" />
 
     </application>

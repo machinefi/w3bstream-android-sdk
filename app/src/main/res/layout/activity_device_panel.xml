@@ -22,25 +22,25 @@
         android:lineHeight="41dp"
         android:text="@string/tips_pebble"
         android:textColor="@color/white"
-        android:textSize="30sp" />
+        android:textSize="35sp" />
 
     <ImageView
-        android:id="@+id/mIvPowerOff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mTvTips"
-        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-60dp"
         android:adjustViewBounds="true"
-        android:src="@mipmap/diamond" />
+        android:src="@mipmap/diamond_01" />
 
-    <Switch
+    <io.iotex.pebble.widget.MaterialSwitch
         android:id="@+id/mSwitch"
         android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mTvActivate"
+        android:layout_above="@+id/mFlConnect"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
-        android:checked="false"
+        android:checked="true"
         android:gravity="center_vertical"
         android:showText="true"
         android:switchTextAppearance="@style/SwitchTheme"
@@ -48,20 +48,34 @@
         android:textOn="@string/on"
         android:thumb="@drawable/switch_rectangle_thumb_selector"
         android:track="@drawable/switch_rectangle_track_selector"
+        app:secondaryTextColor="@color/white_alpha_30"
+        app:secondaryTextSize="18sp"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <TextView
-        android:id="@+id/mTvActivate"
-        android:layout_width="315dp"
-        android:layout_height="54dp"
+    <FrameLayout
+        android:id="@+id/mFlConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp"
-        android:background="@drawable/shape_stroke_white_r100"
-        android:fontFamily="@font/space_grotesk_light"
-        android:gravity="center"
-        android:text="@string/activate_device"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:layout_marginBottom="90dp">
+
+        <dev.pinkroom.walletconnectkit.WalletConnectButton
+            android:id="@+id/mWcActivate"
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:background="@drawable/selector_stroke_btn"
+            android:src="@android:color/transparent" />
+
+        <TextView
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:fontFamily="@font/space_grotesk_light"
+            android:gravity="center"
+            android:text="@string/activate_device"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </FrameLayout>
 
 </RelativeLayout>

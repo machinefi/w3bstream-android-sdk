@@ -9,7 +9,7 @@
             android:duration="300"/> 
           
     <translate 
-	    android:duration="150"
+	    android:duration="300"
 	    android:fromXDelta="0.0%p"
 	    android:toXDelta="-26.0%p" />
 </set>

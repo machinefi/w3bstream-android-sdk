@@ -1,14 +1,8 @@
 package io.iotex.pebble.module.encryption
 
-import com.blankj.utilcode.util.EncryptUtils
-import com.blankj.utilcode.util.FileIOUtils
-import com.blankj.utilcode.util.FileUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import io.iotex.pebble.R
 import io.iotex.pebble.utils.extension.i
-import java.io.BufferedReader
-import java.io.File
-import java.io.InputStreamReader
 
 class EncryptionUtil {
 
@@ -20,9 +14,9 @@ class EncryptionUtil {
             .replace(System.lineSeparator(), "")
             .replace("-----END PUBLIC KEY-----", "")
 
-        val data02 = Utils.getApp().resources.assets.open("data.pem").bufferedReader().readText()
+        val data02 = Utils.getApp().resources.assets.open("data.txt").bufferedReader().readText()
 
-
+        AppUtils.getAppPackageName()
 
 
 

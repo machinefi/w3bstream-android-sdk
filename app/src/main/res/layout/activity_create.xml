@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mRlContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg"
+    android:background="@color/teal_800"
     android:gravity="center_horizontal">
 
     <TextView
-        android:id="@+id/mTvTips"
+        android:id="@+id/mTvMarquee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.2"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:text="@string/meta_pebble"
+        android:textAllCaps="true"
+        android:textColor="@color/white_alpha_50"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/mTvTips01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -16,20 +34,34 @@
         android:layout_marginTop="126dp"
         android:fontFamily="@font/space_grotesk_bold"
         android:gravity="center_horizontal"
-        android:inputType="textMultiLine"
+        android:includeFontPadding="false"
         android:scrollHorizontally="false"
-        android:text="@string/first_device_tips"
+        android:text="@string/first_device_tips01"
         android:textColor="@color/white"
         android:textSize="35sp" />
 
+    <TextView
+        android:id="@+id/mTvTips02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTvTips01"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center_horizontal"
+        android:includeFontPadding="false"
+        android:scrollHorizontally="false"
+        android:text="@string/first_device_tips02"
+        android:textColor="@color/green_400"
+        android:textSize="35sp" />
 
     <ImageView
+        android:id="@+id/mIvDiamond"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mTvTips"
+        android:layout_below="@+id/mTvTips02"
         android:layout_marginTop="-5dp"
         android:adjustViewBounds="true"
-        android:src="@mipmap/diamond" />
+        android:src="@mipmap/diamond_01" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/mBtnCreate"
@@ -39,9 +71,10 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="69dp"
         android:layout_marginBottom="90dp"
-        android:background="@drawable/shape_stroke_white_r100"
+        android:background="@drawable/selector_stroke_btn"
+        android:focusable="true"
         android:fontFamily="@font/space_grotesk_bold"
-        android:text="@string/create_pebble"
+        android:text="@string/get_started"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp" />

@@ -5,8 +5,6 @@ import android.view.View
 
 interface IFragment {
 
-    fun layoutResourceID(savedInstanceState: Bundle?): Int
-
     fun initView(view: View, savedInstanceState: Bundle?)
 
     fun initData(savedInstanceState: Bundle?)

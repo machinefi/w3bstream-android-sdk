@@ -32,7 +32,8 @@
     <string name="address">Address</string>
     <string name="transfer_ownership_tips">Transfer your \n activated \n Meta-Pebble to \n another wallet</string>
     <string name="prepare_tips">Preparing your \n Meta-Pebble ...</string>
-    <string name="first_device_tips">Get Started With \n Your First Device</string>
+    <string name="first_device_tips01">Get Started With</string>
+    <string name="first_device_tips02">Your First Device</string>
     <string name="your_wallet">Your Wallet</string>
     <string name="disconnect">Disconnect</string>
     <string name="select_nft_tips">Select a NFT to activate your device</string>
@@ -50,5 +51,18 @@
     <string name="please_enter">Please enter</string>
     <string name="transaction_prompt">You need to confirm this transaction in ioPay</string>
     <string name="download_iopay">Download ioPay</string>
+    <string name="get_started">Get Started</string>
+    <string name="meta_pebble_nfts">Meta-Pebble NFTs</string>
+    <string name="update_tips">The latest version has upgraded the security and features of your MetaPebble.</string>
+    <string name="update_now">Update Now</string>
+    <string name="update_metapebble">Update your MetaPebble</string>
+    <string name="meta_pebble">Meta-Pebble</string>
+    <string name="activating_metapebble">Activating \n your Meta-Pebble \n ...</string>
+    <string name="registering_metapebble">Registering \n your Meta-Pebble \n ...</string>
+    <string name="activated_registered_successfully">Your Meta-Pebble has been \n successfully activated and \n registered!</string>
+    <string name="completed">Completed!</string>
+    <string name="authorize_to_pop">Authorize to POP</string>
+    <string name="back_to_home">Back to Home</string>
+    <string name="external_link">Go to portal.machinefi.com to check more details about your device and have fun playing with the dApps there!</string>
 
 </resources>

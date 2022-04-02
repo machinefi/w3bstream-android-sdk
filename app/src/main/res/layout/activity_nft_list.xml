@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mRlContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg"
@@ -16,6 +17,7 @@
         android:id="@+id/mClHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/mTitleBar"
         android:layout_marginTop="17dp"
         android:paddingStart="18dp"
         android:paddingEnd="18dp">
@@ -66,6 +68,7 @@
             app:layout_constraintTop_toTopOf="@+id/mTvWalletLabel" />
 
         <TextView
+            android:id="@+id/mTvDisconnect"
             android:layout_width="90dp"
             android:layout_height="28dp"
             android:background="@drawable/shape_stroke_white_r100"
@@ -73,13 +76,13 @@
             android:gravity="center"
             android:text="@string/disconnect"
             android:textColor="@color/white"
-            android:textSize="12dp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/mIvExchange"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/mIvExchange" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/mTvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -98,16 +101,17 @@
             android:text="@string/select_nft_tips"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintStart_toStartOf="@+id/mTvAddress"
+            app:layout_constraintTop_toBottomOf="@+id/mTvAddress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mRvNft"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mTvActivate"
+        android:layout_below="@+id/mClHeader"
         android:layout_marginTop="8dp"
-        android:layout_weight="1"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -118,6 +122,8 @@
         android:id="@+id/mTvActivate"
         android:layout_width="315dp"
         android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="90dp"
         android:background="@drawable/selector_stroke_btn"
@@ -128,4 +134,4 @@
         android:textColor="@color/btn_text_color"
         android:textSize="18sp" />
 
-</LinearLayout>
+</RelativeLayout>

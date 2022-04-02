@@ -61,11 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/space_grotesk_bold"
+            android:text="iodhfiuehfioekpijdiouio"
             android:textColor="@color/green_400"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
-            app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
-            tools:text="iodhfiuehfioekpijdiouio" />
+            app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -98,9 +98,9 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/space_grotesk_light"
+        android:text="NO.666"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:text="NO.666" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/mTvAddressLabel"
@@ -110,9 +110,9 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/space_grotesk_light"
+        android:text="@string/address"
         android:textColor="@color/white_alpha_70"
-        android:textSize="11sp"
-        tools:text="NO.666" />
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/mTvAddress"
@@ -122,9 +122,9 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/space_grotesk_light"
+        android:text="0X78493t8904380r9eiriijkj"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:text="0X78493t8904380r9eiriijkj" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/mIvMask"

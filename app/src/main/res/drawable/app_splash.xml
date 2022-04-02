@@ -6,7 +6,7 @@
 
     <item
 
-        android:drawable="@mipmap/diamond"
+        android:drawable="@mipmap/diamond_01"
         android:gravity="center">
     </item>
 

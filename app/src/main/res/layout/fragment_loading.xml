@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/mTvTips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="126dp"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:includeFontPadding="false"
+        android:gravity="center"
+        android:lineHeight="41dp"
+        android:text="@string/prepare_tips"
+        android:textColor="@color/white"
+        android:textSize="35sp" />
+
+    <ImageView
+        android:id="@+id/mIvDiamond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mTvTips"
+        android:layout_marginTop="-15dp"
+        android:adjustViewBounds="true"
+        android:src="@mipmap/diamond_02" />
+
+    <io.iotex.pebble.widget.LoadingProgress
+        android:id="@+id/mLoadingProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="97dp" />
+
+</RelativeLayout>

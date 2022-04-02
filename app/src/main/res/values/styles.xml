@@ -9,7 +9,6 @@
         <item name="colorControlActivated">#FF4633</item>
         <item name="colorControlNormal">#EEEEEE</item>
         <item name="android:windowNoTitle">true</item>
-<!--        <item name="android:background">@color/teal_800</item>-->
     </style>
 
     <style name="AppTheme.buttonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
@@ -42,10 +41,12 @@
     </style>
 
     <style name="SwitchTheme" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/switch_text</item>
+        <item name="android:textColor">@color/white</item>
         <item name="colorSwitchThumbNormal">@color/white_alpha_30</item>
         <item name="colorControlActivated">@color/purple_200</item>
         <item name="fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:fontFamily">@font/space_grotesk_bold</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>
 
@@ -55,4 +56,10 @@
         <item name="android:minHeight">6dp</item>
         <item name="android:maxHeight">6dp</item>
     </style>
+
+    <declare-styleable name="MaterialSwitch">
+        <attr name="secondaryTextColor" format="color"/>
+        <attr name="secondaryTextSize" format="dimension"/>
+        <attr name="secondaryTextFont" format="integer"/>
+    </declare-styleable>
 </resources>

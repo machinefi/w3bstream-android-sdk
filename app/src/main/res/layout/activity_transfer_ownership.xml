@@ -62,7 +62,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/green_400"
             android:textSize="16sp"
-            tools:text="iodhfiuehfioekpijdijjdifjioefi0ojkouio" />
+            android:text="iodhfiuehfioekpijdijjdifjioefi0ojkouio" />
 
         <TextView
             android:layout_width="match_parent"

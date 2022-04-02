@@ -12,21 +12,12 @@ import dagger.android.support.AndroidSupportInjection
 import io.iotex.core.base.service.IFragment
 import javax.inject.Inject
 
-abstract class BaseFragment : Fragment(), IFragment {
+abstract class BaseFragment(private val layoutId: Int) : Fragment(), IFragment {
 
     protected val TAG = this::class.java.name
 
     @Inject
     lateinit var mVmFactory: ViewModelProvider.Factory
-
-//    protected var mLoadService: LoadService<View>? = null
-
-//    protected val mLoadingDialog by lazy {
-//        LoadingDailog.Builder(this.activity)
-//                .setMessage("加载中...")
-//                .setCancelable(false)
-//                .setCancelOutside(true).create()
-//    }
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -35,11 +26,8 @@ abstract class BaseFragment : Fragment(), IFragment {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var contentView: View? = null
-        val layoutId = layoutResourceID(savedInstanceState)
         if (layoutId > 0) {
-//            mLoadService = LoadSir.getDefault().register(inflater.inflate(layoutId, null)) as LoadService<View>?
-//            contentView = mLoadService?.loadLayout
-            contentView = inflater.inflate(layoutId, null)
+            contentView = inflater.inflate(layoutId, container, false)
         }
         return contentView ?: super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -54,11 +42,6 @@ abstract class BaseFragment : Fragment(), IFragment {
     final override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initData(savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-//        mLoadingDialog.dismiss()
-        super.onDestroyView()
     }
 
 }

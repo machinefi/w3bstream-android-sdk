@@ -2,7 +2,7 @@ package io.iotex.pebble.di.module
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import io.iotex.pebble.pages.*
+import io.iotex.pebble.pages.activity.*
 
 @Module
 abstract class ActivityModule {
@@ -26,9 +26,6 @@ abstract class ActivityModule {
     abstract fun settingActivity(): SettingActivity
 
     @ContributesAndroidInjector
-    abstract fun walletConnectActivity(): WalletConnectActivity
-
-    @ContributesAndroidInjector
     abstract fun ownershipActivity(): OwnershipActivity
 
     @ContributesAndroidInjector
@@ -36,5 +33,11 @@ abstract class ActivityModule {
 
     @ContributesAndroidInjector
     abstract fun nftListActivity(): NftListActivity
+
+    @ContributesAndroidInjector
+    abstract fun nftDetailActivity(): NftDetailActivity
+
+    @ContributesAndroidInjector
+    abstract fun activateCompleteActivity(): ActivateCompleteActivity
 
 }

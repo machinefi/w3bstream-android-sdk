@@ -18,8 +18,10 @@
     <ProgressBar
         android:id="@+id/mPbLoading"
         style="@style/LoadingProgress"
-        android:layout_width="315dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
-        android:progress="40" />
+        android:layout_marginEnd="30dp"
+        tools:progress="42" />
 </LinearLayout>

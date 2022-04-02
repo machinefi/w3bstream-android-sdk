@@ -3,12 +3,12 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
-    id "com.google.protobuf"
-    id 'org.jetbrains.kotlin.android'
+    id 'com.google.protobuf'
+    id 'com.apollographql.apollo3' version '3.1.0'
 }
 
 android {
-    compileSdk 32
+    compileSdk 31
 
     defaultConfig {
         applicationId "io.iotex.pebble"
@@ -22,8 +22,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,6 +47,14 @@ android {
             }
         }
     }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+apollo {
+    packageName.set('io.iotex')
 }
 
 protobuf {
@@ -92,4 +100,7 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation 'dev.pinkroom:walletconnectkit:0.3.1'
     implementation 'org.web3j:core:4.8.2'
+
+    implementation 'com.apollographql.apollo3:apollo-runtime:3.1.0'
+    implementation 'com.sunfusheng:MarqueeView:1.4.0'
 }

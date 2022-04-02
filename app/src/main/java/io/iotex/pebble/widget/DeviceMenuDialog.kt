@@ -5,18 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.Utils
 import io.iotex.pebble.R
-import io.iotex.pebble.pages.AboutActivity
-import io.iotex.pebble.pages.HistoryActivity
-import io.iotex.pebble.pages.SettingActivity
-import org.jetbrains.anko.startActivity
+import io.iotex.pebble.utils.extension.dp2px
 
 class DeviceMenuDialog {
 
     private val mPopupWindow: PopupWindow
     private val mLlHistory: View
+    private val mLlOwnership: View
     private val mLlAbout: View
     private val mLlSetting: View
 
@@ -35,35 +32,48 @@ class DeviceMenuDialog {
         }
 
         mLlHistory = layout.findViewById(R.id.mLlHistory)
+        mLlOwnership = layout.findViewById(R.id.mLlOwnership)
         mLlAbout = layout.findViewById(R.id.mLlAbout)
         mLlSetting = layout.findViewById(R.id.mLlSetting)
     }
 
-    fun setHistoryListener(l: () -> Unit): DeviceMenuDialog {
+    fun setHistoryListener(l: () -> Unit) = apply {
         mLlHistory.setOnClickListener {
             l.invoke()
-            mPopupWindow.dismiss()
+            dismiss()
         }
-        return this
     }
 
-    fun setAboutListener(l: () -> Unit): DeviceMenuDialog {
+    fun setOwnershipListener(l: () -> Unit) = apply {
+        mLlOwnership.setOnClickListener {
+            l.invoke()
+            dismiss()
+        }
+    }
+
+    fun setAboutListener(l: () -> Unit) = apply {
         mLlAbout.setOnClickListener {
             l.invoke()
-            mPopupWindow.dismiss()
+            dismiss()
         }
-        return this
     }
 
-    fun setSettingListener(l: () -> Unit): DeviceMenuDialog {
+    fun setSettingListener(l: () -> Unit) = apply {
         mLlSetting.setOnClickListener {
             l.invoke()
-            mPopupWindow.dismiss()
+            dismiss()
         }
-        return this
     }
 
     fun show(parent: View) {
-        mPopupWindow.showAsDropDown(parent)
+        if (!mPopupWindow.isShowing) {
+            mPopupWindow.showAsDropDown(parent, 16.dp2px(), 0)
+        }
+    }
+
+    fun dismiss() {
+        if (mPopupWindow.isShowing) {
+            mPopupWindow.dismiss()
+        }
     }
 }

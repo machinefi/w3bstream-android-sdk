@@ -31,9 +31,9 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvGps"
+            android:fontFamily="@font/space_grotesk_light"
             android:text="@string/gps"
             android:textColor="@color/white"
-            android:fontFamily="@font/space_grotesk_light"
             android:textSize="14sp" />
 
         <com.suke.widget.SwitchButton
@@ -56,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@color/teal_800"
+        android:background="@color/black_alpha_20"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
@@ -87,6 +87,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_toStartOf="@+id/mIvGpsPrecisionArrow"
+            android:fontFamily="@font/space_grotesk_light"
             android:text="@string/gps"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -106,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:background="@color/teal_800"
+        android:background="@color/black_alpha_20"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
@@ -125,6 +126,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvFrequencyIcon"
+            android:fontFamily="@font/space_grotesk_light"
             android:text="@string/submit_frequency"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -136,6 +138,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="8dp"
             android:layout_toStartOf="@+id/mTvFrequencyArrow"
+            android:fontFamily="@font/space_grotesk_light"
             android:textColor="@color/white"
             android:textSize="14sp"
             tools:text="5 min" />
