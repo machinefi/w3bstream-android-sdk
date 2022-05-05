@@ -11,6 +11,7 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.gif.GifDrawable
+import com.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.attempt
 
 
@@ -26,16 +27,21 @@ fun View.setInvisible() {
     visibility = View.INVISIBLE
 }
 
-fun TextView.renderHighlightTips(source: String, highlight: String) {
+fun TextView.renderHighlightTips(
+    source: String,
+    normalStyle: Style,
+    highlight: String,
+    highlightStyle: Style
+) {
     val tipsList = source.split(Regex("((?<=$highlight)|(?=$highlight))"))
 
     val spanUtils = SpanUtils.with(this)
 
     tipsList.forEach {
         if (it == highlight) {
-            spanUtils.setTitleHighlightStyle(it)
+            spanUtils.setTitleHighlightStyle(it, normalStyle)
         } else {
-            spanUtils.setTitleNormalStyle(it)
+            spanUtils.setTitleNormalStyle(it, highlightStyle)
         }
     }
 
@@ -45,51 +51,68 @@ fun TextView.renderHighlightTips(source: String, highlight: String) {
 
 fun ImageView.bitmapRequestBuilder(): RequestBuilder<Bitmap> {
     return Glide.with(this)
-            .asBitmap()
+        .asBitmap()
 }
 
 fun ImageView.gifRequestBuilder(): RequestBuilder<GifDrawable> {
     return Glide.with(this)
-            .asGif()
+        .asGif()
 }
 
 fun ImageView.loadGif(model: Any?, @DrawableRes holder: Int) {
     attempt {
         gifRequestBuilder()
-                .load(model)
-                .placeholder(holder)
-                .into(this)
+            .load(model)
+            .placeholder(holder)
+            .into(this)
     }
 }
 
 fun ImageView.loadImage(model: Any?, @DrawableRes holder: Int) {
     attempt {
         bitmapRequestBuilder()
-                .load(model)
-                .thumbnail(bitmapRequestBuilder().load(holder))
-                .error(bitmapRequestBuilder().load(holder))
-                .into(this)
+            .load(model)
+            .thumbnail(bitmapRequestBuilder().load(holder))
+            .error(bitmapRequestBuilder().load(holder))
+            .into(this)
     }
 }
 
 fun ImageView.loadRoundImage(model: Any?, @DrawableRes holder: Int) {
     attempt {
         bitmapRequestBuilder()
-                .load(model)
-                .thumbnail(bitmapRequestBuilder().load(holder))
-                .error(bitmapRequestBuilder().load(holder))
-                .transform(CircleCrop())
-                .into(this)
+            .load(model)
+            .thumbnail(bitmapRequestBuilder().load(holder))
+            .error(bitmapRequestBuilder().load(holder))
+            .transform(CircleCrop())
+            .into(this)
     }
 }
 
-fun ImageView.loadImage(model: Any?, @DrawableRes holder: Int, vararg transformation: Transformation<Bitmap>) {
+fun ImageView.loadImage(
+    model: Any?,
+    @DrawableRes holder: Int,
+    vararg transformation: Transformation<Bitmap>
+) {
     attempt {
         bitmapRequestBuilder()
-                .load(model)
-                .thumbnail(bitmapRequestBuilder().load(holder).transform(*transformation))
-                .error(bitmapRequestBuilder().load(holder).transform(*transformation))
-                .transform(*transformation)
-                .into(this)
+            .load(model)
+            .thumbnail(bitmapRequestBuilder().load(holder).transform(*transformation))
+            .error(bitmapRequestBuilder().load(holder).transform(*transformation))
+            .transform(*transformation)
+            .into(this)
+    }
+}
+
+fun <T> MultiTypeAdapter.updateItem(t: T, regex: (T) -> Boolean) {
+    val oldList = this.items.toMutableList() as MutableList<T>
+    val index = oldList.indexOfFirst {
+        regex.invoke(it)
+    }
+
+    if (index != -1) {
+        oldList[index] = t
+        this.items = oldList as List<Any>
+        this.notifyItemChanged(index)
     }
 }

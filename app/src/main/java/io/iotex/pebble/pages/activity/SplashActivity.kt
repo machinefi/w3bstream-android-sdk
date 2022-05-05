@@ -2,17 +2,16 @@ package io.iotex.pebble.pages.activity
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.blankj.utilcode.util.FragmentUtils
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
-import io.iotex.pebble.module.viewmodel.WalletVM
-import io.iotex.pebble.pages.fragment.LoadingFragment
+import io.iotex.pebble.constant.PebbleStore
+import io.iotex.pebble.module.viewmodel.PebbleVM
 import org.jetbrains.anko.startActivity
 
 class SplashActivity : BaseActivity(R.layout.activity_splash) {
 
-    private val mWalletVM by lazy {
-        ViewModelProvider(this)[WalletVM::class.java]
+    private val mPebbleVM by lazy {
+        ViewModelProvider(this, mVmFactory)[PebbleVM::class.java]
     }
 
     override fun beforeInflate(savedInstanceState: Bundle?) {
@@ -24,15 +23,14 @@ class SplashActivity : BaseActivity(R.layout.activity_splash) {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        mWalletVM.queryDeviceList()
+        mPebbleVM.queryDeviceList()
     }
 
     override fun registerObserver() {
-        mWalletVM.mDeviceListLiveData.observe(this) {
+        mPebbleVM.mDeviceListLD.observe(this) {
             if (!it.isNullOrEmpty()) {
-                startActivity<DevicePanelActivity>(
-                    DevicePanelActivity.KEY_DEVICE to it[0]
-                )
+                PebbleStore.setDevice(it[0])
+                startActivity<DevicePanelActivity>()
             } else {
                 startActivity<CreateActivity>()
             }

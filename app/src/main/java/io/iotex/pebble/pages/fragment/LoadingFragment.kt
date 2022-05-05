@@ -7,8 +7,11 @@ import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.Utils
 import io.iotex.core.base.BaseFragment
 import io.iotex.pebble.R
+import io.iotex.pebble.utils.extension.Style
+import io.iotex.pebble.utils.extension.i
 import io.iotex.pebble.utils.extension.renderHighlightTips
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_loading.*
 import java.util.concurrent.TimeUnit
@@ -21,21 +24,16 @@ class LoadingFragment : BaseFragment(R.layout.fragment_loading) {
     private var mSourceTips: String = Utils.getApp().getString(R.string.prepare_tips)
     private var mHighlight: String = Utils.getApp().getString(R.string.meta_pebble)
 
-    override fun initView(view: View, savedInstanceState: Bundle?) {
-        mTvTips.renderHighlightTips(mSourceTips, mHighlight)
+    private val mFirstTrip = 90L
+    private val mSecondTrip = 100L
 
-        Flowable.intervalRange(0, 101, 0, 30, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {
-                mOnStartCallback?.invoke()
-            }
-            .doOnNext {
-                mLoadingProgress.setProgress(it.toInt())
-            }
-            .doOnComplete {
-                mOnCompleteCallback?.invoke()
-            }
-            .subscribe()
+    private var mFirstTripComplete = false
+    private var mShouldStartSecondTrip = false
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        val normalStyle = Style(R.color.white, 35)
+        val highlightStyle = Style(R.color.green_400, 35)
+        mTvTips.renderHighlightTips(mSourceTips, normalStyle, mHighlight, highlightStyle)
     }
 
     fun renderTitle(source: String, highlight: String) = apply {
@@ -43,11 +41,50 @@ class LoadingFragment : BaseFragment(R.layout.fragment_loading) {
         mHighlight = highlight
     }
 
-    fun show(fm: FragmentManager, parent: Int) {
+    fun start(fm: FragmentManager, parent: Int) = apply {
         FragmentUtils.add(fm, this, parent)
+        startFirstTrip()
     }
 
-    fun dismiss(fm: FragmentManager) {
+    private fun startFirstTrip() {
+        Flowable.intervalRange(1, mFirstTrip, 0, 30, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                mOnStartCallback?.invoke()
+            }
+            .doOnNext {
+                mLoadingProgress.setProgress(it.toInt())
+            }
+            .doFinally {
+                mFirstTripComplete = true
+                if (mShouldStartSecondTrip) {
+                    startSecondTrip()
+                }
+            }
+            .subscribe()
+    }
+
+    private fun startSecondTrip() {
+        Flowable.intervalRange(mFirstTrip + 1, mSecondTrip - mFirstTrip, 0, 50, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnNext {
+                mLoadingProgress.setProgress(it.toInt())
+            }
+            .doFinally {
+                mOnCompleteCallback?.invoke()
+            }
+            .subscribe()
+    }
+
+    fun complete() {
+        if (mFirstTripComplete) {
+            startSecondTrip()
+        } else {
+            mShouldStartSecondTrip = true
+        }
+    }
+
+    fun dismiss() {
         if (this.isAdded) {
             FragmentUtils.remove(this)
         }

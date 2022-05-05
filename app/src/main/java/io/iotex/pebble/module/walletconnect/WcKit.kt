@@ -1,7 +1,6 @@
 package io.iotex.pebble.module.walletconnect
 
 import com.blankj.utilcode.util.Utils
-import dev.pinkroom.walletconnectkit.WalletConnectButton
 import dev.pinkroom.walletconnectkit.WalletConnectKit
 import dev.pinkroom.walletconnectkit.WalletConnectKitConfig
 import io.iotex.pebble.utils.extension.i

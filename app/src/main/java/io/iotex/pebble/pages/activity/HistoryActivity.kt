@@ -6,15 +6,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.drakeet.multitype.MultiTypeAdapter
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
+import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.module.db.entries.RecordEntry
-import io.iotex.pebble.module.viewmodel.WalletVM
+import io.iotex.pebble.module.viewmodel.PebbleVM
 import io.iotex.pebble.pages.binder.*
 import kotlinx.android.synthetic.main.activity_history.*
 
 class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListener {
 
-    private val mWalletVM by lazy {
-        ViewModelProvider(this)[WalletVM::class.java]
+    private val mPebbleVM by lazy {
+        ViewModelProvider(this, mVmFactory)[PebbleVM::class.java]
     }
 
     private val mAdapter = MultiTypeAdapter()
@@ -24,7 +25,7 @@ class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListe
     private val pageSize = 15
 
     private val mImei by lazy {
-        intent.getStringExtra(KEY_IMEI) ?: ""
+        PebbleStore.mDevice?.imei ?: ""
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -38,16 +39,16 @@ class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListe
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        mWalletVM.queryRecordList(mImei, page, pageSize)
+        mPebbleVM.queryRecordList(mImei, page, pageSize)
     }
 
     override fun onLoadMore() {
         page++
-        mWalletVM.queryRecordList(mImei, page, pageSize)
+        mPebbleVM.queryRecordList(mImei, page, pageSize)
     }
 
     override fun registerObserver() {
-        mWalletVM.mRecordListLiveData.observe(this) {
+        mPebbleVM.mRecordListLD.observe(this) {
             mLoadMoreDelegate.addData(it)
             mLoadMoreDelegate.loadMoreComplete()
             if (mAdapter.itemCount <= 0) {
@@ -59,10 +60,4 @@ class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListe
             }
         }
     }
-
-    companion object {
-        const val KEY_IMEI = "key_imei"
-    }
-
-
 }

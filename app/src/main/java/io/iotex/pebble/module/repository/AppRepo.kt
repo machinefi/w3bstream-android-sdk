@@ -1,15 +1,11 @@
-package io.iotex.pebble.module.apollo
+package io.iotex.pebble.module.repository
 
 import com.apollographql.apollo3.ApolloClient
-import io.iotex.VersionQuery
+import io.iotex.graphql.metapebble.VersionQuery
+import io.iotex.pebble.di.annocation.ApolloClientMetaPebble
+import javax.inject.Inject
 
-object ApolloManager {
-
-    private val mApolloClient by lazy {
-        ApolloClient.Builder()
-            .serverUrl("https://iopay-api.iotex.io/v1/graphql")
-            .build()
-    }
+class AppRepo @Inject constructor(@ApolloClientMetaPebble val mApolloClient: ApolloClient) {
 
     suspend fun queryVersion(): VersionQuery.Metapebble_v_ctrl_android? {
         val versionList = mApolloClient.query(VersionQuery()).execute().data
@@ -18,6 +14,5 @@ object ApolloManager {
         }
         return null
     }
-
 
 }

@@ -54,7 +54,18 @@ androidExtensions {
 }
 
 apollo {
-    packageName.set('io.iotex')
+    service("metapebble") {
+        srcDir("src/main/graphql/metapebble")
+        packageName.set("io.iotex.graphql.metapebble")
+    }
+    service("smartcontract") {
+        srcDir("src/main/graphql/smartcontract")
+        packageName.set("io.iotex.graphql.smartcontract")
+    }
+//    service("test") {
+//        srcDir("src/main/graphql/test")
+//        packageName.set("io.iotex.graphql.test")
+//    }
 }
 
 protobuf {

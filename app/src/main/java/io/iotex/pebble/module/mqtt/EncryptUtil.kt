@@ -31,10 +31,6 @@ import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManagerFactory
 
 
-const val PACKAGE_TYPE_DATA = 0
-const val PACKAGE_TYPE_CONFIG = 1
-const val PACKAGE_TYPE_STATUS = 2
-
 object EncryptUtil {
 
     @Throws(Exception::class)
@@ -93,25 +89,6 @@ object EncryptUtil {
         return context.socketFactory
     }
 
-    fun signConfirm(device: DeviceEntry): ByteArray {
-        val bd = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3))
-        val timestampStr = bd.setScale(0, BigDecimal.ROUND_DOWN)
-        val timestampData = Integer.toHexString(timestampStr.toInt()).toHexByteArray()
-        val owner = formatAddress(device.walletAddress).toHexByteArray()
-        val result = concat(owner, setLength(timestampData, 4))
-        val hash = Hash.sha256(result)
-        val pk = KeyStoreUtil.resolvePrivateKey(device.password, device.hash)
-        val privateKey = PrivateKey(pk.toHexByteArray())
-        val signatureData = privateKey.sign(hash, Curve.SECP256K1)
-
-        return SensorProtoData.ConfirmPackage.newBuilder()
-            .setOwner(ByteString.copyFrom(owner))
-            .setTimestamp(timestampStr.toInt())
-            .setSignature(ByteString.copyFrom(signatureData))
-            .setChannel(0x13)
-            .build().toByteArray()
-    }
-
     fun signMessage(device: DeviceEntry, lat: Long, long: Long): ByteArray {
         val bd = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3))
         val timestampStr = bd.setScale(0, BigDecimal.ROUND_DOWN)
@@ -137,16 +114,6 @@ object EncryptUtil {
             .setSignature(ByteString.copyFrom(signatureData))
             .setTimestamp(timestampStr.toInt())
             .build().toByteArray()
-    }
-
-    fun formatAddress(address: String): String {
-        if (address.isBlank()) return address
-        return if (address.startsWith("0x")) {
-            address.substring(2)
-        } else {
-            val dec = Bech32.decode(address).data
-            Numeric.toHexString(Bech32.convertBits(dec, 0, dec.size, 5, 8, false))
-        }
     }
 
     fun setLength(msg: ByteArray, length: Int, right: Boolean = false): ByteArray {

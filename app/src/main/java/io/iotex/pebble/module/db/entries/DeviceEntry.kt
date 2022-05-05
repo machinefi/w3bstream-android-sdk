@@ -10,9 +10,6 @@ data class DeviceEntry(
 
     val address: String,
 
-    @ColumnInfo(name = "wallet_address")
-    var walletAddress: String,
-
     @PrimaryKey
     val imei: String,
 
@@ -21,6 +18,11 @@ data class DeviceEntry(
     val password: String,
 
     val hash: String,
+
+    @ColumnInfo(name = "pub_key")
+    val pubKey: String,
+
+    var owner: String,
 
     var status: Int = DEVICE_STATUS_UNREGISTER,
 

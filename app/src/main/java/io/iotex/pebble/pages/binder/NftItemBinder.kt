@@ -3,11 +3,17 @@ package io.iotex.pebble.pages.binder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.drakeet.multitype.ItemViewBinder
+import io.iotex.graphql.smartcontract.NftListQuery
 import io.iotex.pebble.R
+import io.iotex.pebble.utils.extension.loadImage
+import io.iotex.pebble.utils.extension.setGone
+import io.iotex.pebble.utils.extension.setVisible
+import java.io.Serializable
 
 class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
 
@@ -20,9 +26,22 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
     }
 
     override fun onBindViewHolder(holder: VH, item: NftEntry) {
-        holder.mTvNftNo.text = item.no
+        holder.mIvNftLogo.loadImage(item.nft.tokenURI, R.mipmap.ic_nft)
+        if (item.nft.consumed == true) {
+            holder.mFlSelect.isEnabled = false
+            holder.mIvNftLogo.alpha = 0.5F
+            holder.mIvArrow.alpha = 0.5F
+            holder.mIvMark.setVisible()
+        } else {
+            holder.mFlSelect.isEnabled = true
+            holder.mIvNftLogo.alpha = 1F
+            holder.mIvArrow.alpha = 1F
+            holder.mIvMark.setGone()
+        }
+
+        holder.mTvNftNo.text = "No.${item.nft.tokenId}"
         holder.mRBtnSelect.isChecked = item.selected
-        holder.mRBtnSelect.setOnClickListener {
+        holder.mFlSelect.setOnClickListener {
             if (item.selected) return@setOnClickListener
             adapterItems.forEach {
                 if (it is NftEntry) {
@@ -48,9 +67,17 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
     }
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
+        val mIvNftLogo = view.findViewById<ImageView>(R.id.mIvNftLogo)
+        val mIvMark = view.findViewById<ImageView>(R.id.mIvMark)
         val mTvNftNo = view.findViewById<TextView>(R.id.mTvNftNo)
         val mRBtnSelect = view.findViewById<RadioButton>(R.id.mRBtnSelect)
+        val mFlSelect = view.findViewById<View>(R.id.mFlSelect)
+        val mIvArrow = view.findViewById<View>(R.id.mIvArrow)
     }
 }
 
-data class NftEntry(val no: String, var selected: Boolean = false)
+data class NftEntry(
+    val nft: NftListQuery.TokenList,
+    val contract: String,
+    var selected: Boolean = false
+): Serializable

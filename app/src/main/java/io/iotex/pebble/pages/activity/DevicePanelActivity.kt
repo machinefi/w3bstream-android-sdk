@@ -10,16 +10,14 @@ import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.Utils
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
+import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.module.db.AppDatabase
-import io.iotex.pebble.module.db.entries.*
-import io.iotex.pebble.module.mqtt.EncryptUtil
-import io.iotex.pebble.module.mqtt.MqttHelper
-import io.iotex.pebble.module.viewmodel.WalletVM
+import io.iotex.pebble.module.db.entries.DEVICE_POWER_OFF
+import io.iotex.pebble.module.db.entries.DEVICE_POWER_ON
+import io.iotex.pebble.module.viewmodel.ActivateVM
 import io.iotex.pebble.module.walletconnect.WcKit
 import io.iotex.pebble.utils.DeviceHelper
-import io.iotex.pebble.utils.extension.i
-import io.iotex.pebble.utils.extension.renderHighlightTips
-import io.iotex.pebble.utils.extension.setVisible
+import io.iotex.pebble.utils.extension.*
 import io.iotex.pebble.widget.DeviceMenuDialog
 import io.iotex.pebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_device_panel.*
@@ -29,24 +27,39 @@ import org.jetbrains.anko.startActivity
 
 class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
-    private val mWalletVM by lazy {
-        ViewModelProvider(this)[WalletVM::class.java]
+    private val mActivateVM by lazy {
+        ViewModelProvider(this, mVmFactory)[ActivateVM::class.java]
     }
 
-    private var mDevice: DeviceEntry? = null
-
-    private val mConfirmDialog by lazy {
-        PromptDialog(this).setPositiveButton("Confirm") {
-            confirm()
-        }
+    private val mDevice by lazy {
+        PebbleStore.mDevice
     }
 
     private var mNeedResponse = false
 
     override fun initView(savedInstanceState: Bundle?) {
-        mDevice = intent.getSerializableExtra(KEY_DEVICE) as? DeviceEntry
+        mTvImei.text = "IMEI: ${mDevice?.imei}"
+        mTvSn.text = "SN: ${mDevice?.sn}"
+
         renderMenu()
         renderTips()
+
+        mTvAuthorize.setOnClickListener {
+            PromptDialog(this)
+                .setTitle(getString(R.string.authorize_to_pop))
+                .setContent(getString(R.string.authorize_to_pop_tips_01))
+                .setPositiveButton(getString(R.string.authorize))
+                .setCaption(getString(R.string.try_later), true)
+                .show()
+        }
+
+        mSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                powerOn()
+            } else {
+                powerOff()
+            }
+        }
     }
 
     private fun renderMenu() {
@@ -54,24 +67,16 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         mIvMenu.setOnClickListener {
             DeviceMenuDialog()
                 .setHistoryListener {
-                    startActivity<HistoryActivity>(
-                        HistoryActivity.KEY_IMEI to mDevice?.imei
-                    )
+                    startActivity<HistoryActivity>()
                 }
                 .setOwnershipListener {
-                    startActivity<OwnershipActivity>(
-                        OwnershipActivity.KEY_DEVICE to mDevice
-                    )
+                    startActivity<OwnershipActivity>()
                 }
                 .setAboutListener {
-                    startActivity<AboutActivity>(
-                        AboutActivity.KEY_DEVICE to mDevice
-                    )
+                    startActivity<AboutActivity>()
                 }
                 .setSettingListener {
-                    startActivity<SettingActivity>(
-                        SettingActivity.KEY_DEVICE to mDevice
-                    )
+                    startActivity<SettingActivity>()
                 }
                 .show(mIvMenu)
         }
@@ -80,7 +85,9 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     private fun renderTips() {
         val tipsStr = getString(R.string.tips_pebble)
         val highLightStr = getString(R.string.meta_pebble)
-        mTvTips.renderHighlightTips(tipsStr, highLightStr)
+        val normalStyle = Style(R.color.white, 35)
+        val highlightStyle = Style(R.color.green_400, 35)
+        mTvTips.renderHighlightTips(tipsStr, normalStyle, highLightStr, highlightStyle)
     }
 
     override fun onStart() {
@@ -88,7 +95,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
-    private fun pressPowerOff() {
+    private fun powerOn() {
         PermissionUtils
             .permission(PermissionConstants.LOCATION)
             .callback(object : PermissionUtils.SimpleCallback {
@@ -110,8 +117,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
             .request()
     }
 
-    private fun pressPowerOn() {
-
+    private fun powerOff() {
         mDevice?.let { device ->
             DeviceHelper.powerOff(device.imei)
             device.power = DEVICE_POWER_OFF
@@ -123,6 +129,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+        mActivateVM.queryActivatedResult(mDevice?.imei ?: "")
         mWcActivate.start(WcKit.mWalletConnectKit, ::onConnected, ::onDisconnected)
         mWcActivate.setOnClickListener {
             if (WcKit.isConnected()) {
@@ -148,41 +155,26 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     }
 
     private fun onConnected(address: String) {
-        "onConnected".i()
         mNeedResponse = true
     }
 
     private fun onDisconnected() {
         mNeedResponse = false
         WcKit.disconnect()
-        startActivity(Intent(this, DevicePanelActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-    }
-
-    private fun confirm() {
-        mDevice?.let { device ->
-            if (device.walletAddress.isBlank()) return
-            doAsync {
-                val data = EncryptUtil.signConfirm(device)
-                MqttHelper.publishConfirm(device.imei, data)
-            }
-        }
+        startActivity(
+            Intent(this, DevicePanelActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        )
     }
 
     override fun registerObserver() {
-        mWalletVM.mDeviceUpdateLiveData.observe(this) {
-            if (it != null) {
-                mDevice = it
-                if (it.status == DEVICE_STATUS_PROPOSE) {
-                    mConfirmDialog.show()
-                }
-                if (it.status == DEVICE_STATUS_CONFIRM) {
-                    DeviceHelper.pollingSendData(it)
-                    DeviceHelper.stopQuerying()
-                } else {
-                    DeviceHelper.stopSendingData()
-                    DeviceHelper.pollingQuery(it)
-                }
+        mActivateVM.mIsActivatedLd.observe(this) {
+            if (it) {
+                mLlActivated.setVisible()
+                mFlConnect.setGone()
+            } else {
+                mLlActivated.setGone()
+                mFlConnect.setVisible()
             }
         }
     }
@@ -190,10 +182,5 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     override fun onDestroy() {
         super.onDestroy()
         WcKit.disconnect()
-        "onDestroy".i()
-    }
-
-    companion object {
-        const val KEY_DEVICE = "key_device"
     }
 }

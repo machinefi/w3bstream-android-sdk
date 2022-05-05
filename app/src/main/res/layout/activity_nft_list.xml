@@ -119,6 +119,23 @@
         tools:listitem="@layout/item_select_nft" />
 
     <TextView
+        android:id="@+id/mTvApprove"
+        android:layout_width="315dp"
+        android:layout_height="54dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="90dp"
+        android:background="@drawable/selector_stroke_btn"
+        android:enabled="false"
+        android:visibility="gone"
+        android:fontFamily="@font/space_grotesk_bold"
+        android:gravity="center"
+        android:text="@string/approve"
+        android:textColor="@color/btn_text_color"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/mTvActivate"
         android:layout_width="315dp"
         android:layout_height="54dp"

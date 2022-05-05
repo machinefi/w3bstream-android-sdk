@@ -33,24 +33,102 @@
         android:adjustViewBounds="true"
         android:src="@mipmap/diamond_01" />
 
-    <io.iotex.pebble.widget.MaterialSwitch
-        android:id="@+id/mSwitch"
-        android:layout_width="116dp"
+    <LinearLayout
+        android:id="@+id/mLlActivated"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/mFlConnect"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:checked="true"
-        android:gravity="center_vertical"
-        android:showText="true"
-        android:switchTextAppearance="@style/SwitchTheme"
-        android:textOff="@string/off"
-        android:textOn="@string/on"
-        android:thumb="@drawable/switch_rectangle_thumb_selector"
-        android:track="@drawable/switch_rectangle_track_selector"
-        app:secondaryTextColor="@color/white_alpha_30"
-        app:secondaryTextSize="18sp"
-        tools:ignore="UseSwitchCompatOrMaterialXml" />
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <io.iotex.pebble.widget.MaterialSwitch
+            android:id="@+id/mSwitch"
+            android:layout_width="116dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:checked="false"
+            android:gravity="center_vertical"
+            android:showText="true"
+            android:switchTextAppearance="@style/SwitchTheme"
+            android:textOff="@string/off"
+            android:textOn="@string/on"
+            android:thumb="@drawable/switch_rectangle_thumb_selector"
+            android:track="@drawable/switch_rectangle_track_selector"
+            app:secondaryTextColor="@color/white_alpha_30"
+            app:secondaryTextSize="18sp"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:id="@+id/mTvSwitchCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/space_grotesk_light"
+            android:gravity="center"
+            android:text="@string/switch_caption"
+            android:textColor="@color/white_alpha_70"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mTvAuthorize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="10dp"
+            android:autoLink="all"
+            android:fontFamily="@font/space_grotesk_regular"
+            android:gravity="center"
+            android:text="@string/authorize_to_pop_underline"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/mTvAuthorizeTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/space_grotesk_light"
+            android:gravity="center"
+            android:text="@string/authorize_to_pop_tips_02"
+            android:textColor="@color/white_alpha_70"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:id="@+id/mRlDeviceInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp">
+
+            <TextView
+                android:id="@+id/mTvImei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/space_grotesk_light"
+                android:gravity="center"
+                android:textColor="@color/white_alpha_70"
+                android:textSize="11sp"
+                tools:text="IMEI: 100000000000207" />
+
+            <TextView
+                android:id="@+id/mTvSn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:fontFamily="@font/space_grotesk_light"
+                android:gravity="center"
+                android:textColor="@color/white_alpha_70"
+                android:textSize="11sp"
+                tools:text="SN: CE13F82DEC" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/mFlConnect"
@@ -58,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_marginBottom="90dp">
 
         <dev.pinkroom.walletconnectkit.WalletConnectButton

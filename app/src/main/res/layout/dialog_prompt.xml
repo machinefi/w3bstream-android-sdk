@@ -62,13 +62,26 @@
         android:layout_height="54dp"
         android:layout_marginBottom="90dp"
         android:background="@drawable/shape_green400_r100"
+        android:fontFamily="@font/space_grotesk_bold"
         android:gravity="center"
         android:text="@string/confirm"
-        android:fontFamily="@font/space_grotesk_bold"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/mTvCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/try_later"
+        android:textColor="@color/green_400"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/mTvConfirm"
+        app:layout_constraintStart_toStartOf="@+id/mTvConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/mTvConfirm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

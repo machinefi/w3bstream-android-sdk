@@ -11,13 +11,13 @@
     <string name="status">status:</string>
     <string name="confirm_on_device">Please confirm on device</string>
     <string name="keystore_not_init">The application keystore has not been initialized</string>
-    <string name="could_not_load_certificate">Could not load certificate!</string>
-    <string name="device_must_api_level">Sorry! The app is required to device Android 6.0 (API level 23) or higher</string>
-    <string name="submit_frequency">Submit frequency</string>
-    <string name="gps_precision">Change GPS Precision</string>
-    <string name="unregister">Unregister</string>
-    <string name="propose">Propose</string>
-    <string name="confirmed">Confirmed</string>
+
+    <string name="server_error">Server error</string>
+    <string name="request_not_exist">Request address does not exist</string>
+    <string name="request_redirected">Request redirected</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="network_timeout">Network timeout</string>
+    <string name="data_parsing_error">Data parsing error</string>
 
     <string name="tips_pebble">Your Meta-Pebble \n is here!</string>
     <string name="on">ON</string>
@@ -62,7 +62,19 @@
     <string name="activated_registered_successfully">Your Meta-Pebble has been \n successfully activated and \n registered!</string>
     <string name="completed">Completed!</string>
     <string name="authorize_to_pop">Authorize to POP</string>
+    <string name="authorize_to_pop_underline"><u>Authorize to POP</u></string>
     <string name="back_to_home">Back to Home</string>
     <string name="external_link">Go to portal.machinefi.com to check more details about your device and have fun playing with the dApps there!</string>
+    <string name="gps_precision">Change GPS Precision</string>
+    <string name="submit_frequency">Submit frequency</string>
+    <string name="device_must_api_level">Sorry! The app is required to device Android 6.0 (API level 23) or higher</string>
+    <string name="could_not_load_certificate">Could not load certificate!</string>
+    <string name="approve">Approve</string>
+    <string name="try_later">I will do it later</string>
+    <string name="authorize_to_pop_tips_01">Authorize your Meta-Pebble GPS data to the POP Protocol to receive airdrops from various campaigns!</string>
+    <string name="authorize_to_pop_tips_02">Receive airdrop from various campaigns!</string>
+    <string name="authorize">Authorize</string>
+    <string name="switch_caption">Turn on/off your Meta-Pebble to enable/disable data uploading and transmission.</string>
+
 
 </resources>

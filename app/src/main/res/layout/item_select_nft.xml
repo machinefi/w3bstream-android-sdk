@@ -5,20 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:layout_marginTop="12dp"
-    android:background="@mipmap/bg_item_nft_unselected"
+    android:background="@mipmap/bg_item_nft_unactivated"
     android:paddingStart="8dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
+    <FrameLayout
+        android:id="@+id/mFlNftLogo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@mipmap/ic_nft"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/mIvNftLogo"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/ic_nft" />
+
+        <ImageView
+            android:id="@+id/mIvMark"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_activated"
+            android:visibility="gone" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/mTvNftLable"
@@ -28,10 +43,10 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/space_grotesk_light"
         android:text="Meta-Pebble NFT"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/mFlNftLogo"
+        app:layout_constraintTop_toTopOf="@+id/mFlNftLogo" />
 
     <ImageView
         android:id="@+id/mIvArrow"
@@ -50,22 +65,31 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/space_grotesk_light"
-        android:textColor="@color/white"
+        android:textColor="@color/btn_text_color"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/mTvNftLable"
         app:layout_constraintTop_toBottomOf="@+id/mTvNftLable"
         tools:text="NO.283" />
 
-    <RadioButton
-        android:id="@+id/mRBtnSelect"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/selector_nft_select"
-        android:button="@null"
-        android:checked="false"
+    <FrameLayout
+        android:id="@+id/mFlSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/mRBtnSelect"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/selector_nft_select"
+            android:button="@null"
+            android:clickable="false"
+            android:checked="false" />
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package io.iotex.pebble.widget
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -23,6 +24,8 @@ abstract class BaseDialog(val context: Context, resId: Int) {
         val params = mDialog.window?.attributes
         params?.width = ScreenUtils.getScreenWidth() - (15 * 2).dp2px()
         params?.height = WindowManager.LayoutParams.WRAP_CONTENT
+        params?.gravity = Gravity.BOTTOM
+        params?.windowAnimations = R.style.DialogAnimation
         mDialog.window?.attributes = params
     }
 

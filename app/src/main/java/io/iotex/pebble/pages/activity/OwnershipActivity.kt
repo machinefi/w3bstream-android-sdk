@@ -3,6 +3,7 @@ package io.iotex.pebble.pages.activity
 import android.os.Bundle
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
+import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.module.walletconnect.WcKit
 import kotlinx.android.synthetic.main.activity_ownership.*
@@ -11,7 +12,7 @@ import org.jetbrains.anko.startActivity
 class OwnershipActivity: BaseActivity(R.layout.activity_ownership) {
 
     private val mDevice by lazy {
-        intent.getSerializableExtra(KEY_DEVICE) as? DeviceEntry
+        PebbleStore.mDevice
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -25,7 +26,7 @@ class OwnershipActivity: BaseActivity(R.layout.activity_ownership) {
             mTvImei.text = it.imei
             mTvSN.text = it.sn
             mTvAddress.text = it.address
-            mTvWalletAddress.text = it.walletAddress
+            mTvWalletAddress.text = it.owner
         }
     }
 
@@ -33,9 +34,5 @@ class OwnershipActivity: BaseActivity(R.layout.activity_ownership) {
     }
 
     override fun registerObserver() {
-    }
-
-    companion object {
-        const val KEY_DEVICE = "key_device"
     }
 }

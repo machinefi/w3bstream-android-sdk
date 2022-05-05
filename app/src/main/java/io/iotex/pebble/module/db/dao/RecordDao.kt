@@ -12,6 +12,6 @@ interface RecordDao {
     fun insertIfNonExist(record: RecordEntry)
 
     @Query("select * from Record where imei = :imei order by timestamp desc limit ((:page - 1)*:size), (:page*:size)")
-    fun queryByImei(imei: String, page: Int, size: Int): Single<List<RecordEntry>>
+    fun queryByImei(imei: String, page: Int, size: Int): List<RecordEntry>
 
 }

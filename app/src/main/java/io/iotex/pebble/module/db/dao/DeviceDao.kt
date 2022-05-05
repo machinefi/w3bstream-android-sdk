@@ -13,13 +13,10 @@ interface DeviceDao {
     @Update
     fun update(device: DeviceEntry)
 
-    @Query("select * from Device where wallet_address = :walletAddress")
-    fun queryByWalletAddress(walletAddress: String): Single<List<DeviceEntry>>
-
     @Query("select * from Device where imei = :imei limit 1")
     fun queryByImei(imei: String): DeviceEntry?
 
     @Query("select * from Device")
-    fun queryAll(): Single<List<DeviceEntry>>
+    fun queryAll(): List<DeviceEntry>
 
 }

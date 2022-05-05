@@ -56,16 +56,16 @@
             app:layout_constraintTop_toTopOf="@+id/mFlIndicator" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/mTvWalletAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/space_grotesk_bold"
-            android:text="iodhfiuehfioekpijdiouio"
             android:textColor="@color/green_400"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
-            app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel" />
+            app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
+            tools:text="iodhfiuehfioekpijdiouio" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -98,9 +98,9 @@
         android:layout_marginStart="42dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/space_grotesk_light"
-        android:text="NO.666"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:text="NO.666" />
 
     <TextView
         android:id="@+id/mTvAddressLabel"
@@ -115,14 +115,14 @@
         android:textSize="11sp" />
 
     <TextView
-        android:id="@+id/mTvAddress"
+        android:id="@+id/mTvContract"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mTvAddressLabel"
         android:layout_marginStart="42dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/space_grotesk_light"
-        android:text="0X78493t8904380r9eiriijkj"
+        tools:text="0X78493t8904380r9eiriijkj"
         android:textColor="@color/white"
         android:textSize="16sp" />
 
@@ -130,7 +130,7 @@
         android:id="@+id/mIvMask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mTvAddress"
+        android:layout_below="@+id/mTvContract"
         android:layout_marginTop="-24dp"
         android:adjustViewBounds="true"
         android:src="@mipmap/mask_nft" />

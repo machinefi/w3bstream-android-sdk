@@ -1,6 +1,5 @@
 package io.iotex.pebble.utils
 
-import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
@@ -18,7 +17,10 @@ import org.passay.CharacterRule
 import org.passay.EnglishCharacterData
 import org.passay.PasswordGenerator
 import java.io.File
-import java.security.*
+import java.security.KeyFactory
+import java.security.KeyPairGenerator
+import java.security.KeyStore
+import java.security.PrivateKey
 import java.security.spec.MGF1ParameterSpec
 import java.security.spec.X509EncodedKeySpec
 import java.util.*
@@ -30,13 +32,10 @@ const val ANDROID_KEY_STORE = "AndroidKeyStore"
 const val PEBBLE_KEYSTORE_ALIAS = "PEBBLE"
 const val TRANSFORMATION_CIPHER = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding"
 
+
 object KeyStoreUtil {
 
     fun initKeyStore() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            showRestrictedDialog()
-            return
-        }
         val keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
         keyStore.load(null)
         if (!keyStore.containsAlias(PEBBLE_KEYSTORE_ALIAS)) {
@@ -106,8 +105,10 @@ object KeyStoreUtil {
             privateKey = keyStore2.getKey(PEBBLE_KEYSTORE_ALIAS, null) as PrivateKey
         }
         val cipher = Cipher.getInstance(TRANSFORMATION_CIPHER)
-        val spec = OAEPParameterSpec("SHA-256", "MGF1",
-            MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT)
+        val spec = OAEPParameterSpec(
+            "SHA-256", "MGF1",
+            MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT
+        )
         cipher.init(Cipher.DECRYPT_MODE, privateKey, spec)
         val bytes = Base64.decode(password, Base64.NO_WRAP)
         return String(cipher.doFinal(bytes))

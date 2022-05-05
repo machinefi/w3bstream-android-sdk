@@ -57,8 +57,8 @@ object MqttHelper {
                     }
                     if (obj.has("proposer")) {
                         val proposer = obj.getString("proposer")
-                        needUpdate = (device.walletAddress != proposer).or(needUpdate)
-                        device.walletAddress = proposer
+                        needUpdate = (device.owner != proposer).or(needUpdate)
+                        device.owner = proposer
                     }
                     "needUpdate ${needUpdate}".i()
                     if (needUpdate) {

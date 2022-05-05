@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.blankj.utilcode.util.SPUtils
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
+import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.constant.SP_KEY_GPS_CHECKED
 import io.iotex.pebble.constant.SP_KEY_GPS_PRECISION
 import io.iotex.pebble.constant.SP_KEY_SUBMIT_FREQUENCY
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_setting.*
 class SettingActivity: BaseActivity(R.layout.activity_setting) {
 
     private val mDevice by lazy {
-        intent.getSerializableExtra(AboutActivity.KEY_DEVICE) as? DeviceEntry
+        PebbleStore.mDevice
     }
 
     private val mSubmitFrequencyList = listOf(
@@ -91,11 +92,6 @@ class SettingActivity: BaseActivity(R.layout.activity_setting) {
 
     override fun registerObserver() {
     }
-
-    companion object {
-        const val KEY_DEVICE = "key_device"
-    }
-
 }
 
 data class PickerItemData(val label: String, val value: Int)
