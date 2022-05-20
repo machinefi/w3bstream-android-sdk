@@ -13,7 +13,6 @@ import io.iotex.pebble.module.http.ErrorHandleSubscriber
 import io.iotex.pebble.module.http.SignPebbleBody
 import io.iotex.pebble.module.http.SignPebbleResp
 import io.iotex.pebble.module.repository.ActivateRepo
-import io.iotex.pebble.module.repository.PebbleRepo
 import io.iotex.pebble.module.walletconnect.FunctionSignData
 import io.iotex.pebble.module.walletconnect.WcKit
 import io.iotex.pebble.utils.extension.e
@@ -24,6 +23,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.web3j.abi.TypeEncoder
+import org.web3j.abi.datatypes.Address
+import org.web3j.abi.datatypes.DynamicArray
+import org.web3j.abi.datatypes.DynamicStruct
+import org.web3j.abi.datatypes.StaticArray
+import org.web3j.abi.datatypes.generated.Int256
+import org.web3j.abi.datatypes.generated.Int32
+import org.web3j.abi.datatypes.generated.Uint256
+import org.web3j.utils.Numeric
+import java.math.BigInteger
 import javax.inject.Inject
 
 class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseViewModel() {
@@ -59,11 +68,14 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
         viewModelScope.launch {
             val signData =
                 FunctionSignData.getApproveRegistrationDate(REGISTRATION_CONTRACT, tokenId)
-            val response = WcKit.mWalletConnectKit.performTransaction(
-                NFT_CONTRACT,
-                value = "0",
-                data = signData
-            )
+
+            val map = mutableMapOf<String, String>().apply {
+                this["from"] = WcKit.walletAddress() ?: ""
+                this["to"] = NFT_CONTRACT
+                this["data"] = signData
+            }
+            val response = mActivateRepo.executeContract(map)
+
             if (!response.result?.toString().isNullOrBlank()) {
                 mApproveLd.postValue(tokenId)
             }
@@ -72,16 +84,22 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
 
     fun activateMetaPebble(
         tokenId: String,
-        device: DeviceEntry,
+        pubKey: String,
         imei: String,
         sn: String,
-        pubKey: String,
         timestamp: String,
         authentication: String
     ) {
         viewModelScope.launch {
-            val msg = WcKit.walletAddress() + timestamp
-            val signature = mActivateRepo.signMessage(msg, device)
+            WcKit.walletAddress() ?: return@launch
+            "Address : ${WcKit.walletAddress()}".i()
+            val msg = Numeric.prependHexPrefix(TypeEncoder.encodePacked(Address(WcKit.walletAddress())) +
+                    TypeEncoder.encodePacked(Uint256(timestamp.toBigInteger())))
+            "msg : $msg".i()
+            val rawSignature = mActivateRepo.signMessage(msg)
+            "rawSignature : $rawSignature".i()
+            val signature = mActivateRepo.generateSignature(rawSignature)
+            "signature : $signature".i()
 
             val signData = FunctionSignData.getRegistrationData(
                 tokenId,
@@ -92,12 +110,19 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
                 signature,
                 authentication
             )
-
-            val response = WcKit.mWalletConnectKit.performTransaction(
-                REGISTRATION_CONTRACT,
-                value = "0",
-                data = signData
-            )
+            "imei : $imei".i()
+            "tokenId : $tokenId".i()
+            "pubKey : $pubKey".i()
+            "sn : $sn".i()
+            "timestamp : $timestamp".i()
+            "signData : $signData".i()
+            "authentication : $authentication".i()
+            val map = mutableMapOf<String, String>().apply {
+                this["from"] = WcKit.walletAddress() ?: ""
+                this["to"] = REGISTRATION_CONTRACT
+                this["data"] = signData
+            }
+            val response = mActivateRepo.executeContract(map)
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mActivateLd.postValue(tokenId)

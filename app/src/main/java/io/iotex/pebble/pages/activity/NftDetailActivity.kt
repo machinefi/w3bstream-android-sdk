@@ -47,10 +47,9 @@ class NftDetailActivity : BaseActivity(R.layout.activity_nft_detail) {
                 if (!mTokenId.isNullOrBlank() && mDevice != null) {
                     mActivateVM.activateMetaPebble(
                         mTokenId!!,
-                        mDevice!!,
+                        mDevice?.pubKey ?: "",
                         it.imei,
                         it.sn,
-                        it.pubkey,
                         it.timestamp.toString(),
                         it.authentication
                     )

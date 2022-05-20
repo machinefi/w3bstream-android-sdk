@@ -1,6 +1,7 @@
 package io.iotex.pebble.module.walletconnect
 
 import io.iotex.pebble.utils.extension.toHexByteArray
+import org.web3j.abi.DefaultFunctionEncoder
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.*
@@ -29,7 +30,7 @@ object FunctionSignData {
         val outputParameters: MutableList<TypeReference<*>> = ArrayList()
         val tokenIdParam = Uint256(tokenId.toBigInteger())
         val imeiParam = Utf8String(imei)
-        val pubkeyParam = Bytes32(pubkey.toHexByteArray())
+        val pubkeyParam = DynamicBytes(pubkey.toHexByteArray())
         val snParam = Bytes32(sn.toHexByteArray())
         val timestampParam = Uint256(timestamp.toBigInteger())
         val signatureParam = DynamicBytes(signature.toHexByteArray())

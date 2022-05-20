@@ -13,9 +13,11 @@ import io.iotex.pebble.utils.DeviceHelper
 import io.iotex.pebble.utils.GPS_PRECISION
 import io.iotex.pebble.utils.INTERVAL_SEND_DATA
 import io.iotex.pebble.utils.getPickerBuilder
+import io.iotex.pebble.widget.PickerDialog
+import io.iotex.pebble.widget.PickerItemData
 import kotlinx.android.synthetic.main.activity_setting.*
 
-class SettingActivity: BaseActivity(R.layout.activity_setting) {
+class SettingActivity : BaseActivity(R.layout.activity_setting) {
 
     private val mDevice by lazy {
         PebbleStore.mDevice
@@ -45,45 +47,61 @@ class SettingActivity: BaseActivity(R.layout.activity_setting) {
         mSbGps.setOnCheckedChangeListener { view, isChecked ->
             SPUtils.getInstance().put(SP_KEY_GPS_CHECKED, isChecked)
         }
-        mRlFrequency.setOnClickListener {
-            val index = mSubmitFrequencyList.indexOfFirst {
-                it.value == SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
-            }
-            val builder = getPickerBuilder<String>(this, getString(R.string.submit_frequency), index
-            ) { options1, options2, options3, v ->
-                mTvFrequency.text = mSubmitFrequencyList[options1].label
-                SPUtils.getInstance().put(SP_KEY_SUBMIT_FREQUENCY, mSubmitFrequencyList[options1].value)
-                mDevice?.let {
-                    DeviceHelper.pollingSendData(it)
-                }
-            }
-            builder.setPicker(mSubmitFrequencyList.map { it.label })
-            builder.show()
-        }
-        val defFrequencyItem = mSubmitFrequencyList.firstOrNull {
-            it.value == SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
-        }
-        defFrequencyItem?.let {
+
+        getFrequencyCurrentItem()?.also {
             mTvFrequency.text = it.label
         }
+        mRlFrequency.setOnClickListener {
+            val picker = PickerDialog(this)
 
-        mRlGpsPrecision.setOnClickListener {
-            val index = mGpsPrecisionList.indexOfFirst {
-                it.value == SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
+            val curItem = getFrequencyCurrentItem()
+            if (curItem != null) {
+                picker.setCurrentItem(curItem)
             }
-            val builder = getPickerBuilder<String>(this, getString(R.string.gps_precision), index
-            ) { options1, options2, options3, v ->
-                mTvGpsPrecision.text = mGpsPrecisionList[options1].label
-                SPUtils.getInstance().put(SP_KEY_GPS_PRECISION, mGpsPrecisionList[options1].value)
-            }
-            builder.setPicker(mGpsPrecisionList.map { it.label })
-            builder.show()
+            picker.setTitle(getString(R.string.submit_frequency))
+                .setOptions(mSubmitFrequencyList)
+                .setPositiveButton(getString(R.string.confirm)) {
+                    mTvFrequency.text = it.label
+                    SPUtils.getInstance().put(SP_KEY_SUBMIT_FREQUENCY, it.value)
+                    mDevice?.let { device ->
+                        DeviceHelper.pollingSendData(device)
+                    }
+                }
+                .show()
         }
-        val defGpsPrecisionItem = mGpsPrecisionList.firstOrNull {
-            it.value == SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
-        }
-        defGpsPrecisionItem?.let {
+
+        getPrecisionCurrentItem()?.let {
             mTvGpsPrecision.text = it.label
+        }
+        mRlGpsPrecision.setOnClickListener {
+            val picker = PickerDialog(this)
+
+            val curItem = getPrecisionCurrentItem()
+            if (curItem != null) {
+                picker.setCurrentItem(curItem)
+            }
+            picker.setTitle(getString(R.string.gps_precision))
+                .setOptions(mGpsPrecisionList)
+                .setPositiveButton(getString(R.string.confirm)) {
+                    mTvGpsPrecision.text = it.label
+                    SPUtils.getInstance().put(SP_KEY_GPS_PRECISION, it.value)
+                    mDevice?.let { device ->
+                        DeviceHelper.pollingSendData(device)
+                    }
+                }
+                .show()
+        }
+    }
+
+    private fun getFrequencyCurrentItem(): PickerItemData? {
+        return mSubmitFrequencyList.firstOrNull {
+            it.value == SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
+        }
+    }
+
+    private fun getPrecisionCurrentItem(): PickerItemData? {
+        return mGpsPrecisionList.firstOrNull {
+            it.value == SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
         }
     }
 
@@ -93,5 +111,3 @@ class SettingActivity: BaseActivity(R.layout.activity_setting) {
     override fun registerObserver() {
     }
 }
-
-data class PickerItemData(val label: String, val value: Int)

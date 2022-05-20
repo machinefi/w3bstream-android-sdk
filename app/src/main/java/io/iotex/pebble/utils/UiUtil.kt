@@ -19,7 +19,7 @@ fun <T> getPickerBuilder(context: Context, title: String, selectOpt: Int = 0, li
         .setCancelColor(context.getColor(R.color.gray_300))
         .setTextColorCenter(context.getColor(R.color.gray_300))
         .setTitleColor(context.getColor(R.color.gray_300))
-        .setBgColor(context.getColor(R.color.teal_800))
+        .setBgColor(context.getColor(R.color.teal_700))
         .setDividerColor(context.getColor(R.color.white_alpha_6))
         .setTitleBgColor(context.getColor(R.color.teal_800))
         .setContentTextSize(14)

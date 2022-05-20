@@ -13,7 +13,7 @@ object WcKit {
             context = Utils.getApp(),
             bridgeUrl = "wss://bridge.aktionariat.com:8887",
             appUrl = "walletconnectkit.com",
-            appName = "WalletConnect Kit",
+            appName = "MetaPebble",
             appDescription = "This is the Swiss Army toolkit for WalletConnect!"
         )
     }
@@ -37,6 +37,10 @@ object WcKit {
         mWalletConnectKit.createSession(object : Session.Callback {
             override fun onMethodCall(call: Session.MethodCall) {
                 cb.onMethodCall(call)
+                when(call) {
+                    is Session.MethodCall.Response -> {
+                    }
+                }
             }
 
             override fun onStatus(status: Session.Status) {

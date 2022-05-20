@@ -4,9 +4,9 @@ const val META_PEBBLE_GRAPHQL = "https://iopay-api.iotex.io/v1/graphql"
 const val SMART_CONTRACT_GRAPHQL = "https://smartgraph.one/metapebble/graphql"
 const val TEST_GRAPHQL = "https://iotex-testnet.chainanalytics.org/v1/graphql"
 
-const val NFT_CONTRACT = "0xaaca716C7C5AF8aeEd4083d38e4DFF4CBDE67979"
-const val REGISTRATION_RESULT_CONTRACT = "0xbb61bdFfe21B8554195D6E1D071a9B1f98fBc07e"
-const val REGISTRATION_CONTRACT = "0x2F91F982e7b61d632A794d193Abcd53649CB4B75"
+const val NFT_CONTRACT = "0xb3e556D64A769bD056d06b50D44748803c2F9855"
+const val REGISTRATION_RESULT_CONTRACT = "0x21d6ba1Da84257e53513FcC110eED2bA7b8B4c91"
+const val REGISTRATION_CONTRACT = "0xD97798eD7CAc9e64573DB5b2975e9563bFa453A1"
 
 const val CHAIN_ID = 4690
 

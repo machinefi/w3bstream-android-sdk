@@ -7,16 +7,12 @@ import io.iotex.pebble.constant.SP_KEY_GPS_CHECKED
 import io.iotex.pebble.constant.SP_KEY_GPS_PRECISION
 import io.iotex.pebble.constant.SP_KEY_SUBMIT_FREQUENCY
 import io.iotex.pebble.module.db.AppDatabase
-import io.iotex.pebble.module.db.entries.DEVICE_STATUS_CONFIRM
 import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.module.db.entries.RecordEntry
-import io.iotex.pebble.module.keystore.Account
-import io.iotex.pebble.module.keystore.KeystoreUtils
 import io.iotex.pebble.module.mqtt.EncryptUtil
 import io.iotex.pebble.module.mqtt.MqttHelper
 import io.iotex.pebble.utils.extension.formatDecimal
 import io.iotex.pebble.utils.extension.i
-import io.iotex.pebble.utils.extension.toHexString
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -24,7 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.jetbrains.anko.doAsync
-import java.math.BigDecimal
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 import kotlin.math.log10
 
@@ -44,15 +40,14 @@ object DeviceHelper {
     private var mPollingSendDataDisposable: Disposable? = null
 
     suspend fun createDevice(): DeviceEntry = withContext(Dispatchers.IO) {
-        val password = KeyStoreUtil.createRandomPassword()
-        val encodedPassword = KeyStoreUtil.encodePassword(password)
-        val account = Account.create()
-        val keystoreFile = KeystoreUtils.createWalletFileByAccount(password, account)
-        KeyStoreUtil.saveKeystoreFile(keystoreFile)
-        DeviceEntry(
-            account.address(), imei(), sn(), encodedPassword,
-            keystoreFile.id, account.publicKey().toHexString(), ""
-        ).also {
+        KeystoreUtil.createPk()
+        val pubKey = KeystoreUtil.getPubKey()
+        "pubKey --> $pubKey".i()
+        if (pubKey.isNullOrBlank()) {
+            throw Exception("Failed to create MetaPebble")
+        }
+
+        DeviceEntry(imei(), sn(), pubKey, "").also {
             AppDatabase.mInstance.deviceDao().insertIfNonExist(it)
         }
     }

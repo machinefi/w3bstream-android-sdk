@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.ColorUtils
 import com.drakeet.multitype.ItemViewBinder
 import io.iotex.graphql.smartcontract.NftListQuery
 import io.iotex.pebble.R
@@ -32,11 +33,15 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
             holder.mIvNftLogo.alpha = 0.5F
             holder.mIvArrow.alpha = 0.5F
             holder.mIvMark.setVisible()
+            holder.mTvNftLabel.setTextColor(ColorUtils.getColor(R.color.white_alpha_50))
+            holder.mTvNftNo.setTextColor(ColorUtils.getColor(R.color.white_alpha_50))
         } else {
             holder.mFlSelect.isEnabled = true
             holder.mIvNftLogo.alpha = 1F
             holder.mIvArrow.alpha = 1F
             holder.mIvMark.setGone()
+            holder.mTvNftLabel.setTextColor(ColorUtils.getColor(R.color.white))
+            holder.mTvNftNo.setTextColor(ColorUtils.getColor(R.color.white))
         }
 
         holder.mTvNftNo.text = "No.${item.nft.tokenId}"
@@ -73,6 +78,7 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
         val mRBtnSelect = view.findViewById<RadioButton>(R.id.mRBtnSelect)
         val mFlSelect = view.findViewById<View>(R.id.mFlSelect)
         val mIvArrow = view.findViewById<View>(R.id.mIvArrow)
+        val mTvNftLabel = view.findViewById<TextView>(R.id.mTvNftLabel)
     }
 }
 

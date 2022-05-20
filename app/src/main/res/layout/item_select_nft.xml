@@ -36,14 +36,14 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/mTvNftLable"
+        android:id="@+id/mTvNftLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/space_grotesk_light"
         android:text="Meta-Pebble NFT"
-        android:textColor="@color/btn_text_color"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/mFlNftLogo"
         app:layout_constraintTop_toTopOf="@+id/mFlNftLogo" />
@@ -55,9 +55,9 @@
         android:layout_marginStart="10dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_arrow_right"
-        app:layout_constraintBottom_toBottomOf="@+id/mTvNftLable"
-        app:layout_constraintStart_toEndOf="@+id/mTvNftLable"
-        app:layout_constraintTop_toTopOf="@+id/mTvNftLable" />
+        app:layout_constraintBottom_toBottomOf="@+id/mTvNftLabel"
+        app:layout_constraintStart_toEndOf="@+id/mTvNftLabel"
+        app:layout_constraintTop_toTopOf="@+id/mTvNftLabel" />
 
     <TextView
         android:id="@+id/mTvNftNo"
@@ -65,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/space_grotesk_light"
-        android:textColor="@color/btn_text_color"
+        android:textColor="@color/white"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="@+id/mTvNftLable"
-        app:layout_constraintTop_toBottomOf="@+id/mTvNftLable"
+        app:layout_constraintStart_toStartOf="@+id/mTvNftLabel"
+        app:layout_constraintTop_toBottomOf="@+id/mTvNftLabel"
         tools:text="NO.283" />
 
     <FrameLayout

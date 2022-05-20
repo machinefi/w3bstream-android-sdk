@@ -1,4 +1,4 @@
-package io.iotex.pebble.module.keystore;
+package io.iotex.pebble.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;

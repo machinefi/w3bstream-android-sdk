@@ -25,7 +25,6 @@ class OwnershipActivity: BaseActivity(R.layout.activity_ownership) {
         mDevice?.let {
             mTvImei.text = it.imei
             mTvSN.text = it.sn
-            mTvAddress.text = it.address
             mTvWalletAddress.text = it.owner
         }
     }

@@ -2,7 +2,7 @@ package io.iotex.pebble.utils.extension
 
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
-import io.iotex.pebble.module.mqtt.Numeric
+import org.web3j.utils.Numeric
 import timber.log.Timber
 
 fun String?.d(tag: String = "pebble d-->") {

@@ -4,17 +4,14 @@ import android.os.Build
 import com.blankj.utilcode.util.TimeUtils
 import com.google.protobuf.ByteString
 import io.iotex.pebble.module.db.entries.DeviceEntry
-import io.iotex.pebble.module.keystore.Bech32
-import io.iotex.pebble.utils.KeyStoreUtil
+import io.iotex.pebble.utils.KeystoreUtil
 import io.iotex.pebble.utils.RandomUtil
 import io.iotex.pebble.utils.extension.toHexByteArray
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
-import wallet.core.jni.Curve
 import wallet.core.jni.Hash
-import wallet.core.jni.PrivateKey
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -105,9 +102,7 @@ object EncryptUtil {
         val result = concat(setLength(typeData, 4), data, setLength(timestampBytes, 4))
 
         val hash = Hash.sha256(result)
-        val pk = KeyStoreUtil.resolvePrivateKey(device.password, device.hash)
-        val privateKey = PrivateKey(pk.toHexByteArray())
-        val signatureData = privateKey.sign(hash, Curve.SECP256K1)
+        val signatureData = KeystoreUtil.signData(hash)
         return SensorProtoData.BinPackage.newBuilder()
             .setType(SensorProtoData.BinPackage.PackageType.DATA)
             .setData(ByteString.copyFrom(data))

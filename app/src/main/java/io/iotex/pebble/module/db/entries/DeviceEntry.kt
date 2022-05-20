@@ -8,16 +8,16 @@ import java.io.Serializable
 @Entity(tableName = "Device")
 data class DeviceEntry(
 
-    val address: String,
+//    val address: String,
 
     @PrimaryKey
     val imei: String,
 
     val sn: String,
 
-    val password: String,
+//    val password: String,
 
-    val hash: String,
+//    val hash: String,
 
     @ColumnInfo(name = "pub_key")
     val pubKey: String,

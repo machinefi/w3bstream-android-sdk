@@ -19,6 +19,7 @@ import io.iotex.pebble.module.walletconnect.WcKit
 import io.iotex.pebble.utils.DeviceHelper
 import io.iotex.pebble.utils.extension.*
 import io.iotex.pebble.widget.DeviceMenuDialog
+import io.iotex.pebble.widget.PickerDialog
 import io.iotex.pebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_device_panel.*
 import kotlinx.android.synthetic.main.include_bar.*

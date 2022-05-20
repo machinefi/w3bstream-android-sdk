@@ -142,16 +142,17 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         }
         mActivateVM.mSignDeviceLD.observe(this) {
             if (it != null) {
-                val tokenId = mSelectedNft!!.nft.tokenId.toString()
-                mActivateVM.activateMetaPebble(
-                    tokenId,
-                    mDevice!!,
-                    it.imei,
-                    it.sn,
-                    it.pubkey,
-                    it.timestamp.toString(),
-                    it.authentication
-                )
+                mDevice?.let { device ->
+                    val tokenId = mSelectedNft!!.nft.tokenId.toString()
+                    mActivateVM.activateMetaPebble(
+                        tokenId,
+                        device.pubKey,
+                        it.imei,
+                        it.sn,
+                        it.timestamp.toString(),
+                        it.authentication
+                    )
+                }
             }
         }
         mActivateVM.mActivateLd.observe(this) {

@@ -9,6 +9,7 @@ import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.pages.fragment.LoadingFragment
 import io.iotex.pebble.utils.DeviceHelper
 import io.iotex.pebble.utils.extension.loadGif
+import io.iotex.pebble.utils.extension.toast
 import kotlinx.android.synthetic.main.activity_create.*
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.startActivity
@@ -48,8 +49,8 @@ class CreateActivity : BaseActivity(R.layout.activity_create) {
                 mLoading.complete()
             }.onFailure {
                 mLoading.dismiss()
+                it.message?.toast()
             }
-
         }
     }
 
