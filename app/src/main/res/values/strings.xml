@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">MetaPebble</string>
+
+    <string name="server_error">Server error</string>
+    <string name="request_not_exist">Request address does not exist</string>
+    <string name="request_redirected">Request redirected</string>
+    <string name="network_unavailable">Network unavailable</string>
+    <string name="network_timeout">Network timeout</string>
+    <string name="data_parsing_error">Data parsing error</string>
+    
     <string name="create_device">Let’s Create \n Your First Device</string>
     <string name="create_pebble">Create Pebble</string>
     <string name="device">Device</string>
@@ -9,16 +17,6 @@
     <string name="loading">loading</string>
     <string name="success">Success</string>
     <string name="status">status:</string>
-    <string name="confirm_on_device">Please confirm on device</string>
-    <string name="keystore_not_init">The application keystore has not been initialized</string>
-
-    <string name="server_error">Server error</string>
-    <string name="request_not_exist">Request address does not exist</string>
-    <string name="request_redirected">Request redirected</string>
-    <string name="network_unavailable">Network unavailable</string>
-    <string name="network_timeout">Network timeout</string>
-    <string name="data_parsing_error">Data parsing error</string>
-
     <string name="tips_pebble">Your Meta-Pebble \n is here!</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
@@ -75,6 +73,7 @@
     <string name="authorize_to_pop_tips_02">Receive airdrop from various campaigns!</string>
     <string name="authorize">Authorize</string>
     <string name="switch_caption">Turn on/off your Meta-Pebble to enable/disable data uploading and transmission.</string>
-
+    <string name="disconnect_wallet">Disconnect your Wallet</string>
+    <string name="disconnect_wallet_warning">Are you sure to disconnect your wallet now?</string>
 
 </resources>

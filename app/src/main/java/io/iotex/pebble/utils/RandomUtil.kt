@@ -8,11 +8,7 @@ object RandomUtil {
     const val NUMBERCHAR = "0123456789"
 
     /**
-     * 生成制定范围内的随机数
-     *
-     * @param scopeMin
-     * @param scoeMax
-     * @return
+     * Generate random numbers within a specified range
      */
     fun integer(scopeMin: Int, scoeMax: Int): Int {
         val random = Random()
@@ -20,10 +16,7 @@ object RandomUtil {
     }
 
     /**
-     * 返回固定长度的数字
-     *
-     * @param length
-     * @return
+     * Returns a fixed length number
      */
     fun number(length: Int): String {
         val sb = StringBuffer()
@@ -35,12 +28,9 @@ object RandomUtil {
     }
 
     /**
-     * 返回一个定长的随机字符串(只包含大小写字母、数字)
-     *
-     * @param length 随机字符串长度
-     * @return 随机字符串
+     * Returns a fixed-length random string (containing only uppercase and lowercase letters and numbers)
      */
-    fun String(length: Int): String {
+    fun string(length: Int): String {
         val sb = StringBuffer()
         val random = Random()
         for (i in 0 until length) {
@@ -50,12 +40,9 @@ object RandomUtil {
     }
 
     /**
-     * 返回一个定长的随机纯字母字符串(只包含大小写字母)
-     *
-     * @param length 随机字符串长度
-     * @return 随机字符串
+     * Returns a fixed-length random plain-alphabetic string (only uppercase and lowercase letters)
      */
-    fun MixString(length: Int): String {
+    fun mixString(length: Int): String {
         val sb = StringBuffer()
         val random = Random()
         for (i in 0 until length) {
@@ -65,22 +52,16 @@ object RandomUtil {
     }
 
     /**
-     * 返回一个定长的随机纯大写字母字符串(只包含大小写字母)
-     *
-     * @param length 随机字符串长度
-     * @return 随机字符串
+     * Returns a fixed-length random pure uppercase string (containing only uppercase and lowercase letters)
      */
-    fun LowerString(length: Int): String {
-        return MixString(length).toLowerCase()
+    fun lowerString(length: Int): String {
+        return mixString(length).lowercase()
     }
 
     /**
-     * 返回一个定长的随机纯小写字母字符串(只包含大小写字母)
-     *
-     * @param length 随机字符串长度
-     * @return 随机字符串
+     * Returns a fixed-length random pure lowercase string (containing only uppercase and lowercase letters)
      */
-    fun UpperString(length: Int): String {
-        return MixString(length).toUpperCase()
+    fun upperString(length: Int): String {
+        return mixString(length).uppercase()
     }
 }

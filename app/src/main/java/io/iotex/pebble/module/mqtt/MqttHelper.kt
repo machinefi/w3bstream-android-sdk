@@ -3,18 +3,10 @@ package io.iotex.pebble.module.mqtt
 import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.Utils
 import io.iotex.pebble.R
-import io.iotex.pebble.constant.UpdateDeviceEvent
-import io.iotex.pebble.module.db.AppDatabase
-import io.iotex.pebble.module.db.entries.DEVICE_STATUS_CONFIRM
-import io.iotex.pebble.module.db.entries.DEVICE_STATUS_PROPOSE
 import io.iotex.pebble.utils.extension.e
 import io.iotex.pebble.utils.extension.i
-import io.iotex.pebble.utils.extension.toast
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
-import org.greenrobot.eventbus.EventBus
-import org.jetbrains.anko.doAsync
-import org.json.JSONObject
 
 const val SERVER_URI = "ssl://a11homvea4zo8t-ats.iot.us-east-1.amazonaws.com:8883"
 
@@ -41,31 +33,6 @@ object MqttHelper {
 
             @Throws(Exception::class)
             override fun messageArrived(topic: String, message: MqttMessage) {
-                doAsync {
-                    val body = String(message.payload)
-                    "messageArrived $body".i()
-                    val device = AppDatabase.mInstance.deviceDao().queryByImei(mImei) ?: return@doAsync
-                    var needUpdate = false
-                    val obj = JSONObject(body)
-                    if (obj.has("status")) {
-                        val status = obj.getInt("status")
-                        if (device.status == DEVICE_STATUS_PROPOSE && status == DEVICE_STATUS_CONFIRM) {
-                            "Success".toast()
-                        }
-                        needUpdate = device.status != status
-                        device.status = status
-                    }
-                    if (obj.has("proposer")) {
-                        val proposer = obj.getString("proposer")
-                        needUpdate = (device.owner != proposer).or(needUpdate)
-                        device.owner = proposer
-                    }
-                    "needUpdate ${needUpdate}".i()
-                    if (needUpdate) {
-                        AppDatabase.mInstance.deviceDao().update(device)
-                        EventBus.getDefault().post(UpdateDeviceEvent(device))
-                    }
-                }
             }
 
             override fun deliveryComplete(token: IMqttDeliveryToken) {}
@@ -143,15 +110,15 @@ object MqttHelper {
     }
 
     fun publishQuery(imei: String) {
-        publishMessage("device/${imei}/query", ByteArray(0))
+        publishMessage("meta/${imei}/query", ByteArray(0))
     }
 
     fun publishConfirm(imei: String, msg: ByteArray) {
-        publishMessage("device/${imei}/confirm", msg)
+        publishMessage("meta/${imei}/confirm", msg)
     }
 
     fun publishData(imei: String, msg: ByteArray) {
-        publishMessage("device/${imei}/data", msg)
+        publishMessage("meta/${imei}/data", msg)
     }
 
     fun disconnect() {

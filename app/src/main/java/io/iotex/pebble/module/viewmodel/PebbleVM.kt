@@ -3,6 +3,7 @@ package io.iotex.pebble.module.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.iotex.core.base.BaseViewModel
+import io.iotex.pebble.module.db.entries.DEVICE_POWER_ON
 import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.module.db.entries.RecordEntry
 import io.iotex.pebble.module.repository.PebbleRepo
@@ -17,6 +18,7 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo) : BaseViewModel(
     val mDeviceListLD = MutableLiveData<List<DeviceEntry>>()
     val mRecordListLD = MutableLiveData<List<RecordEntry>>()
     val mNftListLD = MutableLiveData<List<NftEntry>>()
+    val mDeviceStatusLD = MutableLiveData<Boolean>()
 
     fun queryDeviceList() {
         viewModelScope.launch {
@@ -32,6 +34,17 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo) : BaseViewModel(
         }
     }
 
+    fun queryPebbleStatus(imei: String) {
+        viewModelScope.launch {
+            val device = mPebbleRepo.queryPebbleStatus(imei)
+            if (device?.status == DEVICE_POWER_ON) {
+                mDeviceStatusLD.postValue(true)
+            } else {
+                mDeviceStatusLD.postValue(false)
+            }
+        }
+    }
+
     fun queryNftList(address: String) {
         val errorHandler = CoroutineExceptionHandler { _, exception ->
             exception.message?.e()
@@ -43,7 +56,9 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo) : BaseViewModel(
                 nftList?.result?.get(0)?.tokenList?.filterNotNull()?.map { token ->
                     NftEntry(token, nftList.result[0]?.address ?: "")
                 }?.also { list ->
-                    mNftListLD.postValue(list)
+                    val consumed = list.filter { it.nft.consumed == true }
+                    val unconsumed = list.filter { it.nft.consumed == false }
+                    mNftListLD.postValue(unconsumed.plus(consumed))
                     return@launch
                 }
             }

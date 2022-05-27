@@ -42,7 +42,6 @@ object DeviceHelper {
     suspend fun createDevice(): DeviceEntry = withContext(Dispatchers.IO) {
         KeystoreUtil.createPk()
         val pubKey = KeystoreUtil.getPubKey()
-        "pubKey --> $pubKey".i()
         if (pubKey.isNullOrBlank()) {
             throw Exception("Failed to create MetaPebble")
         }
@@ -57,7 +56,7 @@ object DeviceHelper {
     }
 
     private fun sn(): String {
-        return RandomUtil.String(LEN_SN)
+        return RandomUtil.string(LEN_SN)
     }
 
     @SuppressLint("CheckResult")
@@ -100,7 +99,7 @@ object DeviceHelper {
         mPollingSendDataDisposable?.dispose()
         val interval = SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
         mPollingSendDataDisposable =
-            Observable.interval(0, interval.toLong(), TimeUnit.MINUTES)
+            Observable.interval(0, interval.toLong(), TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     val location = GPSUtil.getLocation()
@@ -119,7 +118,6 @@ object DeviceHelper {
                         val long = GPSUtil.encodeLocation(l.longitude, decimal)
                         val data = EncryptUtil.signMessage(device, lat, long)
                         MqttHelper.publishData(device.imei, data)
-                        "pollingSendData".i()
                         doAsync {
                             val record = RecordEntry(
                                 device.imei,

@@ -46,9 +46,9 @@ class ActivateRepo @Inject constructor(
 
     suspend fun signMessage(msg: String): String {
         return withContext(Dispatchers.IO) {
-            val hash = Hash.keccak256(msg.toHexByteArray())
-            "hash : ${hash.toHexString()}".i()
-            KeystoreUtil.signData(hash)?.toHexString() ?: ""
+//            val hash = Hash.keccak256(msg.toHexByteArray())
+//            "hash : ${hash.toHexString()}".i()
+            KeystoreUtil.signData(msg.toHexByteArray())?.toHexString() ?: ""
         }
     }
 

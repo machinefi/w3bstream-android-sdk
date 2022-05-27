@@ -1,5 +1,6 @@
 package io.iotex.pebble.module.mqtt
 
+import SensorProtoData
 import android.os.Build
 import com.blankj.utilcode.util.TimeUtils
 import com.google.protobuf.ByteString
@@ -11,7 +12,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
-import wallet.core.jni.Hash
+import org.web3j.crypto.Hash
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -100,9 +101,7 @@ object EncryptUtil {
 
         val typeData = Integer.toHexString(SensorProtoData.BinPackage.PackageType.DATA.number).toHexByteArray()
         val result = concat(setLength(typeData, 4), data, setLength(timestampBytes, 4))
-
-        val hash = Hash.sha256(result)
-        val signatureData = KeystoreUtil.signData(hash)
+        val signatureData = KeystoreUtil.signData(result)
         return SensorProtoData.BinPackage.newBuilder()
             .setType(SensorProtoData.BinPackage.PackageType.DATA)
             .setData(ByteString.copyFrom(data))

@@ -34,6 +34,11 @@ class PebbleRepo @Inject constructor(@ApolloClientSmartContract val mApolloClien
             AppDatabase.mInstance.recordDao().queryByImei(imei, page, pageSize)
         }
 
+    suspend fun queryPebbleStatus(imei: String) =
+        withContext(Dispatchers.IO) {
+            AppDatabase.mInstance.deviceDao().queryByImei(imei)
+        }
+
     suspend fun queryNftList(address: String) = withContext(Dispatchers.IO) {
         val addressOpt = AddressUtil.convertWeb3Address(address)
         val contractOpt = Optional.presentIfNotNull(NFT_CONTRACT)

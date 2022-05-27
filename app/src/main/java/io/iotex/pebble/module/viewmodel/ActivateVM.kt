@@ -15,8 +15,11 @@ import io.iotex.pebble.module.http.SignPebbleResp
 import io.iotex.pebble.module.repository.ActivateRepo
 import io.iotex.pebble.module.walletconnect.FunctionSignData
 import io.iotex.pebble.module.walletconnect.WcKit
+import io.iotex.pebble.utils.KeystoreUtil
 import io.iotex.pebble.utils.extension.e
 import io.iotex.pebble.utils.extension.i
+import io.iotex.pebble.utils.extension.toHexByteArray
+import io.iotex.pebble.utils.extension.toHexString
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,14 +28,9 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.web3j.abi.TypeEncoder
 import org.web3j.abi.datatypes.Address
-import org.web3j.abi.datatypes.DynamicArray
-import org.web3j.abi.datatypes.DynamicStruct
-import org.web3j.abi.datatypes.StaticArray
-import org.web3j.abi.datatypes.generated.Int256
-import org.web3j.abi.datatypes.generated.Int32
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.utils.Numeric
-import java.math.BigInteger
+import wallet.core.jni.Hash
 import javax.inject.Inject
 
 class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseViewModel() {
@@ -88,11 +86,10 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
         imei: String,
         sn: String,
         timestamp: String,
-        authentication: String
+        authentication: String,
     ) {
         viewModelScope.launch {
             WcKit.walletAddress() ?: return@launch
-            "Address : ${WcKit.walletAddress()}".i()
             val msg = Numeric.prependHexPrefix(TypeEncoder.encodePacked(Address(WcKit.walletAddress())) +
                     TypeEncoder.encodePacked(Uint256(timestamp.toBigInteger())))
             "msg : $msg".i()
@@ -110,12 +107,11 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
                 signature,
                 authentication
             )
-            "imei : $imei".i()
-            "tokenId : $tokenId".i()
             "pubKey : $pubKey".i()
+            "tokenId : $tokenId".i()
+            "imei : $imei".i()
             "sn : $sn".i()
             "timestamp : $timestamp".i()
-            "signData : $signData".i()
             "authentication : $authentication".i()
             val map = mutableMapOf<String, String>().apply {
                 this["from"] = WcKit.walletAddress() ?: ""

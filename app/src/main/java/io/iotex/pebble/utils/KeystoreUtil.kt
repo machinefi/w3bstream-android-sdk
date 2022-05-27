@@ -7,16 +7,13 @@ import io.iotex.pebble.utils.extension.toHexString
 import org.bouncycastle.asn1.DERBitString
 import org.bouncycastle.asn1.DERSequence
 import org.web3j.utils.Numeric
-import java.security.KeyFactory
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.Signature
 import java.security.spec.ECGenParameterSpec
-import java.security.spec.X509EncodedKeySpec
-
 
 const val ANDROID_KEY_STORE = "AndroidKeyStore"
-const val PEBBLE_KEYSTORE_ALIAS = "PEBBLE"
+const val PEBBLE_KEYSTORE_ALIAS = "pebble_key"
 
 object KeystoreUtil {
 
@@ -41,8 +38,7 @@ object KeystoreUtil {
         }
 
         kpg.initialize(parameterSpec)
-
-        kpg.generateKeyPair().public.encoded
+        kpg.generateKeyPair()
     }
 
     fun signData(data: ByteArray): ByteArray? {
@@ -74,6 +70,6 @@ object KeystoreUtil {
 
         val pubKeyEncoded = ks.getCertificate(PEBBLE_KEYSTORE_ALIAS).publicKey?.encoded ?: return null
         val subjectPublicKey = DERSequence.getInstance(pubKeyEncoded).getObjectAt(1) as DERBitString
-        return "0x" + subjectPublicKey.bytes.toHexString().substring(4)
+        return Numeric.prependHexPrefix(subjectPublicKey.bytes.toHexString().substring(4))
     }
 }

@@ -2,6 +2,7 @@ package io.iotex.pebble.pages.activity
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.drakeet.multitype.MultiTypeAdapter
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
@@ -18,6 +19,7 @@ import io.iotex.pebble.utils.extension.ellipsis
 import io.iotex.pebble.utils.extension.setGone
 import io.iotex.pebble.utils.extension.setVisible
 import io.iotex.pebble.utils.extension.updateItem
+import io.iotex.pebble.widget.DisconnectDialog
 import kotlinx.android.synthetic.main.activity_nft_list.*
 import org.jetbrains.anko.startActivity
 
@@ -63,9 +65,9 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         }
         mAdapter.register(NftEntry::class, binder)
         mRvNft.adapter = mAdapter
+        (mRvNft.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         mTvDisconnect.setOnClickListener {
-            WcKit.disconnect()
-            this.onBackPressed()
+            disconnectWallet()
         }
         mTvActivate.setOnClickListener {
             activateAndRegister()
@@ -73,6 +75,14 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         mTvApprove.setOnClickListener {
             approve()
         }
+    }
+
+    private fun disconnectWallet() {
+        DisconnectDialog(this)
+            .setPositiveButton(getString(R.string.confirm)) {
+                WcKit.disconnect()
+                this.onBackPressed()
+            }.show()
     }
 
     private fun approve() {

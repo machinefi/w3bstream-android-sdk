@@ -20,6 +20,7 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
 
     private var mSelectedListener: ((NftEntry) -> Unit)? = null
     private var mItemClickListener: ((NftEntry) -> Unit)? = null
+    private var mLastSelectedPosition = -1
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): VH {
         val view = inflater.inflate(R.layout.item_select_nft, parent, false)
@@ -55,7 +56,11 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
             }
             item.selected = !item.selected
             holder.mRBtnSelect.isChecked = item.selected
-            adapter.notifyDataSetChanged()
+            if (mLastSelectedPosition != -1) {
+                adapter.notifyItemChanged(mLastSelectedPosition)
+            }
+            mLastSelectedPosition = holder.layoutPosition
+            adapter.notifyItemChanged(holder.layoutPosition)
             mSelectedListener?.invoke(item)
         }
         holder.itemView.setOnClickListener {
