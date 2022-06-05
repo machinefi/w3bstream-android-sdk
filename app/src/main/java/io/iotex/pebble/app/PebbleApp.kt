@@ -12,7 +12,7 @@ import timber.log.Timber
 class PebbleApp : BaseApplication() {
 
     init {
-        System.loadLibrary("TrustWalletCore")
+//        System.loadLibrary("TrustWalletCore")
 
 //        val bouncyCastleProvider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
 //        if (bouncyCastleProvider != null) {

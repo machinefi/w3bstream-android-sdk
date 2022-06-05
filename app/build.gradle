@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "io.iotex.pebble"
-        minSdk 23
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -91,6 +91,7 @@ protobuf {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':core')
+    implementation project(path: ':walletconnect')
 
     kapt 'com.google.dagger:dagger-compiler:2.35.1'
     kapt 'com.google.dagger:dagger-android-processor:2.35.1'
