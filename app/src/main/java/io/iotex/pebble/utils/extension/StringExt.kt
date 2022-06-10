@@ -2,8 +2,10 @@ package io.iotex.pebble.utils.extension
 
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ToastUtils
+import org.web3j.utils.Convert
 import org.web3j.utils.Numeric
 import timber.log.Timber
+import java.math.BigDecimal
 
 fun String?.d(tag: String = "pebble d-->") {
     if (AppUtils.isAppDebug()) {
@@ -47,3 +49,5 @@ fun String.ellipsis(before: Int, after: Int): String {
         )
     return this
 }
+
+fun String.toWei(unit: Convert.Unit = Convert.Unit.ETHER): BigDecimal = Convert.toWei(this, unit)

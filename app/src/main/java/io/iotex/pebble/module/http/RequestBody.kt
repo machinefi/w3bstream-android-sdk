@@ -6,4 +6,7 @@ data class SignPebbleBody(
     val pubkey: String
 )
 
+data class UploadMetadataBody(
+    val data: String
+)
 

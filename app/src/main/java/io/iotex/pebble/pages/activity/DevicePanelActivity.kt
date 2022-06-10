@@ -4,10 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
 import io.iotex.pebble.constant.PebbleStore
@@ -16,14 +15,14 @@ import io.iotex.pebble.module.db.entries.DEVICE_POWER_OFF
 import io.iotex.pebble.module.db.entries.DEVICE_POWER_ON
 import io.iotex.pebble.module.viewmodel.ActivateVM
 import io.iotex.pebble.module.viewmodel.PebbleVM
-import io.iotex.pebble.module.walletconnect.WcKit
+import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.DeviceHelper
 import io.iotex.pebble.utils.extension.*
 import io.iotex.pebble.widget.DeviceMenuDialog
-import io.iotex.pebble.widget.PickerDialog
 import io.iotex.pebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_device_panel.*
 import kotlinx.android.synthetic.main.include_bar.*
+import kotlinx.coroutines.launch
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
 
@@ -69,7 +68,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     }
 
     private fun renderMenu() {
-        mIvMenu.setVisible()
+        mIvMenu.visible()
         mIvMenu.setOnClickListener {
             DeviceMenuDialog()
                 .setHistoryListener {
@@ -136,18 +135,18 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     override fun initData(savedInstanceState: Bundle?) {
         mActivateVM.queryActivatedResult(mDevice?.imei ?: "")
-        mWcActivate.start(WcKit.mWalletConnectKit, ::onConnected, ::onDisconnected)
-        mWcActivate.setOnClickListener {
-            if (WcKit.isConnected()) {
+        WalletConnector.init(::onConnected, ::onDisconnected)
+        mTvActivate.setOnClickListener {
+            if (WalletConnector.isConnected()) {
                 startActivity<NftListActivity>()
             } else {
-                WcKit.connect(mWcActivate)
+                WalletConnector.connect()
             }
         }
         AppUtils.registerAppStatusChangedListener(object : Utils.OnAppStatusChangedListener {
             override fun onForeground(activity: Activity?) {
                 "onForeground".i()
-                if (WcKit.isConnected() && mNeedResponse) {
+                if (WalletConnector.isConnected() && mNeedResponse) {
                     mNeedResponse = false
                     this@DevicePanelActivity.startActivity<NftListActivity>()
                 }
@@ -157,16 +156,14 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
             }
 
         })
-
     }
 
-    private fun onConnected(address: String) {
+    private fun onConnected(address: String, chainId: Long) {
         mNeedResponse = true
     }
 
     private fun onDisconnected() {
         mNeedResponse = false
-        WcKit.disconnect()
         startActivity(
             Intent(this, DevicePanelActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -175,17 +172,16 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     override fun registerObserver() {
         mActivateVM.mIsActivatedLd.observe(this) {
-//            if (it) {
-//                mLlActivated.setVisible()
-//                mFlConnect.setGone()
-//                mDevice?.let { device ->
-//                    mPebbleVM.queryPebbleStatus(device.imei)
-//                }
-//            } else {
-//                mLlActivated.setGone()
-//                mFlConnect.setVisible()
-//            }
-            mFlConnect.setVisible()
+            if (it) {
+                mLlActivated.visible()
+                mTvActivate.gone()
+                mDevice?.let { device ->
+                    mPebbleVM.queryPebbleStatus(device.imei)
+                }
+            } else {
+                mLlActivated.gone()
+                mTvActivate.visible()
+            }
         }
         mPebbleVM.mDeviceStatusLD.observe(this) {
             mSwitch.isChecked = it
@@ -194,6 +190,6 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     override fun onDestroy() {
         super.onDestroy()
-        WcKit.disconnect()
+        WalletConnector.disconnect()
     }
 }

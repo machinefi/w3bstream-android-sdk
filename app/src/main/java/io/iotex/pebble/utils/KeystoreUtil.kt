@@ -1,12 +1,15 @@
 package io.iotex.pebble.utils
 
+import android.security.KeyChain
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import io.iotex.pebble.utils.extension.e
 import io.iotex.pebble.utils.extension.toHexString
 import org.bouncycastle.asn1.DERBitString
 import org.bouncycastle.asn1.DERSequence
+import org.web3j.abi.TypeEncoder
+import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.utils.Numeric
+import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.Signature
@@ -41,22 +44,36 @@ object KeystoreUtil {
         kpg.generateKeyPair()
     }
 
-    fun signData(data: ByteArray): ByteArray? {
+    fun signData(data: ByteArray): String {
         val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
 
         val entry = ks.getEntry(PEBBLE_KEYSTORE_ALIAS, null)
         if (entry !is KeyStore.PrivateKeyEntry) {
-            "Not an instance of a PrivateKeyEntry".e()
-            return null
+            throw Exception("Not an instance of a PrivateKeyEntry")
         }
-        val signature = Signature.getInstance("SHA256withECDSA").run {
+
+        val signedData = Signature.getInstance("SHA256withECDSA").run {
             initSign(entry.privateKey)
             update(data)
             sign()
         }
-        return signature
+
+        return generateSignature(signedData.toHexString())
+    }
+
+    private fun generateSignature(msg: String): String {
+        val sigStr = Numeric.cleanHexPrefix(msg)
+        if (sigStr.length < 8) throw Exception("Signature message is too short")
+        val len = sigStr.substring(6, 8).toBigInteger(16)
+            .times(BigInteger.valueOf(2)).toInt()
+        val middle = sigStr.substring(8)
+        val arg01 = middle.substring(0, len).toBigInteger(16)
+        val arg02 = middle.substring(len + 4).toBigInteger(16)
+        val arg01Encode = TypeEncoder.encodePacked(Uint256(arg01))
+        val arg02Encode = TypeEncoder.encodePacked(Uint256(arg02))
+        return Numeric.prependHexPrefix(arg01Encode + arg02Encode)
     }
 
     fun getPubKey(): String? {

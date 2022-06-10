@@ -15,16 +15,12 @@ import com.drakeet.multitype.MultiTypeAdapter
 import org.jetbrains.anko.attempt
 
 
-fun View.setGone() {
+fun View.gone() {
     visibility = View.GONE
 }
 
-fun View.setVisible() {
+fun View.visible() {
     visibility = View.VISIBLE
-}
-
-fun View.setInvisible() {
-    visibility = View.INVISIBLE
 }
 
 fun TextView.renderHighlightTips(

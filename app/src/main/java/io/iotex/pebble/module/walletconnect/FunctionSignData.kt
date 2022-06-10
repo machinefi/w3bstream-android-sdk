@@ -8,6 +8,7 @@ import org.web3j.abi.datatypes.*
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.generated.Bytes32
 import org.web3j.abi.datatypes.generated.Uint256
+import org.web3j.abi.spi.FunctionEncoderProvider
 
 object FunctionSignData {
 

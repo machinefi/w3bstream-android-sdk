@@ -19,13 +19,13 @@ class RecordItemBinder: ItemViewBinder<RecordEntry, RecordItemBinder.VH>() {
 
     override fun onBindViewHolder(holder: VH, item: RecordEntry) {
         holder.mTvLat.text = "lat: ${item.lat}"
-        holder.mTvLng.text = "long: ${item.lng}"
+        holder.mTvLong.text = "long: ${item.lng}"
         holder.mTvTime.text = TimeUtils.millis2String(item.timestamp.toLong())
     }
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         val mTvLat = view.findViewById<TextView>(R.id.mTvLat)
-        val mTvLng = view.findViewById<TextView>(R.id.mTvLng)
+        val mTvLong = view.findViewById<TextView>(R.id.mTvLong)
         val mTvTime = view.findViewById<TextView>(R.id.mTvTime)
     }
 

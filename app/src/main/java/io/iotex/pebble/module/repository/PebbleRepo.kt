@@ -3,12 +3,12 @@ package io.iotex.pebble.module.repository
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import io.iotex.graphql.smartcontract.NftListQuery
-import io.iotex.pebble.constant.CHAIN_ID
 import io.iotex.pebble.constant.NFT_CONTRACT
 import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.di.annocation.ApolloClientSmartContract
 import io.iotex.pebble.module.db.AppDatabase
 import io.iotex.pebble.module.db.entries.DeviceEntry
+import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.AddressUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -42,7 +42,8 @@ class PebbleRepo @Inject constructor(@ApolloClientSmartContract val mApolloClien
     suspend fun queryNftList(address: String) = withContext(Dispatchers.IO) {
         val addressOpt = AddressUtil.convertWeb3Address(address)
         val contractOpt = Optional.presentIfNotNull(NFT_CONTRACT)
-        val chainIdOpt = Optional.presentIfNotNull(CHAIN_ID)
+        WalletConnector.chainId ?: throw Exception("ChainId cannot be null")
+        val chainIdOpt = Optional.presentIfNotNull(WalletConnector.chainId!!.toInt())
         mApolloClient.query(NftListQuery(addressOpt, contractOpt, chainIdOpt)).execute().data
     }
 

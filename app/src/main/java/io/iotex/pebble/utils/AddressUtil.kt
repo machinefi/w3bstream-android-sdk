@@ -1,6 +1,6 @@
 package io.iotex.pebble.utils
 
-import io.iotex.pebble.module.walletconnect.WcKit
+import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.extension.toHexByteArray
 import io.iotex.pebble.utils.extension.toHexString
 import org.web3j.utils.Numeric
@@ -8,12 +8,8 @@ import java.math.BigInteger
 
 object AddressUtil {
 
-    fun getWalletAddress(): String {
-        return WcKit.mWalletConnectKit.address ?: ""
-    }
-
     fun getIoWalletAddress(): String {
-        return convertIoAddress(getWalletAddress())
+        return convertIoAddress(WalletConnector.walletAddress ?: "")
     }
 
     fun convertWeb3Address(address: String): String {

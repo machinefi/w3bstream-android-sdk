@@ -7,16 +7,24 @@ import com.google.protobuf.ByteString
 import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.utils.KeystoreUtil
 import io.iotex.pebble.utils.RandomUtil
+import io.iotex.pebble.utils.extension.i
 import io.iotex.pebble.utils.extension.toHexByteArray
+import io.iotex.pebble.utils.extension.toHexString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMKeyPair
 import org.bouncycastle.openssl.PEMParser
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter
+import org.web3j.abi.TypeEncoder
+import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.crypto.Hash
+import org.web3j.utils.Numeric
 import java.io.BufferedInputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.math.BigDecimal
+import java.math.BigInteger
 import java.security.KeyFactory
 import java.security.KeyStore
 import java.security.Security
@@ -101,11 +109,11 @@ object EncryptUtil {
 
         val typeData = Integer.toHexString(SensorProtoData.BinPackage.PackageType.DATA.number).toHexByteArray()
         val result = concat(setLength(typeData, 4), data, setLength(timestampBytes, 4))
-        val signatureData = KeystoreUtil.signData(result)
+        val signature = KeystoreUtil.signData(result).toHexByteArray()
         return SensorProtoData.BinPackage.newBuilder()
             .setType(SensorProtoData.BinPackage.PackageType.DATA)
             .setData(ByteString.copyFrom(data))
-            .setSignature(ByteString.copyFrom(signatureData))
+            .setSignature(ByteString.copyFrom(signature))
             .setTimestamp(timestampStr.toInt())
             .build().toByteArray()
     }

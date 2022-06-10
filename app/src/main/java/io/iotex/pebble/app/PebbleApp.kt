@@ -11,24 +11,12 @@ import timber.log.Timber
 
 class PebbleApp : BaseApplication() {
 
-    init {
-//        System.loadLibrary("TrustWalletCore")
-
-//        val bouncyCastleProvider = Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)
-//        if (bouncyCastleProvider != null) {
-//            Security.removeProvider(BouncyCastleProvider.PROVIDER_NAME)
-//        }
-//        Security.addProvider(BouncyCastleProvider())
-    }
-
     override fun onCreate() {
         super.onCreate()
 
         DaggerAppComponent.builder()
                 .build()
                 .inject(this)
-
-//        KeyStoreUtil.initKeyStore()
 
         RxJavaPlugins.setErrorHandler { t: Throwable? ->
             Timber.e(t)

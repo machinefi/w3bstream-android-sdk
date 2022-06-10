@@ -7,18 +7,17 @@ import com.drakeet.multitype.MultiTypeAdapter
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
 import io.iotex.pebble.constant.PebbleStore
-import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.module.viewmodel.ActivateVM
 import io.iotex.pebble.module.viewmodel.PebbleVM
-import io.iotex.pebble.module.walletconnect.WcKit
+import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.pages.binder.NftEntry
 import io.iotex.pebble.pages.binder.NftItemBinder
 import io.iotex.pebble.pages.fragment.LoadingFragment
 import io.iotex.pebble.utils.AddressUtil
 import io.iotex.pebble.utils.extension.ellipsis
-import io.iotex.pebble.utils.extension.setGone
-import io.iotex.pebble.utils.extension.setVisible
+import io.iotex.pebble.utils.extension.gone
 import io.iotex.pebble.utils.extension.updateItem
+import io.iotex.pebble.utils.extension.visible
 import io.iotex.pebble.widget.DisconnectDialog
 import kotlinx.android.synthetic.main.activity_nft_list.*
 import org.jetbrains.anko.startActivity
@@ -48,18 +47,18 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
                 mTvApprove.isEnabled = true
                 mTvActivate.isEnabled = true
                 if (AddressUtil.isValidAddress(it.nft.approved ?: "")) {
-                    mTvApprove.setGone()
-                    mTvActivate.setVisible()
+                    mTvApprove.gone()
+                    mTvActivate.visible()
                 } else {
-                    mTvApprove.setVisible()
-                    mTvActivate.setGone()
+                    mTvApprove.visible()
+                    mTvActivate.gone()
                 }
             }
             setOnItemClickListener { nftEntry ->
                 startActivity<NftDetailActivity>(
                     NftDetailActivity.KEY_TOKEN_ID to nftEntry.nft.tokenId,
                     NftDetailActivity.KEY_CONTRACT to nftEntry.contract,
-                    NftDetailActivity.KEY_WALLET_ADDRESS to WcKit.walletAddress(),
+                    NftDetailActivity.KEY_WALLET_ADDRESS to WalletConnector.walletAddress,
                 )
             }
         }
@@ -70,7 +69,8 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
             disconnectWallet()
         }
         mTvActivate.setOnClickListener {
-            activateAndRegister()
+//            activateAndRegister()
+            approve()
         }
         mTvApprove.setOnClickListener {
             approve()
@@ -79,8 +79,10 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
 
     private fun disconnectWallet() {
         DisconnectDialog(this)
-            .setPositiveButton(getString(R.string.confirm)) {
-                WcKit.disconnect()
+            .setTitle(getString(R.string.disconnect_wallet))
+            .setContent(getString(R.string.disconnect_wallet_warning))
+            .setPositiveButton(getString(R.string.disconnect)) {
+                WalletConnector.disconnect()
                 this.onBackPressed()
             }.show()
     }
@@ -98,8 +100,8 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        val address = AddressUtil.getWalletAddress()
-        if (address.isNotBlank()) {
+        val address = WalletConnector.walletAddress
+        if (!address.isNullOrBlank()) {
             mPebbleVM.queryNftList(AddressUtil.convertIoAddress(address))
         }
     }
@@ -146,8 +148,8 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
                 }
             }
             if (mSelectedNft?.nft?.tokenId == tokenId) {
-                mTvApprove.setGone()
-                mTvActivate.setVisible()
+                mTvApprove.gone()
+                mTvActivate.visible()
             }
         }
         mActivateVM.mSignDeviceLD.observe(this) {

@@ -11,9 +11,9 @@ import com.blankj.utilcode.util.ColorUtils
 import com.drakeet.multitype.ItemViewBinder
 import io.iotex.graphql.smartcontract.NftListQuery
 import io.iotex.pebble.R
+import io.iotex.pebble.utils.extension.gone
 import io.iotex.pebble.utils.extension.loadImage
-import io.iotex.pebble.utils.extension.setGone
-import io.iotex.pebble.utils.extension.setVisible
+import io.iotex.pebble.utils.extension.visible
 import java.io.Serializable
 
 class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
@@ -33,14 +33,14 @@ class NftItemBinder : ItemViewBinder<NftEntry, NftItemBinder.VH>() {
             holder.mFlSelect.isEnabled = false
             holder.mIvNftLogo.alpha = 0.5F
             holder.mIvArrow.alpha = 0.5F
-            holder.mIvMark.setVisible()
+            holder.mIvMark.visible()
             holder.mTvNftLabel.setTextColor(ColorUtils.getColor(R.color.white_alpha_50))
             holder.mTvNftNo.setTextColor(ColorUtils.getColor(R.color.white_alpha_50))
         } else {
             holder.mFlSelect.isEnabled = true
             holder.mIvNftLogo.alpha = 1F
             holder.mIvArrow.alpha = 1F
-            holder.mIvMark.setGone()
+            holder.mIvMark.gone()
             holder.mTvNftLabel.setTextColor(ColorUtils.getColor(R.color.white))
             holder.mTvNftNo.setTextColor(ColorUtils.getColor(R.color.white))
         }

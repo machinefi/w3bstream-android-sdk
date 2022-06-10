@@ -1,6 +1,8 @@
 package io.iotex.pebble.utils
 
 import android.annotation.SuppressLint
+import com.blankj.utilcode.util.DeviceUtils
+import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
 import io.iotex.pebble.constant.SP_KEY_GPS_CHECKED
@@ -13,6 +15,7 @@ import io.iotex.pebble.module.mqtt.EncryptUtil
 import io.iotex.pebble.module.mqtt.MqttHelper
 import io.iotex.pebble.utils.extension.formatDecimal
 import io.iotex.pebble.utils.extension.i
+import io.iotex.pebble.utils.extension.toast
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -21,6 +24,7 @@ import kotlinx.coroutines.withContext
 import org.eclipse.paho.client.mqttv3.MqttException
 import org.jetbrains.anko.doAsync
 import java.lang.Exception
+import java.math.BigInteger
 import java.util.concurrent.TimeUnit
 import kotlin.math.log10
 
@@ -52,11 +56,16 @@ object DeviceHelper {
     }
 
     private fun imei(): String {
-        return "100${RandomUtil.number(LEN_IMEI - 3)}"
+        val deviceId = DeviceUtils.getUniqueDeviceId()
+        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
+        val imei = BigInteger(hash.substring(0, 10), 16).toString()
+        return "100${imei.substring(0, LEN_IMEI - 3)}"
     }
 
     private fun sn(): String {
-        return RandomUtil.string(LEN_SN)
+        val deviceId = DeviceUtils.getAndroidID()
+        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
+        return hash.substring(0, LEN_SN).uppercase()
     }
 
     @SuppressLint("CheckResult")

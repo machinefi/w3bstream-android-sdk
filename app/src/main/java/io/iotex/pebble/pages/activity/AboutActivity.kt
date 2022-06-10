@@ -2,6 +2,7 @@ package io.iotex.pebble.pages.activity
 
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ClipboardUtils
 import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
@@ -21,6 +22,7 @@ class AboutActivity: BaseActivity(R.layout.activity_about) {
     override fun initView(savedInstanceState: Bundle?) {
         mTvImei.text = " ${mDevice?.imei}"
         mTvSn.text = "${mDevice?.sn}"
+        mTvVersion.text = AppUtils.getAppVersionName()
 //        mTvAddress.text = "${EncryptUtil.formatAddress(mDevice?.address ?: "").ellipsis(6, 8)}"
 
 //        mIvImeiCopy.setOnClickListener {

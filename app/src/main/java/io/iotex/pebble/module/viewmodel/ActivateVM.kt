@@ -14,12 +14,10 @@ import io.iotex.pebble.module.http.SignPebbleBody
 import io.iotex.pebble.module.http.SignPebbleResp
 import io.iotex.pebble.module.repository.ActivateRepo
 import io.iotex.pebble.module.walletconnect.FunctionSignData
-import io.iotex.pebble.module.walletconnect.WcKit
+import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.KeystoreUtil
 import io.iotex.pebble.utils.extension.e
-import io.iotex.pebble.utils.extension.i
 import io.iotex.pebble.utils.extension.toHexByteArray
-import io.iotex.pebble.utils.extension.toHexString
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,7 +28,6 @@ import org.web3j.abi.TypeEncoder
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.utils.Numeric
-import wallet.core.jni.Hash
 import javax.inject.Inject
 
 class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseViewModel() {
@@ -64,15 +61,16 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
 
     fun approveRegistration(tokenId: String) {
         viewModelScope.launch {
+            val walletAddress = WalletConnector.walletAddress ?: return@launch
             val signData =
                 FunctionSignData.getApproveRegistrationDate(REGISTRATION_CONTRACT, tokenId)
 
-            val map = mutableMapOf<String, String>().apply {
-                this["from"] = WcKit.walletAddress() ?: ""
+            val params = mutableMapOf<String, String>().apply {
+                this["from"] = walletAddress
                 this["to"] = NFT_CONTRACT
                 this["data"] = signData
             }
-            val response = mActivateRepo.executeContract(map)
+            val response = WalletConnector.signTransaction(listOf(params))
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mApproveLd.postValue(tokenId)
@@ -89,14 +87,10 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
         authentication: String,
     ) {
         viewModelScope.launch {
-            WcKit.walletAddress() ?: return@launch
-            val msg = Numeric.prependHexPrefix(TypeEncoder.encodePacked(Address(WcKit.walletAddress())) +
+            val walletAddress = WalletConnector.walletAddress ?: return@launch
+            val msg = Numeric.prependHexPrefix(TypeEncoder.encodePacked(Address(walletAddress)) +
                     TypeEncoder.encodePacked(Uint256(timestamp.toBigInteger())))
-            "msg : $msg".i()
-            val rawSignature = mActivateRepo.signMessage(msg)
-            "rawSignature : $rawSignature".i()
-            val signature = mActivateRepo.generateSignature(rawSignature)
-            "signature : $signature".i()
+            val signature = KeystoreUtil.signData(msg.toHexByteArray())
 
             val signData = FunctionSignData.getRegistrationData(
                 tokenId,
@@ -107,18 +101,12 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
                 signature,
                 authentication
             )
-            "pubKey : $pubKey".i()
-            "tokenId : $tokenId".i()
-            "imei : $imei".i()
-            "sn : $sn".i()
-            "timestamp : $timestamp".i()
-            "authentication : $authentication".i()
-            val map = mutableMapOf<String, String>().apply {
-                this["from"] = WcKit.walletAddress() ?: ""
+            val params = mutableMapOf<String, String>().apply {
+                this["from"] = walletAddress
                 this["to"] = REGISTRATION_CONTRACT
                 this["data"] = signData
             }
-            val response = mActivateRepo.executeContract(map)
+            val response = WalletConnector.signTransaction(listOf(params))
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mActivateLd.postValue(tokenId)
