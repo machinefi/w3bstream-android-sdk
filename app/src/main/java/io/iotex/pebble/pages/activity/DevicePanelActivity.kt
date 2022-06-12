@@ -59,10 +59,12 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         }
 
         mSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                powerOn()
-            } else {
-                powerOff()
+            mDevice?.let {
+                if (isChecked) {
+                    mPebbleVM.powerOn(it)
+                } else {
+                    mPebbleVM.powerOff(it)
+                }
             }
         }
     }
@@ -98,39 +100,6 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     override fun onStart() {
         super.onStart()
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
-    }
-
-    private fun powerOn() {
-        PermissionUtils
-            .permission(PermissionConstants.LOCATION)
-            .callback(object : PermissionUtils.SimpleCallback {
-                override fun onGranted() {
-
-                    mDevice?.let { device ->
-                        DeviceHelper.powerOn(device)
-                        device.power = DEVICE_POWER_ON
-
-                        doAsync {
-                            AppDatabase.mInstance.deviceDao().update(device)
-                        }
-                    }
-                }
-
-                override fun onDenied() {
-                }
-            })
-            .request()
-    }
-
-    private fun powerOff() {
-        mDevice?.let { device ->
-            DeviceHelper.powerOff(device.imei)
-            device.power = DEVICE_POWER_OFF
-
-            doAsync {
-                AppDatabase.mInstance.deviceDao().update(device)
-            }
-        }
     }
 
     override fun initData(savedInstanceState: Bundle?) {

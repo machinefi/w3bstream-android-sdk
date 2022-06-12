@@ -95,7 +95,7 @@ object EncryptUtil {
         return context.socketFactory
     }
 
-    fun signMessage(device: DeviceEntry, lat: Long, long: Long): ByteArray {
+    fun signMessage(lat: Long, long: Long): ByteArray {
         val bd = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3))
         val timestampStr = bd.setScale(0, BigDecimal.ROUND_DOWN)
         val timestampBytes = Integer.toHexString(timestampStr.toInt()).toHexByteArray()

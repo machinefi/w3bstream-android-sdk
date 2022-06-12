@@ -7,6 +7,7 @@ data class SignPebbleBody(
 )
 
 data class UploadMetadataBody(
-    val data: String
+    val imei: String,
+    val payload: String,
 )
 

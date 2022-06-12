@@ -15,6 +15,7 @@ import io.iotex.pebble.utils.INTERVAL_SEND_DATA
 import io.iotex.pebble.utils.getPickerBuilder
 import io.iotex.pebble.widget.PickerDialog
 import io.iotex.pebble.widget.PickerItemData
+import io.iotex.pebble.widget.ServerDialog
 import kotlinx.android.synthetic.main.activity_setting.*
 
 class SettingActivity : BaseActivity(R.layout.activity_setting) {
@@ -90,6 +91,10 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                     }
                 }
                 .show()
+        }
+
+        mRlServer.setOnClickListener {
+            ServerDialog(this).show()
         }
     }
 
