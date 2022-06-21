@@ -40,4 +40,7 @@ abstract class ActivityModule {
     @ContributesAndroidInjector
     abstract fun activateCompleteActivity(): ActivateCompleteActivity
 
+    @ContributesAndroidInjector
+    abstract fun deeplinkActivity(): DeeplinkActivity
+
 }

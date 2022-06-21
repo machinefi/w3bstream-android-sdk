@@ -69,8 +69,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
             disconnectWallet()
         }
         mTvActivate.setOnClickListener {
-//            activateAndRegister()
-            approve()
+            activateAndRegister()
         }
         mTvApprove.setOnClickListener {
             approve()

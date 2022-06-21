@@ -1,12 +1,12 @@
 package io.iotex.pebble.module.walletconnect.repository.session
 
 import io.iotex.pebble.module.walletconnect.api.WalletConnectKitConfig
+import io.iotex.pebble.utils.extension.cleanHexPrefix
 import io.iotex.pebble.utils.extension.toHexString
 import org.walletconnect.Session
 import org.walletconnect.impls.OkHttpTransport
 import org.walletconnect.impls.WCSession
 import org.walletconnect.impls.WCSessionStore
-import org.web3j.utils.Numeric
 import java.util.*
 
 internal class SessionRepository(
@@ -66,7 +66,7 @@ internal class SessionRepository(
 
     private fun buildConfig(): Session.Config {
         val handshakeTopic = UUID.randomUUID().toString()
-        val key = Numeric.cleanHexPrefix(ByteArray(32).also { Random().nextBytes(it) }.toHexString())
+        val key = ByteArray(32).also { Random().nextBytes(it) }.toHexString().cleanHexPrefix()
         return Session.Config(handshakeTopic, walletConnectKitConfig.bridgeUrl, key, "wc", 1)
     }
 

@@ -44,7 +44,7 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo:
     fun queryPebbleStatus(imei: String) {
         viewModelScope.launch {
             val device = mPebbleRepo.queryPebbleStatus(imei)
-            if (device?.status == DEVICE_POWER_ON) {
+            if (device?.power == DEVICE_POWER_ON) {
                 mDeviceStatusLD.postValue(true)
             } else {
                 mDeviceStatusLD.postValue(false)
@@ -103,6 +103,9 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo:
         }
     }
 
-
-
+    fun resumeUploading() {
+        viewModelScope.launch {
+            mUploadRepo.stopUploadMetadata()
+        }
+    }
 }

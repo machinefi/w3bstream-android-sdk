@@ -1,8 +1,8 @@
 package io.iotex.pebble.utils
 
-import android.security.KeyChain
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import io.iotex.pebble.utils.extension.cleanHexPrefix
 import io.iotex.pebble.utils.extension.toHexString
 import org.bouncycastle.asn1.DERBitString
 import org.bouncycastle.asn1.DERSequence
@@ -64,7 +64,7 @@ object KeystoreUtil {
     }
 
     private fun generateSignature(msg: String): String {
-        val sigStr = Numeric.cleanHexPrefix(msg)
+        val sigStr = msg.cleanHexPrefix()
         if (sigStr.length < 8) throw Exception("Signature message is too short")
         val len = sigStr.substring(6, 8).toBigInteger(16)
             .times(BigInteger.valueOf(2)).toInt()

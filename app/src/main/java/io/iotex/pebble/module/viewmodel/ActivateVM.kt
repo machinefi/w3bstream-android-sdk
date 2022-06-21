@@ -3,16 +3,17 @@ package io.iotex.pebble.module.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import io.iotex.core.base.BaseViewModel
-import io.iotex.pebble.constant.NFT_CONTRACT
+import io.iotex.pebble.constant.CONTRACT_KEY_NFT
+import io.iotex.pebble.constant.CONTRACT_KEY_REGISTER
 import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.constant.QueryActivateResultEvent
-import io.iotex.pebble.constant.REGISTRATION_CONTRACT
 import io.iotex.pebble.module.db.AppDatabase
 import io.iotex.pebble.module.db.entries.DeviceEntry
 import io.iotex.pebble.module.http.ErrorHandleSubscriber
 import io.iotex.pebble.module.http.SignPebbleBody
 import io.iotex.pebble.module.http.SignPebbleResp
 import io.iotex.pebble.module.repository.ActivateRepo
+import io.iotex.pebble.module.repository.AppRepo
 import io.iotex.pebble.module.walletconnect.FunctionSignData
 import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.KeystoreUtil
@@ -30,7 +31,10 @@ import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.utils.Numeric
 import javax.inject.Inject
 
-class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseViewModel() {
+class ActivateVM @Inject constructor(
+    val mActivateRepo: ActivateRepo,
+    val mAppRepo: AppRepo,
+) : BaseViewModel() {
 
     val mSignDeviceLD = MutableLiveData<SignPebbleResp>()
     val mIsActivatedLd = MutableLiveData<Boolean>()
@@ -62,12 +66,13 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
     fun approveRegistration(tokenId: String) {
         viewModelScope.launch {
             val walletAddress = WalletConnector.walletAddress ?: return@launch
-            val signData =
-                FunctionSignData.getApproveRegistrationDate(REGISTRATION_CONTRACT, tokenId)
+            val registerContract = mAppRepo.queryContractByName(CONTRACT_KEY_REGISTER)?.address ?: return@launch
+            val nftContract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address ?: return@launch
+            val signData = FunctionSignData.getApproveRegistrationDate(registerContract, tokenId)
 
             val params = mutableMapOf<String, String>().apply {
                 this["from"] = walletAddress
-                this["to"] = NFT_CONTRACT
+                this["to"] = nftContract
                 this["data"] = signData
             }
             val response = WalletConnector.signTransaction(listOf(params))
@@ -88,8 +93,11 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
     ) {
         viewModelScope.launch {
             val walletAddress = WalletConnector.walletAddress ?: return@launch
-            val msg = Numeric.prependHexPrefix(TypeEncoder.encodePacked(Address(walletAddress)) +
-                    TypeEncoder.encodePacked(Uint256(timestamp.toBigInteger())))
+            val registerContract = mAppRepo.queryContractByName(CONTRACT_KEY_REGISTER)?.address ?: return@launch
+            val msg = Numeric.prependHexPrefix(
+                TypeEncoder.encodePacked(Address(walletAddress)) +
+                        TypeEncoder.encodePacked(Uint256(timestamp.toBigInteger()))
+            )
             val signature = KeystoreUtil.signData(msg.toHexByteArray())
 
             val signData = FunctionSignData.getRegistrationData(
@@ -103,7 +111,7 @@ class ActivateVM @Inject constructor(val mActivateRepo: ActivateRepo) : BaseView
             )
             val params = mutableMapOf<String, String>().apply {
                 this["from"] = walletAddress
-                this["to"] = REGISTRATION_CONTRACT
+                this["to"] = registerContract
                 this["data"] = signData
             }
             val response = WalletConnector.signTransaction(listOf(params))

@@ -19,9 +19,7 @@ import io.iotex.pebble.module.mqtt.EncryptUtil
 import io.iotex.pebble.module.mqtt.MqttHelper
 import io.iotex.pebble.module.walletconnect.WalletConnector
 import io.iotex.pebble.utils.*
-import io.iotex.pebble.utils.extension.formatDecimal
-import io.iotex.pebble.utils.extension.toHexByteArray
-import io.iotex.pebble.utils.extension.toHexString
+import io.iotex.pebble.utils.extension.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -37,14 +35,14 @@ import kotlin.math.log10
 
 class UploadRepo @Inject constructor(val mApiService: ApiService) {
 
-    private val mPollingComposite = CompositeDisposable()
+    private var mPollingComposite = CompositeDisposable()
 
     @SuppressLint("CheckResult")
-    suspend fun uploadMetadataViaHttps(imei: String) = withContext(Dispatchers.IO) {
+    fun uploadMetadataViaHttps(imei: String) {
         polling {
             val url = SPUtils.getInstance().getString(SP_KEY_SERVER_URL)
             if (url.isNullOrBlank()) return@polling
-            val data = encryptData() ?: return@polling
+            val data = encryptData(imei)?.cleanHexPrefix() ?: return@polling
             val body = UploadMetadataBody(imei, data)
             mApiService.uploadMetadata(url, body).compose(RxUtil.observableSchedulers()).subscribe()
         }
@@ -57,7 +55,7 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             if (MqttHelper.isConnect()) {
                 MqttHelper.subscribe(device.imei)
                 polling {
-                    val data = encryptData() ?: return@polling
+                    val data = encryptData(device.imei) ?: return@polling
                     MqttHelper.publishData(device.imei, data.toHexByteArray())
                 }
                 it.onComplete()
@@ -68,7 +66,7 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             .retryWhen {
                 it.flatMap { err ->
                     if (tryCount++ < RETRY_COUNT) {
-                        Observable.timer(RETRY_TIME, TimeUnit.SECONDS)
+                        Observable.timer(RETRY_TIME, TimeUnit.MINUTES)
                     } else {
                         Observable.error(err)
                     }
@@ -85,16 +83,17 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
     private fun polling(callback: () -> Unit) {
         if (!SPUtils.getInstance().getBoolean(SP_KEY_GPS_CHECKED, true)) return
         val interval = SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
-        val disposable =
-            Observable.interval(0, interval.toLong(), TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    callback.invoke()
-                }
-        mPollingComposite.add(disposable)
+        Observable.interval(0, interval.toLong(), TimeUnit.MINUTES)
+            .doOnSubscribe {
+                mPollingComposite.add(it)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                callback.invoke()
+            }
     }
 
-    private fun encryptData(): String? {
+    private fun encryptData(imei: String): String? {
         val location = GPSUtil.getLocation() ?: return null
         val gpsPrecision = SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
         val origin = 7 - log10(gpsPrecision.toDouble()).toInt()
@@ -106,11 +105,24 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
         val lat = GPSUtil.encodeLocation(location.latitude, decimal)
         val long = GPSUtil.encodeLocation(location.longitude, decimal)
         val data = EncryptUtil.signMessage(lat, long)
+
+        doAsync {
+            val record = RecordEntry(
+                imei,
+                lat.toString(),
+                long.toString(),
+                TimeUtils.getNowMills().toString()
+            )
+            AppDatabase.mInstance.recordDao()
+                .insertIfNonExist(record)
+        }
+
         return data.toHexString()
     }
 
-    suspend fun uploadMetadata(device: DeviceEntry) {
+    fun uploadMetadata(device: DeviceEntry) {
         stopUploadMetadata()
+        mPollingComposite = CompositeDisposable()
         uploadMetadataViaHttps(device.imei)
         uploadMetadataViaMqtt(device)
     }

@@ -1,6 +1,7 @@
 package io.iotex.pebble.utils
 
 import io.iotex.pebble.module.walletconnect.WalletConnector
+import io.iotex.pebble.utils.extension.cleanHexPrefix
 import io.iotex.pebble.utils.extension.toHexByteArray
 import io.iotex.pebble.utils.extension.toHexString
 import org.web3j.utils.Numeric
@@ -46,7 +47,7 @@ object AddressUtil {
             if (ethContract.isBlank() || !ethContract.startsWith("0x"))
                 return false
 
-            val cleanInput = Numeric.cleanHexPrefix(ethContract)
+            val cleanInput = ethContract.cleanHexPrefix()
 
             val value = Numeric.toBigIntNoPrefix(cleanInput)
 

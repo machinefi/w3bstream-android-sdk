@@ -42,6 +42,8 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     private var mNeedResponse = false
 
+    private var mIsActivated = false
+
     override fun initView(savedInstanceState: Bundle?) {
         mTvImei.text = "IMEI: ${mDevice?.imei}"
         mTvSn.text = "SN: ${mDevice?.sn}"
@@ -77,7 +79,11 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
                     startActivity<HistoryActivity>()
                 }
                 .setOwnershipListener {
-                    startActivity<OwnershipActivity>()
+                    if (mIsActivated) {
+                        startActivity<OwnershipActivity>()
+                    } else {
+                        getString(R.string.please_activate_pebble).toast()
+                    }
                 }
                 .setAboutListener {
                     startActivity<AboutActivity>()
@@ -114,7 +120,6 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         }
         AppUtils.registerAppStatusChangedListener(object : Utils.OnAppStatusChangedListener {
             override fun onForeground(activity: Activity?) {
-                "onForeground".i()
                 if (WalletConnector.isConnected() && mNeedResponse) {
                     mNeedResponse = false
                     this@DevicePanelActivity.startActivity<NftListActivity>()
@@ -141,14 +146,17 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     override fun registerObserver() {
         mActivateVM.mIsActivatedLd.observe(this) {
+            mIsActivated = it
             if (it) {
                 mLlActivated.visible()
                 mTvActivate.gone()
+                mTvTips.visible()
                 mDevice?.let { device ->
                     mPebbleVM.queryPebbleStatus(device.imei)
                 }
             } else {
                 mLlActivated.gone()
+                mTvTips.gone()
                 mTvActivate.visible()
             }
         }

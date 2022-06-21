@@ -51,3 +51,5 @@ fun String.ellipsis(before: Int, after: Int): String {
 }
 
 fun String.toWei(unit: Convert.Unit = Convert.Unit.ETHER): BigDecimal = Convert.toWei(this, unit)
+
+fun String.cleanHexPrefix(): String = Numeric.cleanHexPrefix(this)

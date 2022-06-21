@@ -75,7 +75,8 @@
     <string name="switch_caption">Turn on/off your Meta-Pebble to enable/disable data uploading and transmission.</string>
     <string name="disconnect_wallet">Disconnect your Wallet</string>
     <string name="disconnect_wallet_warning">Are you sure to disconnect your wallet now?</string>
-    <string name="data_server">Data Server</string>
+    <string name="w3bstream_server">W3bStream Server</string>
     <string name="set_up_data_server">Set up data server</string>
+    <string name="please_activate_pebble">Please activate MetaPebble</string>
 
 </resources>

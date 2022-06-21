@@ -6,6 +6,7 @@ import io.iotex.core.base.BaseActivity
 import io.iotex.pebble.R
 import io.iotex.pebble.constant.PebbleStore
 import io.iotex.pebble.module.viewmodel.ActivateVM
+import io.iotex.pebble.module.viewmodel.AppVM
 import io.iotex.pebble.module.viewmodel.PebbleVM
 import org.jetbrains.anko.startActivity
 
@@ -14,9 +15,8 @@ class SplashActivity : BaseActivity(R.layout.activity_splash) {
     private val mPebbleVM by lazy {
         ViewModelProvider(this, mVmFactory)[PebbleVM::class.java]
     }
-
-    private val mActivateVM by lazy {
-        ViewModelProvider(this, mVmFactory)[ActivateVM::class.java]
+    private val mAppVM by lazy {
+        ViewModelProvider(this, mVmFactory)[AppVM ::class.java]
     }
 
     override fun beforeInflate(savedInstanceState: Bundle?) {

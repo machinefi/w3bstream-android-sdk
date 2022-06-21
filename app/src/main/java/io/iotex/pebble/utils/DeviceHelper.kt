@@ -33,15 +33,17 @@ object DeviceHelper {
     }
 
     private fun imei(): String {
-        val deviceId = DeviceUtils.getUniqueDeviceId()
-        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
-        val imei = BigInteger(hash.substring(0, 10), 16).toString()
-        return "100${imei.substring(0, LEN_IMEI - 3)}"
+//        val deviceId = DeviceUtils.getUniqueDeviceId()
+//        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
+//        val imei = BigInteger(hash.substring(0, 10), 16).toString()
+//        return "100${imei.substring(0, LEN_IMEI - 3)}"
+        return "100${RandomUtil.number(LEN_IMEI - 3)}"
     }
 
     private fun sn(): String {
-        val deviceId = DeviceUtils.getAndroidID()
-        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
-        return hash.substring(0, LEN_SN).uppercase()
+//        val deviceId = DeviceUtils.getAndroidID()
+//        val hash = EncryptUtils.encryptSHA256ToString(deviceId.toByteArray())
+//        return hash.substring(0, LEN_SN).uppercase()
+        return RandomUtil.string(LEN_SN)
     }
 }

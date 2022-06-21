@@ -44,7 +44,7 @@
             android:layout_centerVertical="true"
             app:sb_background="@color/teal_800"
             app:sb_checked="true"
-            app:sb_checked_color="@color/teal_800"
+            app:sb_checked_color="@color/green_400"
             app:sb_checkline_width="0dp"
             app:sb_show_indicator="false"
             app:sb_uncheck_color="@color/teal_800" />
@@ -178,7 +178,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/mIvSererIcon"
             android:fontFamily="@font/space_grotesk_light"
-            android:text="@string/data_server"
+            android:text="@string/w3bstream_server"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
