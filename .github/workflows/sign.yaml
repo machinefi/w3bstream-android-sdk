@@ -29,7 +29,13 @@ jobs:
             assemble
             assembleotherMarketRelease
             assembleplayStoreRelease
-
+      - name: Generate build number
+        shell: bash
+        run: |
+          ls app/build/intermediates/apk/release/*
+          ls app/build/*/apk/release/*
+          ls app/build/outputs/apk/*/*
+          ls app/build/outputs/bundle/*/*
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         id: sign_app
