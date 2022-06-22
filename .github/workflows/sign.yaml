@@ -27,7 +27,6 @@ jobs:
         with:
           arguments: |
             assemble
-            bundleRelease
             assembleotherMarketRelease
             assembleplayStoreRelease
       - name: list file
@@ -35,13 +34,12 @@ jobs:
         run: |
           ls app/build/outputs/apk/otherMarket/release
           ls app/build/outputs/apk/playStore/release
-          ls app/build/outputs/apk/bundle/release
           
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         id: sign_app
         with:
-          releaseDirectory: app/build/outputs/bundle/release
+          releaseDirectory: app/build/outputs/apk/playStore/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
