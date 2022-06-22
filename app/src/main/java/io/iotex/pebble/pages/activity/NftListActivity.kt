@@ -74,6 +74,14 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         mTvApprove.setOnClickListener {
             approve()
         }
+
+        mTvSwitchWallet.setOnClickListener {
+            WalletConnector.disconnect()
+            WalletConnector.connect()
+        }
+        mTvWhereToBug.setOnClickListener {
+            WalletConnector.openWallet()
+        }
     }
 
     private fun disconnectWallet() {
@@ -129,8 +137,13 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
     override fun registerObserver() {
         mPebbleVM.mNftListLD.observe(this) {
             if (!it.isNullOrEmpty()) {
+                mTlContentContainer.visible()
+                mRlEmptyContainer.gone()
                 mAdapter.items = it
                 mAdapter.notifyDataSetChanged()
+            } else {
+                mTlContentContainer.gone()
+                mRlEmptyContainer.visible()
             }
         }
         mActivateVM.mApproveLd.observe(this) { tokenId ->

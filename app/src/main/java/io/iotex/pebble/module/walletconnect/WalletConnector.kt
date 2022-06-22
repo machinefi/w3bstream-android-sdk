@@ -13,7 +13,7 @@ object WalletConnector : Session.Callback {
         WalletConnectKitConfig(
             context = Utils.getApp(),
             bridgeUrl = "https://bridge.walletconnect.org",
-            appUrl = "https://github.com/iotexproject/wallect-connect-example",
+            appUrl = "",
             appName = "MetaPebble",
             appDescription = ""
         )
@@ -50,6 +50,10 @@ object WalletConnector : Session.Callback {
 
     fun disconnect() {
         walletConnectKit.removeSession()
+    }
+
+    fun openWallet() {
+        walletConnectKit.openWallet()
     }
 
     override fun onStatus(status: Session.Status) {

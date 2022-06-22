@@ -150,13 +150,13 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
             if (it) {
                 mLlActivated.visible()
                 mTvActivate.gone()
-                mTvTips.visible()
+                mTvTips.invisible()
                 mDevice?.let { device ->
                     mPebbleVM.queryPebbleStatus(device.imei)
                 }
             } else {
                 mLlActivated.gone()
-                mTvTips.gone()
+                mTvTips.visible()
                 mTvActivate.visible()
             }
         }

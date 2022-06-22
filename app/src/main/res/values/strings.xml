@@ -39,6 +39,7 @@
     <string name="no_nft">No NFTs yet</string>
     <string name="switch_wallet">Switch to Another Wallet</string>
     <string name="where_to_buy">Where to Buy</string>
+    <string name="where_to_claim">Where to Claim</string>
     <string name="meta_pebble_nft">Meta-Pebble NFT</string>
     <string name="contract_address">Contract address</string>
     <string name="sign_wallet_label">Sign in your wallet</string>
@@ -78,5 +79,7 @@
     <string name="w3bstream_server">W3bStream Server</string>
     <string name="set_up_data_server">Set up data server</string>
     <string name="please_activate_pebble">Please activate MetaPebble</string>
+    <string name="no_nft_yet">No NFTs yet</string>
+    <string name="prompt_network">Make sure you are connecting the wallet in the IoTeX Network.</string>
 
 </resources>

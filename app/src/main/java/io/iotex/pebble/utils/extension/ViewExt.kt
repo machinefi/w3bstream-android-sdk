@@ -23,6 +23,10 @@ fun View.visible() {
     visibility = View.VISIBLE
 }
 
+fun View.invisible() {
+    visibility = View.INVISIBLE
+}
+
 fun TextView.renderHighlightTips(
     source: String,
     normalStyle: Style,
