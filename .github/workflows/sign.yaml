@@ -27,7 +27,6 @@ jobs:
         with:
           arguments: |
             assemble
-            bundle
             assembleotherMarketRelease
             assembleplayStoreRelease
 
