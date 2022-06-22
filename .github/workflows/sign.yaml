@@ -24,16 +24,13 @@ jobs:
           
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2
-        
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      - name: Execute Gradle build
-        run: ./gradlew build
-        
-      - name: Build MarketRelease Release
-        run: ./gradlew assembleotherMarketRelease
-      - name: Build playStore Release
-        run: ./gradlew assembleplayStoreRelease
+        with:
+          arguments: |
+            spotlessCheck
+            assemble
+            bundle
+            assembleotherMarketRelease
+            assembleplayStoreRelease
 
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
