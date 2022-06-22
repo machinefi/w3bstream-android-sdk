@@ -23,6 +23,7 @@ android {
         targetSdk 32
         versionCode generateVersionCode()
         versionName "INTERNAL_BUILD (${generateVersionCode()})"
+        flavorDimensions "updater"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
