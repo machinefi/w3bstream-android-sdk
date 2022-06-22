@@ -30,7 +30,13 @@ jobs:
             bundleRelease
             assembleotherMarketRelease
             assembleplayStoreRelease
-            
+      - name: list file
+        shell: bash
+        run: |
+          ls app/build/outputs/apk/otherMarket/release
+          ls app/build/outputs/apk/playStore/release
+          ls app/build/outputs/apk/bundle/release
+          
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         id: sign_app
