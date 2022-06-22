@@ -29,12 +29,7 @@ jobs:
             assemble
             assembleotherMarketRelease
             assembleplayStoreRelease
-      - name: list file
-        shell: bash
-        run: |
-          ls app/build/outputs/apk/otherMarket/release
-          ls app/build/outputs/apk/playStore/release
-          
+            
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         id: sign_app
@@ -44,7 +39,7 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          BUILD_TOOLS_VERSION: "30.0.2"
+          #BUILD_TOOLS_VERSION: "30.0.2"
 
       - uses: actions/upload-artifact@v2
         with:
