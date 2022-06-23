@@ -21,19 +21,20 @@ jobs:
           java-version: "11"
           distribution: "temurin"
           cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-      #- name: Build MarketRelease Release
-      #  run: ./gradlew --stacktrace assembleotherMarketRelease
-      - name: Build playStore Release
-        run: ./gradlew --stacktrace assembleplayStoreRelease
-
+          
+      - name: Gradle Build Action
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            assemble
+            assembleotherMarketRelease
+            assembleplayStoreRelease
+            
       - uses: r0adkll/sign-android-release@v1
         name: Sign app APK
         id: sign_app
         with:
-          releaseDirectory: app/build/intermediates/apk/release
+          releaseDirectory: app/build/outputs/apk/playStore/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
