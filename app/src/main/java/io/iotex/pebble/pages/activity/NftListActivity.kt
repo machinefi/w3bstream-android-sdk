@@ -1,5 +1,7 @@
 package io.iotex.pebble.pages.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.SimpleItemAnimator
@@ -80,7 +82,10 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
             WalletConnector.connect()
         }
         mTvWhereToBug.setOnClickListener {
-            WalletConnector.openWallet()
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("iopay://io.iotex.iopay/open?action=web&url=https://metapebble.app/faucet")
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            applicationContext.startActivity(intent)
         }
     }
 

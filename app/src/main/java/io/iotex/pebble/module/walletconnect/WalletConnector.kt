@@ -52,10 +52,6 @@ object WalletConnector : Session.Callback {
         walletConnectKit.removeSession()
     }
 
-    fun openWallet() {
-        walletConnectKit.openWallet()
-    }
-
     override fun onStatus(status: Session.Status) {
         "WalletConnector : ${status}".i()
         when (status) {
