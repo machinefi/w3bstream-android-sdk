@@ -7,3 +7,5 @@ const val TEST_GRAPHQL = "https://iotex-testnet.chainanalytics.org/v1/graphql"
 const val CONTRACT_KEY_NFT = "nft"
 const val CONTRACT_KEY_REGISTER = "register"
 const val CONTRACT_KEY_REGISTER_RESULT = "register_result"
+
+const val URL_UPLOAD_DATA = "https://trustream-http.onrender.com/api/data"

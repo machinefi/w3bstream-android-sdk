@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.AppUtils
 import com.machinefi.core.base.BaseApplication
+import com.machinefi.metapebble.di.component.DaggerAppComponent
 import com.machinefi.metapebble.module.repository.AppRepo
 import io.reactivex.plugins.RxJavaPlugins
 import kotlinx.coroutines.GlobalScope
@@ -19,7 +20,7 @@ class PebbleApp : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
 
-        com.machinefi.metapebble.di.component.DaggerAppComponent.builder()
+        DaggerAppComponent.builder()
                 .build()
                 .inject(this)
 
@@ -32,10 +33,6 @@ class PebbleApp : BaseApplication() {
         if (AppUtils.isAppDebug()) {
             Timber.plant(Timber.DebugTree())
         }
-
-//        if (AppUtils.isAppForeground()) {
-//            MqttHelper.connect()
-//        }
 
         GlobalScope.launch {
             mAppRepo.queryContractsFromRemote()
