@@ -27,7 +27,6 @@ jobs:
         with:
           arguments: |
             assemble
-            assembleotherMarketRelease
             assembleplayStoreRelease
             
       - uses: r0adkll/sign-android-release@v1
