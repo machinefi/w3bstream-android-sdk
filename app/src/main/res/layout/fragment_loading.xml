@@ -30,7 +30,7 @@
         android:adjustViewBounds="true"
         android:src="@mipmap/diamond_02" />
 
-    <io.iotex.pebble.widget.LoadingProgress
+    <com.machinefi.metapebble.widget.LoadingProgress
         android:id="@+id/mLoadingProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

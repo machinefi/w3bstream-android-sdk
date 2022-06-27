@@ -42,7 +42,7 @@
         android:visibility="gone"
         android:orientation="vertical">
 
-        <io.iotex.pebble.widget.MaterialSwitch
+        <com.machinefi.metapebble.widget.MaterialSwitch
             android:id="@+id/mSwitch"
             android:layout_width="116dp"
             android:layout_height="wrap_content"

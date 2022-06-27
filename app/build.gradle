@@ -18,7 +18,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "io.iotex.pebble"
+        applicationId "com.machinefi.metapebble"
         minSdk 24
         targetSdk 32
         versionCode generateVersionCode()

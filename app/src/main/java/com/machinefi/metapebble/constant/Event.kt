@@ -1,0 +1,3 @@
+package com.machinefi.metapebble.constant
+
+class QueryActivateResultEvent
