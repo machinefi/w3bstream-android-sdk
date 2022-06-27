@@ -144,10 +144,12 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
                 mLlActivated.visible()
                 mTvActivate.gone()
                 mTvTips.invisible()
+                mTvTitle.text = getString(R.string.meta_pebble)
                 mDevice?.let { device ->
                     mPebbleVM.queryPebbleStatus(device.imei)
                 }
             } else {
+                mTvTitle.text = getString(R.string.device)
                 mLlActivated.gone()
                 mTvTips.visible()
                 mTvActivate.visible()

@@ -54,6 +54,7 @@
         android:layout_height="54dp"
         android:layout_above="@+id/mTvExternalLink"
         android:layout_centerHorizontal="true"
+        android:visibility="gone"
         android:layout_marginBottom="40dp"
         android:background="@drawable/shape_stroke_white_r100"
         android:fontFamily="@font/space_grotesk_bold"

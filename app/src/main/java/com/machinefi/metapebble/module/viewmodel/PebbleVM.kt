@@ -13,6 +13,7 @@ import com.machinefi.metapebble.module.repository.PebbleRepo
 import com.machinefi.metapebble.module.repository.UploadRepo
 import com.machinefi.metapebble.pages.binder.NftEntry
 import com.machinefi.metapebble.utils.extension.e
+import io.iotex.graphql.test.RecordQuery
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo: UploadRepo) : BaseViewModel() {
 
     val mDeviceListLD = MutableLiveData<List<DeviceEntry>>()
-    val mRecordListLD = MutableLiveData<List<RecordEntry>>()
+    val mRecordListLD = MutableLiveData<List<RecordQuery.Pebble_device_record>>()
     val mNftListLD = MutableLiveData<List<NftEntry>>()
     val mDeviceStatusLD = MutableLiveData<Boolean>()
 

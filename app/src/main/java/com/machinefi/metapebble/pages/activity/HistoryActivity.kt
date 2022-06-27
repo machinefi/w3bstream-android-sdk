@@ -10,6 +10,7 @@ import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.module.db.entries.RecordEntry
 import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.pages.binder.*
+import io.iotex.graphql.test.RecordQuery
 import kotlinx.android.synthetic.main.activity_history.*
 
 class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListener {
@@ -31,7 +32,7 @@ class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListe
     override fun initView(savedInstanceState: Bundle?) {
         val recordBinder = RecordItemBinder()
         val loadMoreBinder = LoadMoreBinder()
-        mAdapter.register(RecordEntry::class, recordBinder)
+        mAdapter.register(RecordQuery.Pebble_device_record::class, recordBinder)
         mAdapter.register(LoadMoreEntry::class, loadMoreBinder)
         mRvContent.adapter = mAdapter
         mLoadMoreDelegate = LoadMoreDelegate(mAdapter, this)

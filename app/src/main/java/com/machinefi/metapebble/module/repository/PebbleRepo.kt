@@ -5,17 +5,21 @@ import com.apollographql.apollo3.api.Optional
 import com.machinefi.metapebble.constant.CONTRACT_KEY_NFT
 import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.di.annocation.ApolloClientSmartContract
+import com.machinefi.metapebble.di.annocation.ApolloClientTest
 import com.machinefi.metapebble.module.db.AppDatabase
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
 import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import com.machinefi.metapebble.utils.AddressUtil
+import com.machinefi.metapebble.utils.extension.i
 import io.iotex.graphql.smartcontract.NftListQuery
+import io.iotex.graphql.test.RecordQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PebbleRepo @Inject constructor(
     @ApolloClientSmartContract val mApolloClient: ApolloClient,
+    @ApolloClientTest val mTestApolloClient: ApolloClient,
     val mAppRepo: AppRepo,
 ) {
 
@@ -35,6 +39,10 @@ class PebbleRepo @Inject constructor(
     suspend fun queryRecordList(imei: String, page: Int, pageSize: Int) =
         withContext(Dispatchers.IO) {
             AppDatabase.mInstance.recordDao().queryByImei(imei, page, pageSize)
+            val limitOpt = Optional.presentIfNotNull(pageSize)
+            val offsetOpt = Optional.presentIfNotNull((page - 1)*pageSize)
+            return@withContext mTestApolloClient.query(RecordQuery(imei, limitOpt, offsetOpt))
+                .execute().data?.pebble_device_record ?: emptyList()
         }
 
     suspend fun queryPebbleStatus(imei: String) =

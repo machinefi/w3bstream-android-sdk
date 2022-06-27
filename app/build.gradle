@@ -76,6 +76,10 @@ apollo {
         srcDir("src/main/graphql/smartcontract")
         packageName.set("io.iotex.graphql.smartcontract")
     }
+    service("test") {
+        srcDir("src/main/graphql/test")
+        packageName.set("io.iotex.graphql.test")
+    }
 }
 
 dependencies {

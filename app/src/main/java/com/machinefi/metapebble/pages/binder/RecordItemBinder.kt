@@ -9,17 +9,18 @@ import com.blankj.utilcode.util.TimeUtils
 import com.drakeet.multitype.ItemViewBinder
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.module.db.entries.RecordEntry
+import io.iotex.graphql.test.RecordQuery
 
-class RecordItemBinder: ItemViewBinder<RecordEntry, RecordItemBinder.VH>() {
+class RecordItemBinder: ItemViewBinder<RecordQuery.Pebble_device_record, RecordItemBinder.VH>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): VH {
         val view = inflater.inflate(R.layout.item_record, parent, false)
         return VH(view)
     }
 
-    override fun onBindViewHolder(holder: VH, item: RecordEntry) {
-        holder.mTvLat.text = "lat: ${item.lat}"
-        holder.mTvLong.text = "long: ${item.lng}"
+    override fun onBindViewHolder(holder: VH, item: RecordQuery.Pebble_device_record) {
+        holder.mTvLat.text = item.latitude
+        holder.mTvLong.text = item.longitude
         holder.mTvTime.text = TimeUtils.millis2String(item.timestamp.toLong())
     }
 
