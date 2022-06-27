@@ -16,7 +16,7 @@ class AboutActivity: BaseActivity(R.layout.activity_about) {
     override fun initView(savedInstanceState: Bundle?) {
         mTvImei.text = " ${mDevice?.imei}"
         mTvSn.text = "${mDevice?.sn}"
-        mTvVersion.text = "Developer Preview V0.1"
+        mTvVersion.text = "Developer Preview V1.0.0"
 //        mTvAddress.text = "${EncryptUtil.formatAddress(mDevice?.address ?: "").ellipsis(6, 8)}"
 
 //        mIvImeiCopy.setOnClickListener {
