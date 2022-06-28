@@ -63,7 +63,7 @@
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
             app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
-            android:text="iodhfiuehfioekpijdiouio" />
+            tools:text="iodhfiuehfioekpijdiouio" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView

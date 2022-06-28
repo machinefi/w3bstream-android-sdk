@@ -40,7 +40,7 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
     private fun polling(callback: () -> Unit) {
         if (!SPUtils.getInstance().getBoolean(SP_KEY_GPS_CHECKED, true)) return
         val interval = SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
-        Observable.interval(0, interval.toLong(), TimeUnit.SECONDS)
+        Observable.interval(0, interval.toLong(), TimeUnit.MINUTES)
             .doOnSubscribe {
                 mPollingComposite.add(it)
             }
@@ -86,19 +86,6 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             timestampStr.toString(),
             sensorData
         )
-
-//        doAsync {
-//            val record = RecordEntry(
-//                imei,
-//                lat.toString(),
-//                long.toString(),
-//                TimeUtils.getNowMills().toString()
-//            )
-//            AppDatabase.mInstance.recordDao()
-//                .insertIfNonExist(record)
-//        }
-//
-//        return data.toHexString()
     }
 
     fun uploadMetadata(device: DeviceEntry) {
