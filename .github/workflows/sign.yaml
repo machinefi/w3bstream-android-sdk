@@ -42,7 +42,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: Signed app bundle
+          name: meta-pebble-${{ github.ref_name }}.apk
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
 
       - name: Upload binaries to release
@@ -50,5 +50,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{steps.sign_app.outputs.signedReleaseFile}}
-          asset_name: meta-pebble.apk
+          asset_name: meta-pebble-${{ github.ref_name }}.apk
           tag: ${{ github.ref }}
