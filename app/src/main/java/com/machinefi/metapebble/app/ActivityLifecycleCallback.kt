@@ -57,7 +57,8 @@ class ActivityLifecycleCallback : ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity) {}
     override fun onActivityStopped(activity: Activity) {}
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        outState.putSerializable(STATE_KEY_DEVICE, PebbleStore.mDevice)
+        if (PebbleStore.mDevice != null)
+            outState.putSerializable(STATE_KEY_DEVICE, PebbleStore.mDevice)
     }
     override fun onActivityDestroyed(activity: Activity) {}
 }

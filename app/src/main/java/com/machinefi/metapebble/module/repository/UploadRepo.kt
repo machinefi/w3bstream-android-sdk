@@ -12,6 +12,7 @@ import com.machinefi.metapebble.module.http.SensorData
 import com.machinefi.metapebble.module.http.UploadDataBody
 import com.machinefi.metapebble.module.mqtt.EncryptUtil
 import com.machinefi.metapebble.utils.*
+import com.machinefi.metapebble.utils.extension.i
 import com.machinefi.metapebble.utils.extension.toHexByteArray
 import com.machinefi.metapebble.utils.extension.toHexString
 import io.reactivex.Observable
@@ -32,6 +33,7 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             val url = SPUtils.getInstance().getString(SP_KEY_SERVER_URL, URL_UPLOAD_DATA)
             if (url.isNullOrBlank()) return@polling
             val body = encryptData(imei) ?: return@polling
+            Gson().toJson(body).i()
             mApiService.uploadMetadata(url, body).compose(RxUtil.observableSchedulers()).subscribe()
         }
     }
