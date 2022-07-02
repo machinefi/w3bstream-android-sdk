@@ -18,6 +18,10 @@ import com.machinefi.metapebble.utils.extension.toHexString
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -33,8 +37,8 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             val url = SPUtils.getInstance().getString(SP_KEY_SERVER_URL, URL_UPLOAD_DATA)
             if (url.isNullOrBlank()) return@polling
             val body = encryptData(imei) ?: return@polling
-            Gson().toJson(body).i()
-            mApiService.uploadMetadata(url, body).compose(RxUtil.observableSchedulers()).subscribe()
+            val requestBody = Gson().toJson(body).toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+            mApiService.uploadMetadata(url, requestBody).compose(RxUtil.observableSchedulers()).subscribe()
         }
     }
 
@@ -71,7 +75,9 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
             1024,
             lat.toString(),
             long.toString(),
-            random.toString())
+            random.toString(),
+            timestampStr.toLong()
+        )
         val dataByteArray = Gson().toJson(sensorData).toByteArray()
         val typeData = Integer.toHexString(0).toHexByteArray()
         val result = EncryptUtil.concat(
@@ -83,9 +89,7 @@ class UploadRepo @Inject constructor(val mApiService: ApiService) {
         return UploadDataBody(
             imei,
             KeystoreUtil.getPubKey() ?: "",
-            0,
             signature.toHexString(),
-            timestampStr.toString(),
             sensorData
         )
     }

@@ -4,6 +4,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
+import com.fasterxml.jackson.databind.util.JSONPObject
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Observer

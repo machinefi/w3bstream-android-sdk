@@ -2,3 +2,4 @@ rootProject.name = "pebble-android"
 include ':app'
 include ':core'
 include ':walletconnect'
+include ':pebblekit'

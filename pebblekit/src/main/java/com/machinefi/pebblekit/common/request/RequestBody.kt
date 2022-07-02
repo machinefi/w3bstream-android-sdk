@@ -1,21 +1,21 @@
-package com.machinefi.metapebble.module.http
+package com.machinefi.pebblekit.common.request
 
 import java.io.Serializable
 
-data class SignPebbleBody(
+internal data class SignPebbleBody(
     val imei: String,
     val sn: String,
     val pubkey: String
 )
 
-data class UploadDataBody(
+internal data class UploadDataBody(
     val imei: String,
     val pubKey: String,
     val signature: String,
     val data: SensorData
 ) : Serializable
 
-data class SensorData(
+internal data class SensorData(
     val snr: Int,
     val latitude: String,
     val longitude: String,
