@@ -4,6 +4,8 @@ import com.blankj.utilcode.util.AppUtils
 import com.google.gson.GsonBuilder
 import com.machinefi.pebblekit.common.request.ApiService
 import com.machinefi.pebblekit.common.request.interceptor.GlobalInterceptor
+import com.machinefi.pebblekit.repository.device.DeviceRepository
+import com.machinefi.pebblekit.repository.sign.SignRepository
 import com.machinefi.pebblekit.repository.upload.UploadRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,7 +37,7 @@ internal class PebbleKitModule(config: PebbleKitConfig) {
     }
 
     private val apiService by lazy {
-        Retrofit.Builder().baseUrl("")
+        Retrofit.Builder().baseUrl(config.host)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
@@ -43,9 +45,15 @@ internal class PebbleKitModule(config: PebbleKitConfig) {
     }
 
     val uploadRepository by lazy {
-        UploadRepository(apiService)
+        UploadRepository(apiService, config)
     }
 
+    val deviceRepository by lazy {
+        DeviceRepository()
+    }
 
+    val signRepository by lazy {
+        SignRepository(apiService)
+    }
 
 }

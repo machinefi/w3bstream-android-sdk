@@ -1,6 +1,5 @@
 package com.machinefi.metapebble.utils
 
-import com.iotex.pebble.utils.KeystoreUtil
 import com.machinefi.metapebble.module.db.AppDatabase
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
 import kotlinx.coroutines.Dispatchers

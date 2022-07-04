@@ -1,10 +1,10 @@
 package com.machinefi.pebblekit.uitls.extension
 
-import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
-import java.lang.Exception
+import org.web3j.utils.Numeric
 
-fun String.isJsonValid(): Boolean {
+internal fun String.isJsonValid(): Boolean {
     return try {
         Gson().fromJson("", Any::class.java)
         true
@@ -12,3 +12,11 @@ fun String.isJsonValid(): Boolean {
         false
     }
 }
+
+internal fun String.toast() {
+    ToastUtils.showShort(this)
+}
+
+internal fun String.cleanHexPrefix(): String = Numeric.cleanHexPrefix(this)
+
+internal fun String.toHexByteArray(): ByteArray = Numeric.hexStringToByteArray(this)

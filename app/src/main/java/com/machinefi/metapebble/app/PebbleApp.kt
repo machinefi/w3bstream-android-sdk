@@ -5,6 +5,7 @@ import androidx.multidex.MultiDex
 import com.blankj.utilcode.util.AppUtils
 import com.machinefi.core.base.BaseApplication
 import com.machinefi.metapebble.di.component.DaggerAppComponent
+//import com.machinefi.metapebble.di.component.DaggerAppComponent
 import com.machinefi.metapebble.module.repository.AppRepo
 import io.reactivex.plugins.RxJavaPlugins
 import kotlinx.coroutines.GlobalScope
@@ -37,6 +38,7 @@ class PebbleApp : BaseApplication() {
         GlobalScope.launch {
             mAppRepo.queryContractsFromRemote()
         }
+
     }
 
     override fun attachBaseContext(base: Context) {

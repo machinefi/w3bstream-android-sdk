@@ -9,6 +9,7 @@ import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.constant.SP_KEY_GPS_CHECKED
 import com.machinefi.metapebble.constant.SP_KEY_GPS_PRECISION
 import com.machinefi.metapebble.constant.SP_KEY_SUBMIT_FREQUENCY
+import com.machinefi.metapebble.module.manager.PebbleManager
 import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.utils.GPS_PRECISION
 import com.machinefi.metapebble.utils.INTERVAL_SEND_DATA
@@ -66,6 +67,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                 .setOptions(mSubmitFrequencyList)
                 .setPositiveButton(getString(R.string.confirm)) {
                     mTvFrequency.text = it.label
+                    PebbleManager.pebbleKit.uploadFrequency(it.value)
                     SPUtils.getInstance().put(SP_KEY_SUBMIT_FREQUENCY, it.value)
                     mPebbleVM.resumeUploading()
                 }

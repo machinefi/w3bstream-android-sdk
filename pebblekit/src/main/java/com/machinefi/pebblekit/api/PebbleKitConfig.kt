@@ -1,5 +1,6 @@
 package com.machinefi.pebblekit.api
 
 class PebbleKitConfig(
-    val w3bStreamServer: String
+    val host: String,
+    val w3bStreamServer: String,
 )

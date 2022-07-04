@@ -12,14 +12,5 @@ internal data class UploadDataBody(
     val imei: String,
     val pubKey: String,
     val signature: String,
-    val data: SensorData
+    val data: Any
 ) : Serializable
-
-internal data class SensorData(
-    val snr: Int,
-    val latitude: String,
-    val longitude: String,
-    val random: String,
-    val timestamp: Long
-) : Serializable
-

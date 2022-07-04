@@ -1,9 +1,9 @@
-package com.machinefi.metapebble.utils
+package com.machinefi.pebblekit.uitls
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import com.machinefi.metapebble.utils.extension.cleanHexPrefix
-import com.machinefi.metapebble.utils.extension.toHexString
+import com.machinefi.pebblekit.uitls.extension.cleanHexPrefix
+import com.machinefi.pebblekit.uitls.extension.toHexString
 import org.bouncycastle.asn1.DERBitString
 import org.bouncycastle.asn1.DERSequence
 import org.web3j.abi.TypeEncoder
@@ -15,10 +15,10 @@ import java.security.KeyStore
 import java.security.Signature
 import java.security.spec.ECGenParameterSpec
 
-const val ANDROID_KEY_STORE = "AndroidKeyStore"
-const val PEBBLE_KEYSTORE_ALIAS = "pebble_key"
+internal const val ANDROID_KEY_STORE = "AndroidKeyStore"
+internal const val PEBBLE_KEYSTORE_ALIAS = "pebble_key"
 
-object KeystoreUtil {
+internal object KeystoreUtil {
 
     fun createPk() {
         val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
@@ -89,4 +89,5 @@ object KeystoreUtil {
         val subjectPublicKey = DERSequence.getInstance(pubKeyEncoded).getObjectAt(1) as DERBitString
         return Numeric.prependHexPrefix(subjectPublicKey.bytes.toHexString().substring(4))
     }
+
 }

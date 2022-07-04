@@ -9,7 +9,7 @@ import retrofit2.http.Url
 internal interface ApiService {
 
     @POST("meta/sign")
-    fun signPebble(@Body request: SignPebbleBody): Observable<BaseResp<SignPebbleResp>>
+    fun signPebble(@Body request: SignPebbleBody): Observable<BaseResp<SignPebbleResult>>
 
     @POST
     fun uploadMetadata(@Url url: String, @Body request: RequestBody): Observable<BaseResp<Nothing>>

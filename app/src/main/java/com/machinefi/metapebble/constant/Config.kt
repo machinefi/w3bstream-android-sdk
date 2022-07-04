@@ -9,3 +9,5 @@ const val CONTRACT_KEY_REGISTER = "register"
 const val CONTRACT_KEY_REGISTER_RESULT = "register_result"
 
 const val URL_UPLOAD_DATA = "https://trustream-http.onrender.com/api/data"
+
+const val HTTP_HOST = "https://auth.metapebble.app"

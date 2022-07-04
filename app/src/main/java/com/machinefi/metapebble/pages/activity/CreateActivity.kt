@@ -5,13 +5,17 @@ import androidx.lifecycle.lifecycleScope
 import com.machinefi.core.base.BaseActivity
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.constant.PebbleStore
+import com.machinefi.metapebble.module.db.AppDatabase
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
+import com.machinefi.metapebble.module.manager.PebbleManager
 import com.machinefi.metapebble.pages.fragment.LoadingFragment
 import com.machinefi.metapebble.utils.DeviceHelper
 import com.machinefi.metapebble.utils.extension.loadGif
 import com.machinefi.metapebble.utils.extension.toast
 import kotlinx.android.synthetic.main.activity_create.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.anko.startActivity
 
 class CreateActivity : BaseActivity(R.layout.activity_create) {
@@ -43,8 +47,14 @@ class CreateActivity : BaseActivity(R.layout.activity_create) {
     private fun createDevice() {
         lifecycleScope.launch {
             runCatching {
-                val device = DeviceHelper.createDevice()
-                mDevice = device
+                val d = PebbleManager.pebbleKit.createDevice()
+                DeviceEntry(d.imei, d.sn, d.pubKey, "").also {
+                    mDevice = it
+                    PebbleStore.setDevice(it)
+                    withContext(Dispatchers.IO) {
+                        AppDatabase.mInstance.deviceDao().insertIfNonExist(it)
+                    }
+                }
             }.onSuccess {
                 mLoading.complete()
             }.onFailure {

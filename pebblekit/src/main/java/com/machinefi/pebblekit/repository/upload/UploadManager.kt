@@ -1,9 +1,12 @@
 package com.machinefi.pebblekit.repository.upload
 
+internal const val INTERVAL_SEND_DATA = 5
+
 internal interface UploadManager {
 
-    suspend fun startUploading(hook: () -> String)
+    fun startUploading(w3bStreamServer: String, hook: () -> String)
 
-    suspend fun stopUploading()
+    fun stopUploading()
 
+    fun uploadFrequency(frequency: Int)
 }

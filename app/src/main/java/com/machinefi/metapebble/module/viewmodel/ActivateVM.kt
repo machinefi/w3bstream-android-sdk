@@ -2,7 +2,7 @@ package com.machinefi.metapebble.module.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.iotex.pebble.utils.KeystoreUtil
+import com.machinefi.metapebble.utils.KeystoreUtil
 import com.machinefi.core.base.BaseViewModel
 import com.machinefi.metapebble.constant.CONTRACT_KEY_NFT
 import com.machinefi.metapebble.constant.CONTRACT_KEY_REGISTER
@@ -10,15 +10,14 @@ import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.constant.QueryActivateResultEvent
 import com.machinefi.metapebble.module.db.AppDatabase
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
-import com.machinefi.metapebble.module.http.ErrorHandleSubscriber
-import com.machinefi.metapebble.module.http.SignPebbleBody
-import com.machinefi.metapebble.module.http.SignPebbleResp
+import com.machinefi.metapebble.module.manager.PebbleManager
 import com.machinefi.metapebble.module.repository.ActivateRepo
 import com.machinefi.metapebble.module.repository.AppRepo
 import com.machinefi.metapebble.module.walletconnect.FunctionSignData
 import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import com.machinefi.metapebble.utils.extension.e
 import com.machinefi.metapebble.utils.extension.toHexByteArray
+import com.machinefi.pebblekit.common.request.SignPebbleResult
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +35,7 @@ class ActivateVM @Inject constructor(
     val mAppRepo: AppRepo,
 ) : BaseViewModel() {
 
-    val mSignDeviceLD = MutableLiveData<SignPebbleResp>()
+    val mSignDeviceLD = MutableLiveData<SignPebbleResult>()
     val mIsActivatedLd = MutableLiveData<Boolean>()
     val mApproveLd = MutableLiveData<String>()
     val mActivateLd = MutableLiveData<String>()
@@ -44,23 +43,14 @@ class ActivateVM @Inject constructor(
     override fun useEventBus() = true
 
     fun signDevice(device: DeviceEntry) {
-        val body = SignPebbleBody(device.imei, device.sn, device.pubKey)
-        mActivateRepo.signDevice(body)
-            .doOnSubscribe {
-                addDisposable(it)
-            }
-            .subscribe(object : ErrorHandleSubscriber<SignPebbleResp>() {
-                override fun onSuccess(t: SignPebbleResp) {
-                    viewModelScope.launch {
-                        mSignDeviceLD.postValue(t)
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                    super.onError(e)
-                    mSignDeviceLD.postValue(null)
-                }
-            })
+        val errorHandler = CoroutineExceptionHandler { _, exception ->
+            exception.message?.e()
+            mSignDeviceLD.postValue(null)
+        }
+        viewModelScope.launch(errorHandler) {
+            val result = PebbleManager.pebbleKit.sign(device.imei, device.sn, device.pubKey)
+            mSignDeviceLD.postValue(result)
+        }
     }
 
     fun approveRegistration(tokenId: String) {

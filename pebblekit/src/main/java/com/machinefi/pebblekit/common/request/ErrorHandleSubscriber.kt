@@ -1,10 +1,10 @@
-package com.machinefi.metapebble.module.http
+package com.machinefi.pebblekit.common.request
 
 import com.blankj.utilcode.util.Utils
 import com.google.gson.JsonIOException
 import com.google.gson.JsonParseException
-import com.machinefi.metapebble.R
-import com.machinefi.metapebble.utils.extension.toast
+import com.machinefi.pebblekit.R
+import com.machinefi.pebblekit.uitls.extension.toast
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.json.JSONException
@@ -14,7 +14,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.text.ParseException
 
-abstract class ErrorHandleSubscriber<T> : Observer<BaseResp<T>> {
+internal abstract class ErrorHandleSubscriber<T> : Observer<BaseResp<T>> {
 
     override fun onComplete() {
     }
@@ -65,7 +65,7 @@ abstract class ErrorHandleSubscriber<T> : Observer<BaseResp<T>> {
             }
         } else {
             if (t.error != null) {
-                onFail(t.error.code)
+                onFail(t.error.code, t.error.message)
                 t.error.message.toast()
             }
         }
@@ -73,7 +73,7 @@ abstract class ErrorHandleSubscriber<T> : Observer<BaseResp<T>> {
 
     abstract fun onSuccess(t: T)
 
-    open fun onFail(code: Int) {}
+    open fun onFail(code: Int, msg: String) {}
 
 
 }

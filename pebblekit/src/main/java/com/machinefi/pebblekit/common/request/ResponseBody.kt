@@ -1,6 +1,6 @@
 package com.machinefi.pebblekit.common.request
 
-internal data class SignPebbleResp(
+data class SignPebbleResult(
     val imei: String,
     val sn: String,
     val timestamp: Long,

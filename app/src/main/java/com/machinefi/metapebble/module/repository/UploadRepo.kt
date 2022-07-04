@@ -1,108 +1,59 @@
 package com.machinefi.metapebble.module.repository
 
-import android.annotation.SuppressLint
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
-import com.iotex.pebble.utils.KeystoreUtil
-import com.machinefi.metapebble.constant.*
-import com.machinefi.metapebble.module.db.entries.DeviceEntry
-import com.machinefi.metapebble.module.http.ApiService
-import com.machinefi.metapebble.module.http.SensorData
-import com.machinefi.metapebble.module.http.UploadDataBody
-import com.machinefi.metapebble.module.mqtt.EncryptUtil
-import com.machinefi.metapebble.utils.*
-import com.machinefi.metapebble.utils.extension.i
-import com.machinefi.metapebble.utils.extension.toHexByteArray
-import com.machinefi.metapebble.utils.extension.toHexString
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import com.machinefi.metapebble.constant.SP_KEY_GPS_PRECISION
+import com.machinefi.metapebble.constant.SP_KEY_SERVER_URL
+import com.machinefi.metapebble.constant.URL_UPLOAD_DATA
+import com.machinefi.metapebble.module.manager.PebbleManager
+import com.machinefi.metapebble.utils.GPSUtil
+import com.machinefi.metapebble.utils.GPS_PRECISION
+import com.machinefi.metapebble.utils.RandomUtil
+import java.io.Serializable
 import java.math.BigDecimal
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import kotlin.math.log10
 
-class UploadRepo @Inject constructor(val mApiService: ApiService) {
+class UploadRepo @Inject constructor() {
 
-    private var mPollingComposite = CompositeDisposable()
-
-    @SuppressLint("CheckResult")
-    fun uploadMetadataViaHttps(imei: String) {
-        polling {
-            val url = SPUtils.getInstance().getString(SP_KEY_SERVER_URL, URL_UPLOAD_DATA)
-            if (url.isNullOrBlank()) return@polling
-            val body = encryptData(imei) ?: return@polling
-            val requestBody = Gson().toJson(body).toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-            mApiService.uploadMetadata(url, requestBody).compose(RxUtil.observableSchedulers()).subscribe()
-        }
-    }
-
-    @SuppressLint("CheckResult")
-    private fun polling(callback: () -> Unit) {
-        if (!SPUtils.getInstance().getBoolean(SP_KEY_GPS_CHECKED, true)) return
-        val interval = SPUtils.getInstance().getInt(SP_KEY_SUBMIT_FREQUENCY, INTERVAL_SEND_DATA)
-        Observable.interval(0, interval.toLong(), TimeUnit.MINUTES)
-            .doOnSubscribe {
-                mPollingComposite.add(it)
+    fun startUploadMetadata() {
+        val location = GPSUtil.getLocation() ?: return
+        val url = SPUtils.getInstance().getString(SP_KEY_SERVER_URL, URL_UPLOAD_DATA)
+        PebbleManager.pebbleKit.startUploading(url) {
+            val gpsPrecision = SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
+            val origin = 7 - log10(gpsPrecision.toDouble()).toInt()
+            val decimal = if (origin >= 0) {
+                origin
+            } else {
+                0
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                callback.invoke()
-            }
-    }
-
-    private fun encryptData(imei: String): UploadDataBody? {
-        val location = GPSUtil.getLocation() ?: return null
-        val gpsPrecision = SPUtils.getInstance().getInt(SP_KEY_GPS_PRECISION, GPS_PRECISION)
-        val origin = 7 - log10(gpsPrecision.toDouble()).toInt()
-        val decimal = if (origin >= 0) {
-            origin
-        } else {
-            0
+            val lat = GPSUtil.encodeLocation(location.latitude, decimal)
+            val long = GPSUtil.encodeLocation(location.longitude, decimal)
+            val random = RandomUtil.integer(10000, 99999)
+            val bd = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3))
+            val timestampStr = bd.setScale(0, BigDecimal.ROUND_DOWN)
+            val sensorData = SensorData(
+                1024,
+                lat.toString(),
+                long.toString(),
+                random.toString(),
+                timestampStr.toLong()
+            )
+            return@startUploading Gson().toJson(sensorData)
         }
-        val lat = GPSUtil.encodeLocation(location.latitude, decimal)
-        val long = GPSUtil.encodeLocation(location.longitude, decimal)
-        val bd = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3))
-        val timestampStr = bd.setScale(0, BigDecimal.ROUND_DOWN)
-        val timestampBytes = Integer.toHexString(timestampStr.toInt()).toHexByteArray()
-        val random = RandomUtil.integer(10000, 99999)
-        val sensorData = SensorData(
-            1024,
-            lat.toString(),
-            long.toString(),
-            random.toString(),
-            timestampStr.toLong()
-        )
-        val dataByteArray = Gson().toJson(sensorData).toByteArray()
-        val typeData = Integer.toHexString(0).toHexByteArray()
-        val result = EncryptUtil.concat(
-            EncryptUtil.setLength(typeData, 4),
-            dataByteArray,
-            EncryptUtil.setLength(timestampBytes, 4)
-        )
-        val signature = KeystoreUtil.signData(result).toHexByteArray()
-        return UploadDataBody(
-            imei,
-            KeystoreUtil.getPubKey() ?: "",
-            signature.toHexString(),
-            sensorData
-        )
-    }
-
-    fun uploadMetadata(device: DeviceEntry) {
-        stopUploadMetadata()
-        mPollingComposite = CompositeDisposable()
-        uploadMetadataViaHttps(device.imei)
     }
 
     fun stopUploadMetadata() {
-        mPollingComposite.dispose()
-        mPollingComposite.clear()
+        PebbleManager.pebbleKit.stopUploading()
     }
 
 }
+
+data class SensorData(
+    val snr: Int,
+    val latitude: String,
+    val longitude: String,
+    val random: String,
+    val timestamp: Long
+) : Serializable

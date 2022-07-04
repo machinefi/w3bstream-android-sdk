@@ -8,7 +8,6 @@ import com.machinefi.core.base.BaseViewModel
 import com.machinefi.metapebble.module.db.entries.DEVICE_POWER_OFF
 import com.machinefi.metapebble.module.db.entries.DEVICE_POWER_ON
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
-import com.machinefi.metapebble.module.db.entries.RecordEntry
 import com.machinefi.metapebble.module.repository.PebbleRepo
 import com.machinefi.metapebble.module.repository.UploadRepo
 import com.machinefi.metapebble.pages.binder.NftEntry
@@ -95,15 +94,14 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo:
 
     private fun uploadData(device: DeviceEntry) {
         viewModelScope.launch {
-            mUploadRepo.uploadMetadata(device)
+            mUploadRepo.startUploadMetadata()
             device.power = DEVICE_POWER_ON
             mPebbleRepo.updateDevice(device)
         }
     }
 
     fun resumeUploading() {
-        viewModelScope.launch {
-            mUploadRepo.stopUploadMetadata()
-        }
+        mUploadRepo.stopUploadMetadata()
+        mUploadRepo.startUploadMetadata()
     }
 }
