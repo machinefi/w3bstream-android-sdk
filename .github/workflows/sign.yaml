@@ -39,12 +39,16 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
           BUILD_TOOLS_VERSION: "30.0.2"
-
-      - uses: actions/upload-artifact@v2
+            
+      - uses: keithweaver/aws-s3-github-action@v1.0.0
         with:
-          name: meta-pebble-${{ github.ref_name }}.apk
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
-
+          command: cp
+          source: ${{steps.sign_app.outputs.signedReleaseFile}}
+          destination: s3://pebble-ota/meta-pebble/meta-pebble-${{ github.ref_name }}.apk
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ap-east-1
+          
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
