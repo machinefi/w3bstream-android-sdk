@@ -113,7 +113,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         }
         AppUtils.registerAppStatusChangedListener(object : Utils.OnAppStatusChangedListener {
             override fun onForeground(activity: Activity?) {
-                if (WalletConnector.isConnected() && mNeedResponse) {
+                if ( mNeedResponse) {
                     mNeedResponse = false
                     this@DevicePanelActivity.startActivity<NftListActivity>()
                 }

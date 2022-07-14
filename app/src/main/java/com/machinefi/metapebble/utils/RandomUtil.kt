@@ -10,9 +10,9 @@ object RandomUtil {
     /**
      * Generate random numbers within a specified range
      */
-    fun integer(scopeMin: Int, scoeMax: Int): Int {
+    fun integer(scopeMin: Int, scopeMax: Int): Int {
         val random = Random()
-        return random.nextInt(scoeMax) % (scoeMax - scopeMin + 1) + scopeMin
+        return random.nextInt(scopeMax) % (scopeMax - scopeMin + 1) + scopeMin
     }
 
     /**

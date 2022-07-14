@@ -32,7 +32,7 @@ class HistoryActivity : BaseActivity(R.layout.activity_history), OnLoadMoreListe
     override fun initView(savedInstanceState: Bundle?) {
         val recordBinder = RecordItemBinder()
         val loadMoreBinder = LoadMoreBinder()
-        mAdapter.register(RecordQuery.Pebble_device_record::class, recordBinder)
+        mAdapter.register(RecordEntry::class, recordBinder)
         mAdapter.register(LoadMoreEntry::class, loadMoreBinder)
         mRvContent.adapter = mAdapter
         mLoadMoreDelegate = LoadMoreDelegate(mAdapter, this)

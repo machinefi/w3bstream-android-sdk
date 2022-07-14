@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.constant.SP_KEY_SERVER_URL
+import com.machinefi.metapebble.constant.URL_UPLOAD_DATA
 
 class ServerDialog(context: Context): BaseDialog(context, R.layout.dialog_server) {
 

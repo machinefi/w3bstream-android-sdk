@@ -57,12 +57,13 @@
 
         <TextView
             android:id="@+id/mTvWalletAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/space_grotesk_bold"
             android:textColor="@color/green_400"
             android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
             app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
             tools:text="iodhfiuehfioekpijdiouio" />
@@ -116,15 +117,16 @@
 
     <TextView
         android:id="@+id/mTvContract"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mTvAddressLabel"
         android:layout_marginStart="42dp"
         android:layout_marginTop="5dp"
+        android:layout_marginEnd="18dp"
         android:fontFamily="@font/space_grotesk_light"
-        tools:text="0X78493t8904380r9eiriijkj"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        tools:text="0X78493t8904380r9eiriijkj" />
 
     <ImageView
         android:id="@+id/mIvMask"

@@ -2,17 +2,17 @@ package com.machinefi.metapebble.pages.activity
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.machinefi.core.base.BaseActivity
 import com.machinefi.metapebble.R
-import com.machinefi.metapebble.constant.PebbleStore
-import com.machinefi.metapebble.constant.SP_KEY_GPS_CHECKED
-import com.machinefi.metapebble.constant.SP_KEY_GPS_PRECISION
-import com.machinefi.metapebble.constant.SP_KEY_SUBMIT_FREQUENCY
+import com.machinefi.metapebble.constant.*
 import com.machinefi.metapebble.module.manager.PebbleManager
 import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.utils.GPS_PRECISION
 import com.machinefi.metapebble.utils.INTERVAL_SEND_DATA
+import com.machinefi.metapebble.utils.extension.gone
+import com.machinefi.metapebble.utils.extension.visible
 import com.machinefi.metapebble.widget.PickerDialog
 import com.machinefi.metapebble.widget.PickerItemData
 import com.machinefi.metapebble.widget.ServerDialog
@@ -63,13 +63,15 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             if (curItem != null) {
                 picker.setCurrentItem(curItem)
             }
-            picker.setTitle(getString(R.string.submit_frequency))
+            picker.setTitle(getString(R.string.gps_collection_interval))
                 .setOptions(mSubmitFrequencyList)
                 .setPositiveButton(getString(R.string.confirm)) {
                     mTvFrequency.text = it.label
                     PebbleManager.pebbleKit.uploadFrequency(it.value)
                     SPUtils.getInstance().put(SP_KEY_SUBMIT_FREQUENCY, it.value)
-                    mPebbleVM.resumeUploading()
+                    mDevice?.imei?.let {
+                        mPebbleVM.resumeUploading(it)
+                    }
                 }
                 .show()
         }
@@ -93,9 +95,36 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                 .show()
         }
 
-        mRlServer.setOnClickListener {
-            ServerDialog(this).show()
+        val serverUrl = SPUtils.getInstance().getString(SP_KEY_SERVER_URL)
+        if (serverUrl.isNullOrBlank()) {
+            mLlReset.visible()
+            mEtServer.visible()
+            mLlServer.gone()
+        } else {
+            mLlReset.gone()
+            mEtServer.gone()
+            mLlServer.visible()
         }
+        mLlReset.setOnClickListener {
+            val url = mEtServer.text.toString()
+            if (RegexUtils.isURL(url)) {
+                mTvError.gone()
+                mEtServer.gone()
+                mLlReset.gone()
+                mLlServer.visible()
+                SPUtils.getInstance().put(SP_KEY_SERVER_URL, url)
+                mTvServer.text = url
+            } else {
+                mTvError.visible()
+            }
+        }
+        mIvReset.setOnClickListener {
+            mLlServer.gone()
+            mTvError.gone()
+            mEtServer.visible()
+            mEtServer.setText(serverUrl)
+        }
+
     }
 
     private fun getFrequencyCurrentItem(): PickerItemData? {

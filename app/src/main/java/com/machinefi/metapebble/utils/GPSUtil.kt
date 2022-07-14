@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.*
 import android.os.Bundle
+import android.util.Log
 import com.blankj.utilcode.util.Utils
 import com.machinefi.metapebble.utils.extension.e
 import com.machinefi.metapebble.utils.extension.formatDecimal
@@ -99,6 +100,10 @@ object GPSUtil {
     fun encodeLocation(value: Double, decimal: Int): Long {
         val v = value.formatDecimal(decimal)
         return BigDecimal(v).multiply(BigDecimal.TEN.pow(7)).toLong()
+    }
+
+    fun decodeLocation(value: Long): String {
+        return BigDecimal(value).div(BigDecimal.TEN.pow(7)).toPlainString()
     }
 
 }

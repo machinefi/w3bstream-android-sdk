@@ -1,6 +1,7 @@
 package com.machinefi.pebblekit.repository.upload
 
 import android.annotation.SuppressLint
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
@@ -60,7 +61,6 @@ internal class UploadRepository(
             val imei = SPUtils.getInstance(SP_NAME).getString(SP_KEY_IMEI)
             if (imei.isNullOrBlank()) return@polling
             val body = UploadDataBody(imei, KeystoreUtil.getPubKey() ?: "", signature, data)
-            Gson().toJson(body)
             val requestBody =
                 Gson().toJson(body)
                     .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())

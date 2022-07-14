@@ -39,10 +39,6 @@ class PebbleRepo @Inject constructor(
     suspend fun queryRecordList(imei: String, page: Int, pageSize: Int) =
         withContext(Dispatchers.IO) {
             AppDatabase.mInstance.recordDao().queryByImei(imei, page, pageSize)
-            val limitOpt = Optional.presentIfNotNull(pageSize)
-            val offsetOpt = Optional.presentIfNotNull((page - 1)*pageSize)
-            return@withContext mTestApolloClient.query(RecordQuery(imei, limitOpt, offsetOpt))
-                .execute().data?.pebble_device_record ?: emptyList()
         }
 
     suspend fun queryPebbleStatus(imei: String) =

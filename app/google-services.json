@@ -1,221 +1,40 @@
 {
   "project_info": {
-    "project_number": "979030768255",
-    "firebase_url": "https://iopay-bd445.firebaseio.com",
-    "project_id": "iopay-bd445",
-    "storage_bucket": "iopay-bd445.appspot.com"
+    "project_number": "827858325222",
+    "project_id": "meta-pebble",
+    "storage_bucket": "meta-pebble.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:03d15c140cdaee12",
+        "mobilesdk_app_id": "1:827858325222:android:8ebc16ed08e70f17f37527",
         "android_client_info": {
-          "package_name": "io.iotex.iopay"
+          "package_name": "com.machinefi.metapebble"
         }
       },
       "oauth_client": [
         {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
+          "client_id": "827858325222-0javo08rvhcb7tqf35h4cgc5467qev5s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
+          "current_key": "AIzaSyDO1tdTzJKVYTYjPV7bqDP2-lEsvdctDJg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
+              "client_id": "827858325222-0javo08rvhcb7tqf35h4cgc5467qev5s.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
+              "client_id": "827858325222-497alr2gs931todj91s8ps3h53npdqbc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:cf2da8412e1bb2b5",
-        "android_client_info": {
-          "package_name": "io.iotex.iopay.beta"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:34b8322487122898479d4a",
-        "android_client_info": {
-          "package_name": "io.iotex.iopay.gp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:3db9f9b3a81859db",
-        "android_client_info": {
-          "package_name": "io.iotex.iopay.prod"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:a27809cac54594bb479d4a",
-        "android_client_info": {
-          "package_name": "io.iotex.iopay_2.beta"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:979030768255:android:610abbaa06bd1874479d4a",
-        "android_client_info": {
-          "package_name": "io.iotex.pebble"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAi6GA6gV30SOWnyr3bHeSXnlO6FDdo6Bk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "979030768255-5fnuls094qcafetj88cdman81viggo0p.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "979030768255-ib0diqu3tescc206765h4hjtilfs31nv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "io.iotex.iopay2.beta"
+                "bundle_id": "com.machinefi.metapebble.dev"
               }
             }
           ]

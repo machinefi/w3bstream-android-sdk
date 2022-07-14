@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/teal_800</item>
-        <item name="colorPrimaryDark">@color/teal_800</item>
-        <item name="colorAccent">@color/teal_800</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="android:buttonStyle">@style/AppTheme.buttonStyle</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
-        <item name="colorControlActivated">#FF4633</item>
-        <item name="colorControlNormal">#EEEEEE</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
@@ -48,7 +48,7 @@
     <style name="SwitchTheme" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/white</item>
         <item name="colorSwitchThumbNormal">@color/white_alpha_30</item>
-        <item name="colorControlActivated">@color/purple_200</item>
+        <item name="colorControlActivated">@color/green_400</item>
         <item name="fontFamily">@font/space_grotesk_bold</item>
         <item name="android:fontFamily">@font/space_grotesk_bold</item>
         <item name="android:textStyle">bold</item>

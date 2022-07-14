@@ -55,6 +55,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/mTvFrom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -62,7 +63,7 @@
             android:includeFontPadding="false"
             android:textColor="@color/green_400"
             android:textSize="16sp"
-            android:text="iodhfiuehfioekpijdijjdifjioefi0ojkouio" />
+            tools:text="iodhfiuehfioekpijdijjdifjioefi0ojkouio" />
 
         <TextView
             android:layout_width="match_parent"
@@ -140,9 +141,9 @@
         android:layout_below="@+id/mTvTransactionPrompt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:textColor="@color/green_400"
-        android:textSize="14sp"
         android:fontFamily="@font/space_grotesk_light"
-        android:text="@string/download_iopay" />
+        android:text="@string/download_iopay"
+        android:textColor="@color/green_400"
+        android:textSize="14sp" />
 
 </RelativeLayout>

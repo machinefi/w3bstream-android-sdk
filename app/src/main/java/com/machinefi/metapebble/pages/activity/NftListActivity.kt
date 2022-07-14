@@ -21,6 +21,7 @@ import com.machinefi.metapebble.utils.extension.gone
 import com.machinefi.metapebble.utils.extension.updateItem
 import com.machinefi.metapebble.utils.extension.visible
 import com.machinefi.metapebble.widget.DisconnectDialog
+import com.machinefi.metapebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_nft_list.*
 import org.jetbrains.anko.startActivity
 
@@ -42,7 +43,12 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        mTvAddress.text = AddressUtil.getIoWalletAddress().ellipsis(6, 6)
+        mTvEmptyAddress.text = WalletConnector.walletAddress?.ellipsis(6, 6)
+        mTvAddress.text = WalletConnector.walletAddress?.ellipsis(6, 6)
+        mSrlContent.setColorSchemeResources(R.color.colorPrimary)
+        mSrlContent.setOnRefreshListener {
+            queryNftList()
+        }
         val binder = NftItemBinder().apply {
             setOnSelectedListener {
                 mSelectedNft = it
@@ -83,7 +89,8 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         }
         mTvWhereToBug.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("iopay://io.iotex.iopay/open?action=web&url=https://metapebble.app/faucet")
+            intent.data =
+                Uri.parse("iopay://io.iotex.iopay/open?action=web&url=https://metapebble.app/faucet")
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             applicationContext.startActivity(intent)
         }
@@ -100,18 +107,34 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
     }
 
     private fun approve() {
-        if (mDevice != null && mSelectedNft != null) {
-            mActivateVM.approveRegistration(mSelectedNft?.nft?.tokenId ?: "")
-        }
+        PromptDialog(this)
+            .setTitle(getString(R.string.approve))
+            .setContent(getString(R.string.sign_wallet_tips))
+            .setPositiveButton(getString(R.string.confirm)) {
+                if (mDevice != null && mSelectedNft != null) {
+                    mActivateVM.approveRegistration(mSelectedNft?.nft?.tokenId ?: "")
+                }
+            }
+            .show()
     }
 
     private fun activateAndRegister() {
-        if (mDevice != null && mSelectedNft != null) {
-            mActivateVM.signDevice(mDevice!!)
-        }
+        PromptDialog(this)
+            .setTitle(getString(R.string.activating_metapebble))
+            .setContent(getString(R.string.sign_wallet_tips))
+            .setPositiveButton(getString(R.string.confirm)) {
+                if (mDevice != null && mSelectedNft != null) {
+                    mActivateVM.signDevice(mDevice!!)
+                }
+            }
+            .show()
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+        queryNftList()
+    }
+
+    private fun queryNftList() {
         val address = WalletConnector.walletAddress
         if (!address.isNullOrBlank()) {
             mPebbleVM.queryNftList(AddressUtil.convertIoAddress(address))
@@ -141,6 +164,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
 
     override fun registerObserver() {
         mPebbleVM.mNftListLD.observe(this) {
+            mSrlContent.isRefreshing = false
             if (!it.isNullOrEmpty()) {
                 mTlContentContainer.visible()
                 mRlEmptyContainer.gone()

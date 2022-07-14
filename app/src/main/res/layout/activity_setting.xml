@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/mIvGps"
-            android:layout_width="20dp"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/mIvGps"
             android:fontFamily="@font/space_grotesk_light"
             android:text="@string/gps"
@@ -52,17 +52,68 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mRlFrequency"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/black_alpha_20"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <ImageView
+            android:id="@+id/mIvFrequencyIcon"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_frequency" />
+
+        <TextView
+            android:id="@+id/mTvFrequencyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/mIvFrequencyIcon"
+            android:fontFamily="@font/space_grotesk_light"
+            android:text="@string/gps_collection_interval"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/mTvFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/mTvFrequencyArrow"
+            android:fontFamily="@font/space_grotesk_light"
+            android:textColor="@color/green_400"
+            android:textSize="14sp"
+            tools:text="5 mins" />
+
+        <ImageView
+            android:id="@+id/mTvFrequencyArrow"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_arrow_forward" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/mRlGpsPrecision"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:background="@color/black_alpha_20"
         android:paddingStart="15dp"
         android:paddingEnd="15dp">
 
         <ImageView
             android:id="@+id/mIvGpsPrecisionIcon"
-            android:layout_width="20dp"
+            android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:adjustViewBounds="true"
@@ -73,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@id/mIvGpsPrecisionIcon"
             android:fontFamily="@font/space_grotesk_light"
             android:text="@string/gps_precision"
@@ -88,9 +139,9 @@
             android:layout_marginEnd="8dp"
             android:layout_toStartOf="@+id/mIvGpsPrecisionArrow"
             android:fontFamily="@font/space_grotesk_light"
-            android:text="@string/gps"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textColor="@color/green_400"
+            android:textSize="14sp"
+            tools:text="Fine(~100m)" />
 
         <ImageView
             android:id="@+id/mIvGpsPrecisionArrow"
@@ -102,94 +153,136 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/mRlFrequency"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:background="@color/black_alpha_20"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp">
+        android:orientation="vertical"
+        android:paddingTop="13dp"
+        android:paddingBottom="17dp">
 
-        <ImageView
-            android:id="@+id/mIvFrequencyIcon"
-            android:layout_width="20dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_frequency" />
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
 
-        <TextView
-            android:id="@+id/mTvFrequencyLabel"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/mIvSererIcon"
+                android:layout_width="24dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_server_url" />
+
+            <TextView
+                android:id="@+id/mTvServerLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@id/mIvSererIcon"
+                android:fontFamily="@font/space_grotesk_light"
+                android:text="@string/w3bstream_server"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/mLlReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/space_grotesk_regular"
+                    android:text="@string/reset_default"
+                    android:textColor="@color/green_400"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/mTvServerArrow"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@mipmap/ic_refresh" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/mIvFrequencyIcon"
-            android:fontFamily="@font/space_grotesk_light"
-            android:text="@string/submit_frequency"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="40dp">
 
-        <TextView
-            android:id="@+id/mTvFrequency"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@+id/mTvFrequencyArrow"
-            android:fontFamily="@font/space_grotesk_light"
-            android:textColor="@color/green_400"
-            android:textSize="14sp"
-            tools:text="5 min" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/mTvFrequencyArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_forward" />
+                <EditText
+                    android:id="@+id/mEtServer"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:background="@drawable/shape_white_a8_r4"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="@color/white_alpha_70"
+                    android:textSize="14sp"
+                    tools:text="http://test-http.orender" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/mTvError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/space_grotesk_light"
+                    android:textColor="@color/red_700"
+                    android:text="@string/url_invalid"
+                    android:textSize="12sp" />
 
-    <RelativeLayout
-        android:id="@+id/mRlServer"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/black_alpha_20"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp">
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/mIvSererIcon"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_frequency" />
+            <LinearLayout
+                android:id="@+id/mLlServer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-        <TextView
-            android:id="@+id/mTvServerLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/mIvSererIcon"
-            android:fontFamily="@font/space_grotesk_light"
-            android:text="@string/w3bstream_server"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/mTvServer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/space_grotesk_regular"
+                    android:maxWidth="270dp"
+                    android:maxLines="1"
+                    android:textColor="@color/white_alpha_70"
+                    android:textSize="14sp"
+                    tools:text="http://test-http.orenderhttp://test-http.orender" />
 
-        <ImageView
-            android:id="@+id/mTvServerArrow"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_arrow_forward" />
+                <ImageView
+                    android:id="@+id/mIvReset"
+                    android:layout_width="26dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:adjustViewBounds="true"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_edit" />
 
-    </RelativeLayout>
+            </LinearLayout>
 
+        </FrameLayout>
+
+    </LinearLayout>
 </LinearLayout>

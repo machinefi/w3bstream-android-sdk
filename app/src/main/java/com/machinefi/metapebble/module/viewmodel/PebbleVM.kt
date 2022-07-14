@@ -8,6 +8,7 @@ import com.machinefi.core.base.BaseViewModel
 import com.machinefi.metapebble.module.db.entries.DEVICE_POWER_OFF
 import com.machinefi.metapebble.module.db.entries.DEVICE_POWER_ON
 import com.machinefi.metapebble.module.db.entries.DeviceEntry
+import com.machinefi.metapebble.module.db.entries.RecordEntry
 import com.machinefi.metapebble.module.repository.PebbleRepo
 import com.machinefi.metapebble.module.repository.UploadRepo
 import com.machinefi.metapebble.pages.binder.NftEntry
@@ -20,7 +21,7 @@ import javax.inject.Inject
 class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo: UploadRepo) : BaseViewModel() {
 
     val mDeviceListLD = MutableLiveData<List<DeviceEntry>>()
-    val mRecordListLD = MutableLiveData<List<RecordQuery.Pebble_device_record>>()
+    val mRecordListLD = MutableLiveData<List<RecordEntry>>()
     val mNftListLD = MutableLiveData<List<NftEntry>>()
     val mDeviceStatusLD = MutableLiveData<Boolean>()
 
@@ -94,14 +95,14 @@ class PebbleVM @Inject constructor(val mPebbleRepo: PebbleRepo, val mUploadRepo:
 
     private fun uploadData(device: DeviceEntry) {
         viewModelScope.launch {
-            mUploadRepo.startUploadMetadata()
+            mUploadRepo.startUploadMetadata(device.imei)
             device.power = DEVICE_POWER_ON
             mPebbleRepo.updateDevice(device)
         }
     }
 
-    fun resumeUploading() {
+    fun resumeUploading(imei: String) {
         mUploadRepo.stopUploadMetadata()
-        mUploadRepo.startUploadMetadata()
+        mUploadRepo.startUploadMetadata(imei)
     }
 }

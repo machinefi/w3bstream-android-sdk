@@ -11,16 +11,16 @@ import com.machinefi.metapebble.R
 import com.machinefi.metapebble.module.db.entries.RecordEntry
 import io.iotex.graphql.test.RecordQuery
 
-class RecordItemBinder: ItemViewBinder<RecordQuery.Pebble_device_record, RecordItemBinder.VH>() {
+class RecordItemBinder: ItemViewBinder<RecordEntry, RecordItemBinder.VH>() {
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): VH {
         val view = inflater.inflate(R.layout.item_record, parent, false)
         return VH(view)
     }
 
-    override fun onBindViewHolder(holder: VH, item: RecordQuery.Pebble_device_record) {
-        holder.mTvLat.text = item.latitude
-        holder.mTvLong.text = item.longitude
+    override fun onBindViewHolder(holder: VH, item: RecordEntry) {
+        holder.mTvLat.text = item.lat
+        holder.mTvLong.text = item.lat
         holder.mTvTime.text = TimeUtils.millis2String(item.timestamp.toLong())
     }
 

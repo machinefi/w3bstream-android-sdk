@@ -13,263 +13,276 @@
         android:id="@+id/mTitleBar"
         layout="@layout/include_bar" />
 
-    <RelativeLayout
-        android:id="@+id/mTlContentContainer"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/mSrlContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_below="@+id/mTitleBar"
-        android:visibility="gone">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mClHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="17dp"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp">
-
-            <FrameLayout
-                android:id="@+id/mFlIndicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="2dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@mipmap/ic_gradient_green_line" />
-
-                <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:adjustViewBounds="true"
-                    android:src="@mipmap/ic_green_rectangle" />
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/mTvWalletLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:text="@string/your_wallet"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/mFlIndicator"
-                app:layout_constraintTop_toTopOf="@+id/mFlIndicator" />
-
-            <ImageView
-                android:id="@+id/mIvExchange"
-                android:layout_width="18dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_exchange"
-                app:layout_constraintBottom_toBottomOf="@+id/mTvWalletLabel"
-                app:layout_constraintStart_toEndOf="@+id/mTvWalletLabel"
-                app:layout_constraintTop_toTopOf="@+id/mTvWalletLabel" />
-
-            <TextView
-                android:id="@+id/mTvDisconnect"
-                android:layout_width="90dp"
-                android:layout_height="28dp"
-                android:background="@drawable/shape_stroke_white_r100"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:gravity="center"
-                android:text="@string/disconnect"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="@+id/mIvExchange"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/mIvExchange" />
-
-            <TextView
-                android:id="@+id/mTvAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:textColor="@color/green_400"
-                android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
-                app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
-                tools:text="iodhfiuehfioekpijdiouio" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:text="@string/select_nft_tips"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/mTvAddress"
-                app:layout_constraintTop_toBottomOf="@+id/mTvAddress" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mRvNft"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/mFlActions"
-            android:layout_below="@+id/mClHeader"
-            android:layout_marginTop="8dp"
-            android:paddingStart="18dp"
-            android:paddingEnd="18dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5"
-            tools:listitem="@layout/item_select_nft" />
+        android:layout_height="match_parent">
 
         <FrameLayout
-            android:id="@+id/mFlActions"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="90dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/mTvApprove"
-                android:layout_width="315dp"
-                android:layout_height="54dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/selector_stroke_btn"
-                android:enabled="false"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:gravity="center"
-                android:text="@string/approve"
-                android:textColor="@color/btn_text_color"
-                android:textSize="18sp"
-                android:visibility="gone" />
+            <RelativeLayout
+                android:id="@+id/mTlContentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/mTvActivate"
-                android:layout_width="315dp"
-                android:layout_height="54dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/selector_stroke_btn"
-                android:enabled="false"
-                android:fontFamily="@font/space_grotesk_bold"
-                android:gravity="center"
-                android:text="@string/activate_meta_pebble"
-                android:textColor="@color/btn_text_color"
-                android:textSize="18sp" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mClHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="17dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp">
+
+                    <FrameLayout
+                        android:id="@+id/mFlIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:layout_width="2dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@mipmap/ic_gradient_green_line" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:adjustViewBounds="true"
+                            android:src="@mipmap/ic_green_rectangle" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/mTvWalletLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="13dp"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:text="@string/your_wallet"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@+id/mFlIndicator"
+                        app:layout_constraintTop_toTopOf="@+id/mFlIndicator" />
+
+                    <ImageView
+                        android:id="@+id/mIvExchange"
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_exchange"
+                        app:layout_constraintBottom_toBottomOf="@+id/mTvWalletLabel"
+                        app:layout_constraintStart_toEndOf="@+id/mTvWalletLabel"
+                        app:layout_constraintTop_toTopOf="@+id/mTvWalletLabel" />
+
+                    <TextView
+                        android:id="@+id/mTvDisconnect"
+                        android:layout_width="90dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/shape_stroke_white_r100"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:gravity="center"
+                        android:text="@string/disconnect"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/mIvExchange"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/mIvExchange" />
+
+                    <TextView
+                        android:id="@+id/mTvAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:textColor="@color/green_400"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="@+id/mTvWalletLabel"
+                        app:layout_constraintTop_toBottomOf="@+id/mTvWalletLabel"
+                        tools:text="iodhfiuehfioekpijdiouio" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:text="@string/select_nft_tips"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@+id/mTvAddress"
+                        app:layout_constraintTop_toBottomOf="@+id/mTvAddress" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mRvNft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/mFlActions"
+                    android:layout_below="@+id/mClHeader"
+                    android:layout_marginTop="8dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_select_nft" />
+
+                <FrameLayout
+                    android:id="@+id/mFlActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="90dp">
+
+                    <TextView
+                        android:id="@+id/mTvApprove"
+                        android:layout_width="315dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/selector_stroke_btn"
+                        android:enabled="false"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:gravity="center"
+                        android:text="@string/approve"
+                        android:textColor="@color/btn_text_color"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/mTvActivate"
+                        android:layout_width="315dp"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/selector_stroke_btn"
+                        android:enabled="false"
+                        android:fontFamily="@font/space_grotesk_bold"
+                        android:gravity="center"
+                        android:text="@string/activate_meta_pebble"
+                        android:textColor="@color/btn_text_color"
+                        android:textSize="18sp" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/mRlEmptyContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/mTitleBar"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/mTvEmptyTips01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="38dp"
+                    android:fontFamily="@font/space_grotesk_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/your_wallet"
+                    android:textColor="@color/white"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/mTvEmptyAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mTvEmptyTips01"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/space_grotesk_bold"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/green_400"
+                    android:textSize="24sp"
+                    tools:text="iodhfiuehfioekpijdiouio" />
+
+                <ImageView
+                    android:id="@+id/mIvEmptyIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mTvEmptyAddress"
+                    android:layout_marginTop="60dp"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/ic_nft_empty" />
+
+                <TextView
+                    android:id="@+id/mTvEmptyTips02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mIvEmptyIcon"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="34dp"
+                    android:fontFamily="@font/space_grotesk_bold"
+                    android:includeFontPadding="false"
+                    android:text="@string/no_nft_yet"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/mTvEmptyTips03"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mTvEmptyTips02"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="34dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@mipmap/bg04"
+                    android:fontFamily="@font/space_grotesk_light"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingStart="14dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/prompt_network"
+                    android:textColor="@color/green_300"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/mTvSwitchWallet"
+                    android:layout_width="315dp"
+                    android:layout_height="54dp"
+                    android:layout_below="@+id/mTvEmptyTips03"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="26dp"
+                    android:background="@drawable/selector_stroke_btn"
+                    android:enabled="true"
+                    android:fontFamily="@font/space_grotesk_bold"
+                    android:gravity="center"
+                    android:text="@string/switch_wallet"
+                    android:textColor="@color/btn_text_color"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/mTvWhereToBug"
+                    android:layout_width="315dp"
+                    android:layout_height="54dp"
+                    android:layout_below="@+id/mTvSwitchWallet"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/selector_stroke_btn"
+                    android:enabled="true"
+                    android:fontFamily="@font/space_grotesk_bold"
+                    android:gravity="center"
+                    android:text="@string/where_to_claim"
+                    android:textColor="@color/btn_text_color"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
 
         </FrameLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/mRlEmptyContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/mTitleBar">
-
-        <TextView
-            android:id="@+id/mTvEmptyTips01"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="38dp"
-            android:fontFamily="@font/space_grotesk_bold"
-            android:includeFontPadding="false"
-            android:text="@string/your_wallet"
-            android:textColor="@color/white"
-            android:textSize="35sp" />
-
-        <TextView
-            android:id="@+id/mTvEmptyAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mTvEmptyTips01"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/space_grotesk_bold"
-            android:includeFontPadding="false"
-            android:textColor="@color/green_400"
-            android:textSize="24sp"
-            tools:text="iodhfiuehfioekpijdiouio" />
-
-        <ImageView
-            android:id="@+id/mIvEmptyIcon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mTvEmptyAddress"
-            android:layout_marginTop="60dp"
-            android:adjustViewBounds="true"
-            android:src="@mipmap/ic_nft_empty" />
-
-        <TextView
-            android:id="@+id/mTvEmptyTips02"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mIvEmptyIcon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="34dp"
-            android:fontFamily="@font/space_grotesk_bold"
-            android:includeFontPadding="false"
-            android:text="@string/no_nft_yet"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/mTvEmptyTips03"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mTvEmptyTips02"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="34dp"
-            android:layout_marginEnd="30dp"
-            android:background="@mipmap/bg04"
-            android:fontFamily="@font/space_grotesk_light"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:paddingStart="14dp"
-            android:paddingTop="6dp"
-            android:paddingEnd="14dp"
-            android:paddingBottom="6dp"
-            android:text="@string/prompt_network"
-            android:textColor="@color/green_300"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/mTvSwitchWallet"
-            android:layout_width="315dp"
-            android:layout_height="54dp"
-            android:layout_below="@+id/mTvEmptyTips03"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="26dp"
-            android:background="@drawable/selector_stroke_btn"
-            android:enabled="true"
-            android:fontFamily="@font/space_grotesk_bold"
-            android:gravity="center"
-            android:text="@string/switch_wallet"
-            android:textColor="@color/btn_text_color"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/mTvWhereToBug"
-            android:layout_width="315dp"
-            android:layout_height="54dp"
-            android:layout_below="@+id/mTvSwitchWallet"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/selector_stroke_btn"
-            android:enabled="true"
-            android:fontFamily="@font/space_grotesk_bold"
-            android:gravity="center"
-            android:text="@string/where_to_claim"
-            android:textColor="@color/btn_text_color"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

@@ -64,8 +64,8 @@
     <string name="authorize_to_pop_underline"><u>Authorize to POP</u></string>
     <string name="back_to_home">Back to Home</string>
     <string name="external_link">Go to portal.machinefi.com to check more details about your device and have fun playing with the dApps there!</string>
-    <string name="gps_precision">Change GPS Precision</string>
-    <string name="submit_frequency">Submit frequency</string>
+    <string name="gps_precision">GPS Precision</string>
+    <string name="gps_collection_interval">GPS Collection Interval</string>
     <string name="device_must_api_level">Sorry! The app is required to device Android 6.0 (API level 23) or higher</string>
     <string name="could_not_load_certificate">Could not load certificate!</string>
     <string name="approve">Approve</string>
@@ -81,5 +81,6 @@
     <string name="please_activate_pebble">Please activate MetaPebble</string>
     <string name="no_nft_yet">No NFTs yet</string>
     <string name="prompt_network">Make sure you are connecting the wallet in the IoTeX Network.</string>
-
+    <string name="reset_default">Reset default</string>
+    <string name="url_invalid">The url is invalid.</string>
 </resources>

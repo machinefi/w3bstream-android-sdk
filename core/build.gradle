@@ -74,10 +74,12 @@ dependencies {
     //view
     api 'com.google.android.material:material:1.4.0'
     api 'androidx.constraintlayout:constraintlayout:2.1.0'
-    api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-14'
     api 'com.drakeet.multitype:multitype:4.0.0'
     api 'com.github.zcweng:switch-button:0.0.3@aar'
     api 'com.github.donkingliang:ConsecutiveScroller:4.6.1'
+    api  'io.github.scwang90:refresh-layout-kernel:2.0.5'
+    api  'io.github.scwang90:refresh-header-classics:2.0.5'
+    api  'io.github.scwang90:refresh-footer-classics:2.0.5'
 
     //rx
     api 'io.reactivex.rxjava2:rxjava:2.2.10'
