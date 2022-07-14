@@ -44,7 +44,7 @@ jobs:
         with:
           command: cp
           source: ${{steps.sign_app.outputs.signedReleaseFile}}
-          destination: s3://pebble-ota/meta-pebble/meta-pebble-${{ github.ref_name }}.apk
+          destination: s3://metapebble/meta-pebble/meta-pebble-${{ github.ref_name }}.apk
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ap-east-1
