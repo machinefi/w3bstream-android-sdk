@@ -47,13 +47,15 @@ class PebbleRepo @Inject constructor(
         }
 
     suspend fun queryNftList(address: String) = withContext(Dispatchers.IO) {
-        val contract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address
-            ?: return@withContext null
-        val addressOpt = AddressUtil.convertWeb3Address(address)
-        val contractOpt = Optional.presentIfNotNull(contract)
-        WalletConnector.chainId ?: throw Exception("ChainId cannot be null")
-        val chainIdOpt = Optional.presentIfNotNull(WalletConnector.chainId!!.toInt())
-        mApolloClient.query(NftListQuery(addressOpt, contractOpt, chainIdOpt)).execute().data
+        kotlin.runCatching {
+            val contract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address
+                ?: return@withContext null
+            val addressOpt = AddressUtil.convertWeb3Address(address)
+            val contractOpt = Optional.presentIfNotNull(contract)
+            WalletConnector.chainId ?: throw Exception("ChainId cannot be null")
+            val chainIdOpt = Optional.presentIfNotNull(WalletConnector.chainId!!.toInt())
+            mApolloClient.query(NftListQuery(addressOpt, contractOpt, chainIdOpt)).execute().data
+        }.getOrNull()
     }
 
 }

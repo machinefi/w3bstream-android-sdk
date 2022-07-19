@@ -20,7 +20,7 @@ class RecordItemBinder: ItemViewBinder<RecordEntry, RecordItemBinder.VH>() {
 
     override fun onBindViewHolder(holder: VH, item: RecordEntry) {
         holder.mTvLat.text = item.lat
-        holder.mTvLong.text = item.lat
+        holder.mTvLong.text = item.lng
         holder.mTvTime.text = TimeUtils.millis2String(item.timestamp.toLong())
     }
 

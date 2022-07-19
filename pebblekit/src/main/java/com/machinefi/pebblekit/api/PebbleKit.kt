@@ -12,14 +12,18 @@ class PebbleKit private constructor(
     DeviceManager by deviceManager,
     SignManager by signManager {
 
+    init {
+
+    }
+
     class Builder(config: PebbleKitConfig) {
 
         private val pebbleKitModule = PebbleKitModule(config)
 
         fun build() = PebbleKit(
-            pebbleKitModule.uploadRepository,
-            pebbleKitModule.deviceRepository,
-            pebbleKitModule.signRepository
+            pebbleKitModule.uploadManager,
+            pebbleKitModule.deviceManager,
+            pebbleKitModule.signManager
         )
     }
 

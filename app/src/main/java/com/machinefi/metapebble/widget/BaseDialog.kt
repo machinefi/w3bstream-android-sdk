@@ -37,6 +37,10 @@ abstract class BaseDialog(val context: Context, resId: Int) {
         mDialog.setCanceledOnTouchOutside(cancellable)
     }
 
+    fun isShowing(): Boolean {
+        return mDialog.isShowing
+    }
+
     fun show() {
         if (context is Activity && !context.isFinishing && !mDialog.isShowing) {
             mDialog.show()

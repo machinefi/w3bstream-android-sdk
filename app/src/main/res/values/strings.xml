@@ -57,6 +57,7 @@
     <string name="update_metapebble">Update your MetaPebble</string>
     <string name="meta_pebble">Meta-Pebble</string>
     <string name="activating_metapebble">Activating \n your Meta-Pebble \n ...</string>
+    <string name="activating_tips">Activating Meta-Pebble</string>
     <string name="registering_metapebble">Registering \n your Meta-Pebble \n ...</string>
     <string name="activated_registered_successfully">Your Meta-Pebble has been \n successfully activated and \n registered!</string>
     <string name="completed">Completed!</string>
@@ -83,4 +84,9 @@
     <string name="prompt_network">Make sure you are connecting the wallet in the IoTeX Network.</string>
     <string name="reset_default">Reset default</string>
     <string name="url_invalid">The url is invalid.</string>
+    <string name="error">Error</string>
+    <string name="connect_error">Unable to connect to your wallet. Please try again later</string>
+    <string name="ok">OK</string>
+    <string name="https_url">HTTPS URL</string>
+    <string name="socket_url">SOCKET URL</string>
 </resources>

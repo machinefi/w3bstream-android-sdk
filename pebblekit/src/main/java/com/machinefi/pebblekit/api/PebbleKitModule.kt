@@ -6,6 +6,7 @@ import com.machinefi.pebblekit.common.request.ApiService
 import com.machinefi.pebblekit.common.request.interceptor.GlobalInterceptor
 import com.machinefi.pebblekit.repository.device.DeviceRepository
 import com.machinefi.pebblekit.repository.sign.SignRepository
+import com.machinefi.pebblekit.repository.upload.HttpUploader
 import com.machinefi.pebblekit.repository.upload.UploadRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,15 +45,15 @@ internal class PebbleKitModule(config: PebbleKitConfig) {
             .build().create(ApiService::class.java)
     }
 
-    val uploadRepository by lazy {
+    val uploadManager by lazy {
         UploadRepository(apiService, config)
     }
 
-    val deviceRepository by lazy {
+    val deviceManager by lazy {
         DeviceRepository()
     }
 
-    val signRepository by lazy {
+    val signManager by lazy {
         SignRepository(apiService)
     }
 

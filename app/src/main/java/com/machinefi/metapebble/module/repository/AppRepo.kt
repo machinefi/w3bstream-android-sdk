@@ -12,13 +12,16 @@ import javax.inject.Inject
 
 class AppRepo @Inject constructor(@ApolloClientMetaPebble val mApolloClient: ApolloClient) {
 
-    suspend fun queryVersion(): VersionQuery.MetaPebble_version_android? {
-        val versionList = mApolloClient.query(VersionQuery()).execute().data
-        if (versionList?.metaPebble_version_android?.isNotEmpty() == true) {
-            return versionList.metaPebble_version_android[0]
+    suspend fun queryVersion(): VersionQuery.MetaPebble_version_android? =
+        withContext(Dispatchers.IO) {
+            kotlin.runCatching {
+                val version = mApolloClient.query(VersionQuery()).execute().data
+                if (version?.metaPebble_version_android?.isNotEmpty() == true) {
+                    return@withContext version.metaPebble_version_android[0]
+                }
+            }
+            return@withContext null
         }
-        return null
-    }
 
     private suspend fun queryContracts(): List<ContractEntry> {
         val contracts = AppDatabase.mInstance.contractDao().queryAll()
@@ -29,14 +32,15 @@ class AppRepo @Inject constructor(@ApolloClientMetaPebble val mApolloClient: Apo
     }
 
     suspend fun queryContractsFromRemote(): List<ContractEntry> = withContext(Dispatchers.IO) {
-        val remoteContracts = mApolloClient.query(ContractQuery()).execute().data
-            ?.metaPebble_pebble_contract
-
-        return@withContext remoteContracts?.map {
-            ContractEntry(it.address, it.name, it.abi).also { contract ->
-                AppDatabase.mInstance.contractDao().insertIfNonExist(contract)
+        kotlin.runCatching {
+            val remoteContracts = mApolloClient.query(ContractQuery()).execute().data
+                ?.metaPebble_pebble_contract
+            remoteContracts?.map {
+                ContractEntry(it.address, it.name, it.abi).also { contract ->
+                    AppDatabase.mInstance.contractDao().insertIfNonExist(contract)
+                }
             }
-        } ?: emptyList()
+        }.getOrNull() ?: emptyList()
     }
 
     suspend fun queryContractByName(name: String): ContractEntry? = withContext(Dispatchers.IO) {

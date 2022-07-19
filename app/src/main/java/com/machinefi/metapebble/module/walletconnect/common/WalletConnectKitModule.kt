@@ -11,6 +11,7 @@ import org.walletconnect.impls.FileWCSessionStore
 import org.walletconnect.impls.MoshiPayloadAdapter
 import org.walletconnect.impls.OkHttpTransport
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 internal class WalletConnectKitModule(context: Context, config: WalletConnectKitConfig) {
 
@@ -33,7 +34,10 @@ internal class WalletConnectKitModule(context: Context, config: WalletConnectKit
 
     private val transporter by lazy {
         OkHttpTransport.Builder(
-            OkHttpClient.Builder().build(),
+            OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .callTimeout(5, TimeUnit.SECONDS)
+                .build(),
             moshi
         )
     }

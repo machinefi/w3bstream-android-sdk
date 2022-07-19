@@ -4,9 +4,13 @@ internal const val INTERVAL_SEND_DATA = 5
 
 internal interface UploadManager {
 
-    fun startUploading(w3bStreamServer: String, hook: () -> String)
+    fun startUploading(hook: () -> String)
 
     fun stopUploading()
 
     fun uploadFrequency(frequency: Int)
+
+    fun httpsServerUrl(url: String)
+
+    fun socketServerUrl(url: String)
 }

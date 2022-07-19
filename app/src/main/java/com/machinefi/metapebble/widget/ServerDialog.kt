@@ -7,8 +7,8 @@ import android.widget.TextView
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.SPUtils
 import com.machinefi.metapebble.R
-import com.machinefi.metapebble.constant.SP_KEY_SERVER_URL
-import com.machinefi.metapebble.constant.URL_UPLOAD_DATA
+import com.machinefi.metapebble.constant.SP_KEY_HTTPS_URL
+import com.machinefi.metapebble.constant.URL_HTTPS_SERVER
 
 class ServerDialog(context: Context): BaseDialog(context, R.layout.dialog_server) {
 
@@ -20,13 +20,13 @@ class ServerDialog(context: Context): BaseDialog(context, R.layout.dialog_server
             dismiss()
         }
 
-        val serverUrl = SPUtils.getInstance().getString(SP_KEY_SERVER_URL)
+        val serverUrl = SPUtils.getInstance().getString(SP_KEY_HTTPS_URL)
         mEtServer.setText(serverUrl)
 
         mTvConfirm.setOnClickListener {
             val url = mEtServer.text.toString().trim()
             if (RegexUtils.isURL(url)) {
-                SPUtils.getInstance().put(SP_KEY_SERVER_URL, url)
+                SPUtils.getInstance().put(SP_KEY_HTTPS_URL, url)
                 dismiss()
             }
         }

@@ -32,7 +32,6 @@ internal class SessionRepository(
             addCallback(callback)
             offer()
         }
-        session?.approvedAccounts()
     }
 
     override fun removeSession() {

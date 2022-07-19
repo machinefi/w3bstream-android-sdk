@@ -22,6 +22,8 @@ object WalletConnector : Session.Callback {
 
     private lateinit var onConnected: (address: String, chainId: Long) -> Unit
     private var onDisconnected: (() -> Unit)? = null
+    private var onOpenWallet: (() -> Unit)? = null
+    private var onConnectError: (() -> Unit)? = null
 
     val walletAddress get() = walletConnectKit.address
     val chainId get() = walletConnectKit.chainId
@@ -30,10 +32,14 @@ object WalletConnector : Session.Callback {
 
     fun init(
         onConnected: (address: String, chainId: Long) -> Unit,
-        onDisconnected: (() -> Unit)?
-    ) {
+        onDisconnected: (() -> Unit)?,
+        onOpenWallet: (() -> Unit)?,
+        onConnectError: (() -> Unit)?,
+        ) {
         this.onConnected = onConnected
         this.onDisconnected = onDisconnected
+        this.onOpenWallet = onOpenWallet
+        this.onConnectError = onConnectError
         loadSessionIfStored()
     }
 
@@ -58,6 +64,7 @@ object WalletConnector : Session.Callback {
             is Session.Status.Approved -> onSessionApproved()
             is Session.Status.Connected -> onSessionConnected()
             is Session.Status.Closed -> onSessionDisconnected()
+            is Session.Status.Error -> onSessionError()
             else -> {}
         }
     }
@@ -70,7 +77,12 @@ object WalletConnector : Session.Callback {
         safeLet(walletConnectKit.address, walletConnectKit.chainId, onConnected)
     }
 
+    private fun onSessionError() {
+        this.onConnectError?.invoke()
+    }
+
     private fun onSessionConnected() {
+        this.onOpenWallet?.invoke()
         walletConnectKit.address ?: walletConnectKit.requestHandshake()
     }
 

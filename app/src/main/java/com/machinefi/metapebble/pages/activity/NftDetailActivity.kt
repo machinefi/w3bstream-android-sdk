@@ -1,11 +1,13 @@
 package com.machinefi.metapebble.pages.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.machinefi.core.base.BaseActivity
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.module.viewmodel.ActivateVM
+import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import kotlinx.android.synthetic.main.activity_nft_detail.*
 
 class NftDetailActivity : BaseActivity(R.layout.activity_nft_detail) {

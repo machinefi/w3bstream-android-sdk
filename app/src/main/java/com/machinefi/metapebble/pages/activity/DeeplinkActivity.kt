@@ -10,9 +10,10 @@ class DeeplinkActivity: BaseActivity(R.layout.activity_deeplink) {
 
     override fun beforeInflate(savedInstanceState: Bundle?) {
         super.beforeInflate(savedInstanceState)
-        val exist = ActivityUtils.isActivityExistsInStack(DevicePanelActivity::class.java)
-        if (exist) {
-            startActivity(Intent(this, DevicePanelActivity::class.java).apply {
+        val target = ActivityUtils.getTopActivity()
+//        val exist = ActivityUtils.isActivityExistsInStack(DevicePanelActivity::class.java)
+        if (target != null) {
+            startActivity(Intent(this, target::class.java).apply {
                 data = intent.data
             })
         } else {

@@ -188,30 +188,18 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <LinearLayout
-                android:id="@+id/mLlReset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.suke.widget.SwitchButton
+                android:id="@+id/mSbServer"
+                android:layout_width="45dp"
+                android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/space_grotesk_regular"
-                    android:text="@string/reset_default"
-                    android:textColor="@color/green_400"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/mTvServerArrow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="4dp"
-                    android:src="@mipmap/ic_refresh" />
-
-            </LinearLayout>
+                app:sb_background="@color/teal_800"
+                app:sb_checked="true"
+                app:sb_checked_color="@color/green_400"
+                app:sb_checkline_width="0dp"
+                app:sb_show_indicator="false"
+                app:sb_uncheck_color="@color/teal_800" />
 
         </RelativeLayout>
 
@@ -219,66 +207,257 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="40dp">
 
             <LinearLayout
+                android:id="@+id/mLlServerInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/mEtServer"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="34dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/space_grotesk_light"
+                        android:includeFontPadding="false"
+                        android:text="@string/https_url"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/mLlHttpsRefresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/space_grotesk_regular"
+                            android:includeFontPadding="false"
+                            android:text="@string/reset_default"
+                            android:textColor="@color/green_400"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="4dp"
+                            android:src="@mipmap/ic_refresh" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/mEtHttps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:background="@drawable/shape_white_a8_r4"
                     android:paddingStart="10dp"
+                    android:paddingTop="6dp"
                     android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/white_alpha_70"
                     android:textSize="14sp"
                     tools:text="http://test-http.orender" />
 
                 <TextView
-                    android:id="@+id/mTvError"
+                    android:id="@+id/mTvHttpsError"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/space_grotesk_light"
-                    android:textColor="@color/red_700"
                     android:text="@string/url_invalid"
-                    android:textSize="12sp" />
+                    android:textColor="@color/red_700"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/mLlServer"
-                android:layout_width="wrap_content"
+                android:id="@+id/mLlHttpsPreview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/mTvServer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/space_grotesk_regular"
-                    android:maxWidth="270dp"
-                    android:maxLines="1"
+                    android:fontFamily="@font/space_grotesk_light"
+                    android:includeFontPadding="false"
+                    android:text="@string/https_url"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mTvHttpsPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/space_grotesk_regular"
+                        android:maxWidth="270dp"
+                        android:maxLines="1"
+                        android:textColor="@color/white_alpha_70"
+                        android:textSize="14sp"
+                        tools:text="http://test-http.orenderhttp://test-http.orender" />
+
+                    <ImageView
+                        android:id="@+id/mIvHttpsReset"
+                        android:layout_width="26dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:adjustViewBounds="true"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_edit" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="40dp">
+
+            <LinearLayout
+                android:id="@+id/mLlSocketInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/space_grotesk_light"
+                        android:includeFontPadding="false"
+                        android:text="@string/socket_url"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/mLlSocketRefresh"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/space_grotesk_regular"
+                            android:includeFontPadding="false"
+                            android:text="@string/reset_default"
+                            android:textColor="@color/green_400"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="4dp"
+                            android:src="@mipmap/ic_refresh" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <EditText
+                    android:id="@+id/mEtSocket"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_white_a8_r4"
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
                     android:textColor="@color/white_alpha_70"
                     android:textSize="14sp"
-                    tools:text="http://test-http.orenderhttp://test-http.orender" />
+                    tools:text="http://test-http.orender" />
 
-                <ImageView
-                    android:id="@+id/mIvReset"
-                    android:layout_width="26dp"
+                <TextView
+                    android:id="@+id/mTvSocketError"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:adjustViewBounds="true"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_edit" />
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/space_grotesk_light"
+                    android:text="@string/url_invalid"
+                    android:textColor="@color/red_700"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mLlSocketPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/space_grotesk_light"
+                    android:includeFontPadding="false"
+                    android:text="@string/socket_url"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mTvSocketPreview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/space_grotesk_regular"
+                        android:maxWidth="270dp"
+                        android:maxLines="1"
+                        android:textColor="@color/white_alpha_70"
+                        android:textSize="14sp"
+                        tools:text="http://test-http.orenderhttp://test-http.orender" />
+
+                    <ImageView
+                        android:id="@+id/mIvSocketReset"
+                        android:layout_width="26dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:adjustViewBounds="true"
+                        android:padding="4dp"
+                        android:src="@drawable/ic_edit" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

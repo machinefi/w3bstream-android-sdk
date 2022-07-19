@@ -8,8 +8,9 @@ const val CONTRACT_KEY_NFT = "nft"
 const val CONTRACT_KEY_REGISTER = "register"
 const val CONTRACT_KEY_REGISTER_RESULT = "register_result"
 
-//const val URL_UPLOAD_DATA = "https://trustream-http.onrender.com/api/data"
-const val URL_UPLOAD_DATA = "https://w3w3bstream-example.onrender.com/api/data"
+//const val URL_HTTPS_SERVER = "https://trustream-http.onrender.com/api/data"
+const val URL_HTTPS_SERVER = "https://w3w3bstream-example.onrender.com/api/data"
+const val URL_SOCKET_SERVER = "wss://w3w3bstream-example.onrender.com/"
 
 const val HTTP_HOST = "https://auth.metapebble.app"
 

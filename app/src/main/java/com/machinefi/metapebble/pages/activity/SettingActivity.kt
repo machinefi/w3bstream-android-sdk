@@ -95,36 +95,63 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
                 .show()
         }
 
-        val serverUrl = SPUtils.getInstance().getString(SP_KEY_SERVER_URL)
-        if (serverUrl.isNullOrBlank()) {
-            mLlReset.visible()
-            mEtServer.visible()
-            mLlServer.gone()
-        } else {
-            mLlReset.gone()
-            mEtServer.gone()
-            mLlServer.visible()
-        }
-        mLlReset.setOnClickListener {
-            val url = mEtServer.text.toString()
-            if (RegexUtils.isURL(url)) {
-                mTvError.gone()
-                mEtServer.gone()
-                mLlReset.gone()
-                mLlServer.visible()
-                SPUtils.getInstance().put(SP_KEY_SERVER_URL, url)
-                mTvServer.text = url
-            } else {
-                mTvError.visible()
+        initServer()
+    }
+
+    private fun initServer() {
+        mSbServer.isChecked = SPUtils.getInstance().getBoolean(SP_KEY_SERVER_CHECKED, true)
+        mSbServer.setOnCheckedChangeListener { view, isChecked ->
+            SPUtils.getInstance().put(SP_KEY_SERVER_CHECKED, isChecked)
+            if (!isChecked) {
+                mLlHttpsPreview.visible()
+                mLlServerInput.gone()
+
+                mLlSocketPreview.visible()
+                mLlSocketInput.gone()
             }
         }
-        mIvReset.setOnClickListener {
-            mLlServer.gone()
-            mTvError.gone()
-            mEtServer.visible()
-            mEtServer.setText(serverUrl)
+
+        val httpsUrl = SPUtils.getInstance().getString(SP_KEY_HTTPS_URL, URL_HTTPS_SERVER)
+        mTvHttpsPreview.text = httpsUrl
+        mEtHttps.setText(httpsUrl)
+        mIvHttpsReset.setOnClickListener {
+            if (!mSbServer.isChecked) return@setOnClickListener
+            mLlHttpsPreview.gone()
+            mLlServerInput.visible()
+        }
+        mLlHttpsRefresh.setOnClickListener {
+            val url = mEtHttps.text.trim().toString()
+            if (RegexUtils.isURL(url)) {
+                mTvHttpsError.gone()
+                mTvHttpsPreview.text = url
+                SPUtils.getInstance().put(SP_KEY_HTTPS_URL, url)
+                mLlHttpsPreview.visible()
+                mLlServerInput.gone()
+            } else {
+                mTvHttpsError.visible()
+            }
         }
 
+        val socketUrl = SPUtils.getInstance().getString(SP_KEY_SOCKET_URL, URL_SOCKET_SERVER)
+        mTvSocketPreview.text = socketUrl
+        mEtSocket.setText(socketUrl)
+        mIvSocketReset.setOnClickListener {
+            if (!mSbServer.isChecked) return@setOnClickListener
+            mLlSocketPreview.gone()
+            mLlSocketInput.visible()
+        }
+        mLlSocketRefresh.setOnClickListener {
+            val url = mEtSocket.text.trim().toString()
+            if (RegexUtils.isURL(url)) {
+                mTvSocketError.gone()
+                mTvSocketPreview.text = url
+                SPUtils.getInstance().put(SP_KEY_SOCKET_URL, url)
+                mLlSocketPreview.visible()
+                mLlSocketInput.gone()
+            } else {
+                mTvSocketError.visible()
+            }
+        }
     }
 
     private fun getFrequencyCurrentItem(): PickerItemData? {

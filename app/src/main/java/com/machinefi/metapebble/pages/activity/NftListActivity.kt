@@ -120,7 +120,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
 
     private fun activateAndRegister() {
         PromptDialog(this)
-            .setTitle(getString(R.string.activating_metapebble))
+            .setTitle(getString(R.string.activating_tips))
             .setContent(getString(R.string.sign_wallet_tips))
             .setPositiveButton(getString(R.string.confirm)) {
                 if (mDevice != null && mSelectedNft != null) {

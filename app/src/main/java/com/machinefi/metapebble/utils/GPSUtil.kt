@@ -103,7 +103,7 @@ object GPSUtil {
     }
 
     fun decodeLocation(value: Long): String {
-        return BigDecimal(value).div(BigDecimal.TEN.pow(7)).toPlainString()
+        return BigDecimal(value).divide(BigDecimal.TEN.pow(7)).toPlainString()
     }
 
 }

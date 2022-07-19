@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.Utils
 import com.machinefi.core.base.BaseActivity
@@ -14,9 +15,11 @@ import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import com.machinefi.metapebble.utils.extension.*
 import com.machinefi.metapebble.widget.DeviceMenuDialog
+import com.machinefi.metapebble.widget.LoadingDialog
 import com.machinefi.metapebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_device_panel.*
 import kotlinx.android.synthetic.main.include_bar.*
+import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.startActivity
 
 class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
@@ -27,6 +30,10 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     private val mPebbleVM by lazy {
         ViewModelProvider(this, mVmFactory)[PebbleVM::class.java]
+    }
+
+    private val mProgress by lazy {
+        LoadingDialog(this)
     }
 
     private val mDevice by lazy {
@@ -103,12 +110,13 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     override fun initData(savedInstanceState: Bundle?) {
         mActivateVM.queryActivatedResult(mDevice?.imei ?: "")
-        WalletConnector.init(::onConnected, ::onDisconnected)
+        WalletConnector.init(::onConnected, ::onDisconnected, ::onOpenWallet, ::onConnectError)
         mTvActivate.setOnClickListener {
             if (WalletConnector.isConnected()) {
                 startActivity<NftListActivity>()
             } else {
                 WalletConnector.connect()
+                mProgress.show()
             }
         }
         AppUtils.registerAppStatusChangedListener(object : Utils.OnAppStatusChangedListener {
@@ -131,10 +139,27 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
 
     private fun onDisconnected() {
         mNeedResponse = false
-        startActivity(
-            Intent(this, DevicePanelActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        )
+        ActivityUtils.getActivityList().forEach {
+            if (it !is DevicePanelActivity) {
+                it.onBackPressed()
+            }
+        }
+    }
+
+    private fun onOpenWallet() {
+        mProgress.dismiss()
+    }
+
+    private fun onConnectError() {
+        runOnUiThread {
+            mProgress.dismiss()
+            PromptDialog(this)
+                .setTitle(getString(R.string.error))
+                .setContent(getString(R.string.connect_error))
+                .setPositiveButton(getString(R.string.ok))
+                .show()
+        }
+
     }
 
     override fun registerObserver() {
