@@ -136,7 +136,9 @@ class NftDetailActivity : BaseActivity(R.layout.activity_nft_detail) {
             }
         }
         mActivateVM.mActivateLd.observe(this) {
-            activateProgress()
+            if (!it.isNullOrBlank()) {
+                activateProgress()
+            }
         }
     }
 
