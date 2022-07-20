@@ -214,8 +214,8 @@
                 android:id="@+id/mLlServerInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -300,8 +300,8 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -310,9 +310,11 @@
                         android:id="@+id/mTvHttpsPreview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toStartOf="@+id/mIvHttpsReset"
                         android:ellipsize="end"
                         android:fontFamily="@font/space_grotesk_regular"
-                        android:maxWidth="270dp"
                         android:maxLines="1"
                         android:textColor="@color/white_alpha_70"
                         android:textSize="14sp"
@@ -322,12 +324,14 @@
                         android:id="@+id/mIvHttpsReset"
                         android:layout_width="26dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="4dp"
                         android:adjustViewBounds="true"
                         android:padding="4dp"
                         android:src="@drawable/ic_edit" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -430,19 +434,19 @@
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/mTvSocketPreview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toStartOf="@+id/mIvSocketReset"
                         android:ellipsize="end"
                         android:fontFamily="@font/space_grotesk_regular"
-                        android:maxWidth="270dp"
                         android:maxLines="1"
                         android:textColor="@color/white_alpha_70"
                         android:textSize="14sp"
@@ -452,12 +456,14 @@
                         android:id="@+id/mIvSocketReset"
                         android:layout_width="26dp"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="4dp"
                         android:adjustViewBounds="true"
                         android:padding="4dp"
                         android:src="@drawable/ic_edit" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
