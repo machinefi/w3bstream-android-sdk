@@ -79,7 +79,7 @@ object WalletConnector : Session.Callback {
     }
 
     private fun onSessionError(error: Throwable) {
-        if (error is Session.TransportError) {
+        if (error is Session.TransportError && !isConnected()) {
             this.onConnectError?.invoke()
         }
     }
