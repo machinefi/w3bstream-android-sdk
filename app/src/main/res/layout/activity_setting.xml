@@ -360,7 +360,7 @@
                         android:layout_centerVertical="true"
                         android:fontFamily="@font/space_grotesk_light"
                         android:includeFontPadding="false"
-                        android:text="@string/socket_url"
+                        android:text="@string/websocket_url"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
