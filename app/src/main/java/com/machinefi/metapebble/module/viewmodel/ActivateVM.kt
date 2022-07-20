@@ -55,17 +55,13 @@ class ActivateVM @Inject constructor(
 
     fun approveRegistration(tokenId: String) {
         viewModelScope.launch {
-            val walletAddress = WalletConnector.walletAddress ?: return@launch
             val registerContract = mAppRepo.queryContractByName(CONTRACT_KEY_REGISTER)?.address ?: return@launch
             val nftContract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address ?: return@launch
             val signData = FunctionSignData.getApproveRegistrationDate(registerContract, tokenId)
 
-            val params = mutableMapOf<String, String>().apply {
-                this["from"] = walletAddress
-                this["to"] = nftContract
-                this["data"] = signData
-            }
-            val response = WalletConnector.signTransaction(listOf(params))
+            val response = WalletConnector.sendTransaction(
+                nftContract, "0", signData
+            )
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mApproveLd.postValue(tokenId)
@@ -99,12 +95,9 @@ class ActivateVM @Inject constructor(
                 signature,
                 authentication
             )
-            val params = mutableMapOf<String, String>().apply {
-                this["from"] = walletAddress
-                this["to"] = registerContract
-                this["data"] = signData
-            }
-            val response = WalletConnector.signTransaction(listOf(params))
+            val response = WalletConnector.sendTransaction(
+                registerContract, "0", signData
+            )
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mActivateLd.postValue(tokenId)

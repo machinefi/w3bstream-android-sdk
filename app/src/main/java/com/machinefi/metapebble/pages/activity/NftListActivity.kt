@@ -21,6 +21,7 @@ import com.machinefi.metapebble.utils.extension.gone
 import com.machinefi.metapebble.utils.extension.updateItem
 import com.machinefi.metapebble.utils.extension.visible
 import com.machinefi.metapebble.widget.DisconnectDialog
+import com.machinefi.metapebble.widget.LoadingDialog
 import com.machinefi.metapebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_nft_list.*
 import org.jetbrains.anko.startActivity
@@ -32,6 +33,10 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
     }
     private val mActivateVM by lazy {
         ViewModelProvider(this, mVmFactory)[ActivateVM::class.java]
+    }
+
+    private val mProgress by lazy {
+        LoadingDialog(this)
     }
 
     private val mAdapter = MultiTypeAdapter()
@@ -125,6 +130,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
             .setPositiveButton(getString(R.string.confirm)) {
                 if (mDevice != null && mSelectedNft != null) {
                     mActivateVM.signDevice(mDevice!!)
+                    mProgress.show()
                 }
             }
             .show()
@@ -194,6 +200,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
             }
         }
         mActivateVM.mSignDeviceLD.observe(this) {
+            mProgress.dismiss()
             if (it != null) {
                 mDevice?.let { device ->
                     val tokenId = mSelectedNft!!.nft.tokenId.toString()

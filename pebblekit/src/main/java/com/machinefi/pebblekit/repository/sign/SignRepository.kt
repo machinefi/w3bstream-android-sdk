@@ -26,6 +26,11 @@ internal class SignRepository(
                     override fun onFail(code: Int, msg: String) {
                         continuation.resumeWith(Result.failure(SignException(msg)))
                     }
+
+                    override fun onError(e: Throwable) {
+                        super.onError(e)
+                        continuation.resumeWith(Result.failure(SignException(e.message ?: "")))
+                    }
                 })
         }
 

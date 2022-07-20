@@ -146,6 +146,15 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        ActivityUtils.getActivityList().forEach {
+            if (it !is DevicePanelActivity) {
+                it.onBackPressed()
+            }
+        }
+    }
+
     private fun onOpenWallet() {
         mProgress.dismiss()
     }
