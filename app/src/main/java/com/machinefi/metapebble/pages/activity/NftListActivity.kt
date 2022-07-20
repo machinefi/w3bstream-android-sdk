@@ -1,5 +1,6 @@
 package com.machinefi.metapebble.pages.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.machinefi.metapebble.pages.binder.NftEntry
 import com.machinefi.metapebble.pages.binder.NftItemBinder
 import com.machinefi.metapebble.pages.fragment.LoadingFragment
 import com.machinefi.metapebble.utils.AddressUtil
+import com.machinefi.metapebble.utils.RxUtil
 import com.machinefi.metapebble.utils.extension.ellipsis
 import com.machinefi.metapebble.utils.extension.gone
 import com.machinefi.metapebble.utils.extension.updateItem
@@ -25,6 +27,7 @@ import com.machinefi.metapebble.widget.LoadingDialog
 import com.machinefi.metapebble.widget.PromptDialog
 import kotlinx.android.synthetic.main.activity_nft_list.*
 import org.jetbrains.anko.startActivity
+import java.util.concurrent.TimeUnit
 
 class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
 
@@ -47,6 +50,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         PebbleStore.mDevice
     }
 
+    @SuppressLint("CheckResult")
     override fun initView(savedInstanceState: Bundle?) {
         mTvEmptyAddress.text = WalletConnector.walletAddress?.ellipsis(6, 6)
         mTvAddress.text = WalletConnector.walletAddress?.ellipsis(6, 6)
@@ -68,10 +72,16 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
                 }
             }
             setOnItemClickListener { nftEntry ->
+                val approved = AddressUtil.isValidAddress(nftEntry.nft.approved ?: "")
+                val nftWrapper = NftWrapper(
+                    nftEntry.nft.tokenId ?: "",
+                    nftEntry.nft.consumed ?: true,
+                    approved,
+                    nftEntry.contract,
+                    WalletConnector.walletAddress ?: ""
+                )
                 startActivity<NftDetailActivity>(
-                    NftDetailActivity.KEY_TOKEN_ID to nftEntry.nft.tokenId,
-                    NftDetailActivity.KEY_CONTRACT to nftEntry.contract,
-                    NftDetailActivity.KEY_WALLET_ADDRESS to WalletConnector.walletAddress,
+                    NftDetailActivity.KEY_NFT_WRAPPER to nftWrapper,
                 )
             }
         }
@@ -81,11 +91,13 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         mTvDisconnect.setOnClickListener {
             disconnectWallet()
         }
+        RxUtil.clicks(mTvApprove)
+            .throttleFirst(1, TimeUnit.SECONDS)
+            .subscribe {
+                approve()
+            }
         mTvActivate.setOnClickListener {
             activateAndRegister()
-        }
-        mTvApprove.setOnClickListener {
-            approve()
         }
 
         mTvSwitchWallet.setOnClickListener {

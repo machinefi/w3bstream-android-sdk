@@ -137,18 +137,39 @@
         android:adjustViewBounds="true"
         android:src="@mipmap/mask_nft" />
 
-    <TextView
-        android:id="@+id/mTvSwitchWallet"
-        android:layout_width="315dp"
-        android:layout_height="54dp"
+    <FrameLayout
+        android:id="@+id/mFlActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="90dp"
-        android:background="@drawable/shape_stroke_white_r100"
-        android:fontFamily="@font/space_grotesk_bold"
-        android:gravity="center"
-        android:text="@string/activate_meta_pebble"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="90dp">
+
+        <TextView
+            android:id="@+id/mTvApprove"
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_stroke_btn"
+            android:fontFamily="@font/space_grotesk_bold"
+            android:gravity="center"
+            android:text="@string/approve"
+            android:visibility="gone"
+            android:textColor="@color/btn_text_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/mTvActivate"
+            android:layout_width="315dp"
+            android:layout_height="54dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/selector_stroke_btn"
+            android:fontFamily="@font/space_grotesk_bold"
+            android:gravity="center"
+            android:text="@string/activate_meta_pebble"
+            android:textColor="@color/btn_text_color"
+            android:textSize="18sp" />
+
+    </FrameLayout>
 
 </RelativeLayout>

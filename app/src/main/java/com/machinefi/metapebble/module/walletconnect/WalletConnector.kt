@@ -6,6 +6,7 @@ import com.machinefi.metapebble.module.walletconnect.api.WalletConnectKitConfig
 import com.machinefi.metapebble.utils.extension.i
 import com.machinefi.metapebble.utils.extension.safeLet
 import org.walletconnect.Session
+import java.lang.Error
 
 object WalletConnector : Session.Callback {
 
@@ -64,7 +65,7 @@ object WalletConnector : Session.Callback {
             is Session.Status.Approved -> onSessionApproved()
             is Session.Status.Connected -> onSessionConnected()
             is Session.Status.Closed -> onSessionDisconnected()
-            is Session.Status.Error -> onSessionError()
+            is Session.Status.Error -> onSessionError(status.throwable)
             else -> {}
         }
     }
@@ -77,8 +78,10 @@ object WalletConnector : Session.Callback {
         safeLet(walletConnectKit.address, walletConnectKit.chainId, onConnected)
     }
 
-    private fun onSessionError() {
-        this.onConnectError?.invoke()
+    private fun onSessionError(error: Throwable) {
+        if (error is Session.TransportError) {
+            this.onConnectError?.invoke()
+        }
     }
 
     private fun onSessionConnected() {

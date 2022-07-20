@@ -13,30 +13,27 @@ import io.reactivex.SingleTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class RxUtil {
+object RxUtil {
 
-    companion object {
+    fun clicks(view: View?): Observable<String> {
+        return ViewClickObservable(view)
+    }
 
-        fun clicks(view: View?): Observable<String> {
-            return ViewClickObservable(view)
+    fun textChange(view: TextView?): Observable<String> {
+        return TextChangeObservable(view)
+    }
+
+    fun <T> observableSchedulers(): ObservableTransformer<T, T> {
+        return ObservableTransformer<T, T> {
+            it.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
         }
+    }
 
-        fun textChange(view: TextView?): Observable<String> {
-            return TextChangeObservable(view)
-        }
-
-        fun <T> observableSchedulers(): ObservableTransformer<T, T> {
-            return ObservableTransformer<T, T> {
-                it.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-            }
-        }
-
-        fun <T> singleSchedulers(): SingleTransformer<T, T> {
-            return SingleTransformer<T, T> {
-                it.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-            }
+    fun <T> singleSchedulers(): SingleTransformer<T, T> {
+        return SingleTransformer<T, T> {
+            it.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 

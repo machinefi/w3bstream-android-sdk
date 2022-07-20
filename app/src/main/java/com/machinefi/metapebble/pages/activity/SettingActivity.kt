@@ -105,9 +105,14 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             if (!isChecked) {
                 mLlHttpsPreview.visible()
                 mLlServerInput.gone()
+                mIvHttpsReset.gone()
 
                 mLlSocketPreview.visible()
                 mLlSocketInput.gone()
+                mIvSocketReset.gone()
+            } else {
+                mIvHttpsReset.visible()
+                mIvSocketReset.visible()
             }
         }
 

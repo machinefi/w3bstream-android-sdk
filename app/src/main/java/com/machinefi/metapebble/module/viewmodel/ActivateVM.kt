@@ -65,6 +65,8 @@ class ActivateVM @Inject constructor(
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mApproveLd.postValue(tokenId)
+            } else {
+                mApproveLd.postValue(null)
             }
         }
     }
@@ -101,6 +103,8 @@ class ActivateVM @Inject constructor(
 
             if (!response.result?.toString().isNullOrBlank()) {
                 mActivateLd.postValue(tokenId)
+            } else {
+                mActivateLd.postValue(null)
             }
         }
     }

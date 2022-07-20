@@ -302,7 +302,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="26dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -311,7 +311,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="6dp"
                         android:layout_toStartOf="@+id/mIvHttpsReset"
                         android:ellipsize="end"
                         android:fontFamily="@font/space_grotesk_regular"
@@ -326,7 +325,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:adjustViewBounds="true"
                         android:padding="4dp"
                         android:src="@drawable/ic_edit" />
@@ -430,20 +429,19 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/space_grotesk_light"
                     android:includeFontPadding="false"
-                    android:text="@string/socket_url"
+                    android:text="@string/websocket_url"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="26dp">
 
                     <TextView
                         android:id="@+id/mTvSocketPreview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="6dp"
                         android:layout_toStartOf="@+id/mIvSocketReset"
                         android:ellipsize="end"
                         android:fontFamily="@font/space_grotesk_regular"
@@ -458,7 +456,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginStart="6dp"
                         android:adjustViewBounds="true"
                         android:padding="4dp"
                         android:src="@drawable/ic_edit" />

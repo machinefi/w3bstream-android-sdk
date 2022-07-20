@@ -88,5 +88,5 @@
     <string name="connect_error">Unable to connect to your wallet. Please try again later</string>
     <string name="ok">OK</string>
     <string name="https_url">HTTPS URL</string>
-    <string name="socket_url">SOCKET URL</string>
+    <string name="websocket_url">WEBSOCKET URL</string>
 </resources>
