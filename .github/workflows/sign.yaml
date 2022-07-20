@@ -49,6 +49,17 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ap-east-1
           
+      - uses: keithweaver/aws-s3-github-action@v1.0.0
+        name: upload to s3 meta-pebble-release.apk
+        with:
+          command: cp
+          source: ${{steps.sign_app.outputs.signedReleaseFile}}
+          destination: s3://metapebble/meta-pebble/meta-pebble-release.apk
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ap-east-1
+          
+          
       - name: Upload binaries to release
         if: github.ref_name != 'main'
         uses: svenstaro/upload-release-action@v2
