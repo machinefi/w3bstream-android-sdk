@@ -40,6 +40,42 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:827858325222:android:f73f99c3ff528eb1f37527",
+        "android_client_info": {
+          "package_name": "com.machinefi.metapebble.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "827858325222-0javo08rvhcb7tqf35h4cgc5467qev5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO1tdTzJKVYTYjPV7bqDP2-lEsvdctDJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "827858325222-0javo08rvhcb7tqf35h4cgc5467qev5s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "827858325222-497alr2gs931todj91s8ps3h53npdqbc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.machinefi.metapebble.dev"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
