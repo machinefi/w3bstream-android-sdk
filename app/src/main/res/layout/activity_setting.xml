@@ -308,7 +308,7 @@
 
                     <TextView
                         android:id="@+id/mTvHttpsPreview"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/mIvHttpsReset"
@@ -439,7 +439,7 @@
 
                     <TextView
                         android:id="@+id/mTvSocketPreview"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/mIvSocketReset"

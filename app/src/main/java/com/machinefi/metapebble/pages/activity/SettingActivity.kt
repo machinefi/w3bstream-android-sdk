@@ -1,5 +1,6 @@
 package com.machinefi.metapebble.pages.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.RegexUtils
@@ -11,13 +12,16 @@ import com.machinefi.metapebble.module.manager.PebbleManager
 import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.utils.GPS_PRECISION
 import com.machinefi.metapebble.utils.INTERVAL_SEND_DATA
+import com.machinefi.metapebble.utils.RxUtil
 import com.machinefi.metapebble.utils.extension.gone
+import com.machinefi.metapebble.utils.extension.i
 import com.machinefi.metapebble.utils.extension.isValidUrl
 import com.machinefi.metapebble.utils.extension.visible
 import com.machinefi.metapebble.widget.PickerDialog
 import com.machinefi.metapebble.widget.PickerItemData
 import com.machinefi.metapebble.widget.ServerDialog
 import kotlinx.android.synthetic.main.activity_setting.*
+import java.util.concurrent.TimeUnit
 
 class SettingActivity : BaseActivity(R.layout.activity_setting) {
 
@@ -99,6 +103,7 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
         initServer()
     }
 
+    @SuppressLint("CheckResult")
     private fun initServer() {
         mSbServer.isChecked = SPUtils.getInstance().getBoolean(SP_KEY_SERVER_CHECKED, true)
         mSbServer.setOnCheckedChangeListener { view, isChecked ->
@@ -126,17 +131,22 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             mLlServerInput.visible()
         }
         mLlHttpsRefresh.setOnClickListener {
-            val url = RegexUtils.getReplaceAll(mEtHttps.text.trim().toString().lowercase(), "/*$", "")
-            if (url.isValidUrl()) {
-                mTvHttpsError.gone()
-                mTvHttpsPreview.text = url
-                SPUtils.getInstance().put(SP_KEY_HTTPS_URL, url)
-                mLlHttpsPreview.visible()
-                mLlServerInput.gone()
-            } else {
-                mTvHttpsError.visible()
-            }
+            mEtHttps.setText(URL_HTTPS_SERVER)
+            mTvHttpsPreview.text = URL_HTTPS_SERVER
         }
+        RxUtil.textChange(mEtHttps)
+            .debounce(600, TimeUnit.MILLISECONDS)
+            .compose(RxUtil.observableSchedulers())
+            .subscribe {
+                val url = RegexUtils.getReplaceAll(it.lowercase(), "/*$", "")
+                if (url.isValidUrl()) {
+                    mTvHttpsError.gone()
+                    mTvHttpsPreview.text = url
+                    SPUtils.getInstance().put(SP_KEY_HTTPS_URL, url)
+                } else {
+                    mTvHttpsError.visible()
+                }
+            }
 
         val socketUrl = SPUtils.getInstance().getString(SP_KEY_SOCKET_URL, URL_SOCKET_SERVER)
         mTvSocketPreview.text = socketUrl
@@ -147,17 +157,22 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             mLlSocketInput.visible()
         }
         mLlSocketRefresh.setOnClickListener {
-            val url = RegexUtils.getReplaceAll(mEtSocket.text.trim().toString().lowercase(), "/*$", "")
-            if (url.isValidUrl()) {
-                mTvSocketError.gone()
-                mTvSocketPreview.text = url
-                SPUtils.getInstance().put(SP_KEY_SOCKET_URL, url)
-                mLlSocketPreview.visible()
-                mLlSocketInput.gone()
-            } else {
-                mTvSocketError.visible()
-            }
+            mEtSocket.setText(URL_SOCKET_SERVER)
+            mTvSocketPreview.text = URL_SOCKET_SERVER
         }
+        RxUtil.textChange(mEtSocket)
+            .debounce(600, TimeUnit.MILLISECONDS)
+            .compose(RxUtil.observableSchedulers())
+            .subscribe {
+                val url = RegexUtils.getReplaceAll(it.lowercase(), "/*$", "")
+                if (url.isValidUrl()) {
+                    mTvSocketError.gone()
+                    mTvSocketPreview.text = url
+                    SPUtils.getInstance().put(SP_KEY_SOCKET_URL, url)
+                } else {
+                    mTvSocketError.visible()
+                }
+            }
     }
 
     private fun getFrequencyCurrentItem(): PickerItemData? {

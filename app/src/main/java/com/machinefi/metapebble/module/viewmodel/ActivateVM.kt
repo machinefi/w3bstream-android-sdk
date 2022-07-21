@@ -18,10 +18,7 @@ import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import com.machinefi.metapebble.utils.extension.e
 import com.machinefi.metapebble.utils.extension.toHexByteArray
 import com.machinefi.pebblekit.common.request.SignPebbleResult
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import org.web3j.abi.TypeEncoder
@@ -54,7 +51,7 @@ class ActivateVM @Inject constructor(
     }
 
     fun approveRegistration(tokenId: String) {
-        viewModelScope.launch {
+        GlobalScope.launch {
             val registerContract = mAppRepo.queryContractByName(CONTRACT_KEY_REGISTER)?.address ?: return@launch
             val nftContract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address ?: return@launch
             val signData = FunctionSignData.getApproveRegistrationDate(registerContract, tokenId)

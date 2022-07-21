@@ -10,7 +10,7 @@ const val CONTRACT_KEY_REGISTER_RESULT = "register_result"
 
 //const val URL_HTTPS_SERVER = "https://trustream-http.onrender.com/api/data"
 const val URL_HTTPS_SERVER = "https://w3w3bstream-example.onrender.com/api/data"
-const val URL_SOCKET_SERVER = "wss://w3w3bstream-example.onrender.com/"
+const val URL_SOCKET_SERVER = "wss://w3w3bstream-example.onrender.com"
 
 const val HTTP_HOST = "https://auth.metapebble.app"
 
