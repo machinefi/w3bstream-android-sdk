@@ -51,7 +51,7 @@ class ActivateVM @Inject constructor(
     }
 
     fun approveRegistration(tokenId: String) {
-        GlobalScope.launch {
+        viewModelScope.launch {
             val registerContract = mAppRepo.queryContractByName(CONTRACT_KEY_REGISTER)?.address ?: return@launch
             val nftContract = mAppRepo.queryContractByName(CONTRACT_KEY_NFT)?.address ?: return@launch
             val signData = FunctionSignData.getApproveRegistrationDate(registerContract, tokenId)
