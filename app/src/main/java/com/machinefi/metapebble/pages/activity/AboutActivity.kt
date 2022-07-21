@@ -1,6 +1,7 @@
 package com.machinefi.metapebble.pages.activity
 
 import android.os.Bundle
+import com.blankj.utilcode.util.AppUtils
 import com.machinefi.core.base.BaseActivity
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.constant.PebbleStore
@@ -16,7 +17,8 @@ class AboutActivity: BaseActivity(R.layout.activity_about) {
     override fun initView(savedInstanceState: Bundle?) {
         mTvImei.text = " ${mDevice?.imei}"
         mTvSn.text = "${mDevice?.sn}"
-        mTvVersion.text = "Developer Preview V1.0.0"
+        mTvVersion.text = AppUtils.getAppVersionName()
+//        mTvVersion.text = "Developer Preview V1.0.0"
 //        mTvAddress.text = "${EncryptUtil.formatAddress(mDevice?.address ?: "").ellipsis(6, 8)}"
 
 //        mIvImeiCopy.setOnClickListener {

@@ -14,4 +14,4 @@ const val URL_SOCKET_SERVER = "wss://w3w3bstream-example.onrender.com/"
 
 const val HTTP_HOST = "https://auth.metapebble.app"
 
-const val APK_DOWNLOAD_URL = "https://metapebble.s3.ap-east-1.amazonaws.com/meta-pebble/meta-pebble-v1.0.0_developer.apk"
+const val APK_DOWNLOAD_URL = "https://iopay-app.s3.amazonaws.com/iopay-release.apk"

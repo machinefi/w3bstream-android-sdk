@@ -33,7 +33,7 @@ abstract class BaseDialog(val context: Context, resId: Int) {
         return mContentView.findViewById(id)
     }
 
-    fun cancellableOnTouchOutside(cancellable: Boolean) = apply {
+    open fun cancellableOnTouchOutside(cancellable: Boolean) = apply {
         mDialog.setCanceledOnTouchOutside(cancellable)
     }
 

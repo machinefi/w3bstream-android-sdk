@@ -11,6 +11,7 @@ import com.machinefi.core.base.BaseActivity
 import com.machinefi.metapebble.R
 import com.machinefi.metapebble.constant.PebbleStore
 import com.machinefi.metapebble.module.viewmodel.ActivateVM
+import com.machinefi.metapebble.module.viewmodel.AppVM
 import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.module.walletconnect.WalletConnector
 import com.machinefi.metapebble.utils.extension.*
@@ -27,9 +28,11 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     private val mActivateVM by lazy {
         ViewModelProvider(this, mVmFactory)[ActivateVM::class.java]
     }
-
     private val mPebbleVM by lazy {
         ViewModelProvider(this, mVmFactory)[PebbleVM::class.java]
+    }
+    private val mAppVM by lazy {
+        ViewModelProvider(this, mVmFactory)[AppVM::class.java]
     }
 
     private val mProgress by lazy {
@@ -109,6 +112,7 @@ class DevicePanelActivity : BaseActivity(R.layout.activity_device_panel) {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+        mAppVM.checkUpdate()
         mActivateVM.queryActivatedResult(mDevice?.imei ?: "")
         WalletConnector.init(::onConnected, ::onDisconnected, ::onOpenWallet, ::onConnectError)
         mTvActivate.setOnClickListener {

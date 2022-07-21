@@ -13,6 +13,12 @@ static def generateVersionCode() {
     return result.toInteger()
 }
 
+static def tag() {
+    def result = "git describe --abbrev=0".execute().text.trim()
+    if (result.empty) result = ""
+    return result
+}
+
 android {
     compileSdk 31
 
@@ -21,7 +27,7 @@ android {
         minSdk 24
         targetSdk 32
         versionCode generateVersionCode()
-        versionName "INTERNAL_BUILD (${generateVersionCode()})"
+        versionName "v0.1 (${generateVersionCode()})"
         flavorDimensions "updater"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
