@@ -12,6 +12,7 @@ import com.machinefi.metapebble.module.viewmodel.PebbleVM
 import com.machinefi.metapebble.utils.GPS_PRECISION
 import com.machinefi.metapebble.utils.INTERVAL_SEND_DATA
 import com.machinefi.metapebble.utils.extension.gone
+import com.machinefi.metapebble.utils.extension.isValidUrl
 import com.machinefi.metapebble.utils.extension.visible
 import com.machinefi.metapebble.widget.PickerDialog
 import com.machinefi.metapebble.widget.PickerItemData
@@ -125,8 +126,8 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             mLlServerInput.visible()
         }
         mLlHttpsRefresh.setOnClickListener {
-            val url = mEtHttps.text.trim().toString()
-            if (RegexUtils.isURL(url)) {
+            val url = RegexUtils.getReplaceAll(mEtHttps.text.trim().toString().lowercase(), "/*$", "")
+            if (url.isValidUrl()) {
                 mTvHttpsError.gone()
                 mTvHttpsPreview.text = url
                 SPUtils.getInstance().put(SP_KEY_HTTPS_URL, url)
@@ -146,8 +147,8 @@ class SettingActivity : BaseActivity(R.layout.activity_setting) {
             mLlSocketInput.visible()
         }
         mLlSocketRefresh.setOnClickListener {
-            val url = mEtSocket.text.trim().toString()
-            if (RegexUtils.isURL(url)) {
+            val url = RegexUtils.getReplaceAll(mEtSocket.text.trim().toString().lowercase(), "/*$", "")
+            if (url.isValidUrl()) {
                 mTvSocketError.gone()
                 mTvSocketPreview.text = url
                 SPUtils.getInstance().put(SP_KEY_SOCKET_URL, url)

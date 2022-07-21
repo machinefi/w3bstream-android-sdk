@@ -1,6 +1,7 @@
 package com.machinefi.metapebble.utils.extension
 
 import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
 import org.web3j.utils.Convert
 import org.web3j.utils.Numeric
@@ -53,3 +54,10 @@ fun String.ellipsis(before: Int, after: Int): String {
 fun String.toWei(unit: Convert.Unit = Convert.Unit.ETHER): BigDecimal = Convert.toWei(this, unit)
 
 fun String.cleanHexPrefix(): String = Numeric.cleanHexPrefix(this)
+
+fun String.isValidUrl(): Boolean {
+    val head = "((http|https)://)?([(w|W)]{3}+\\.)?"
+    val tail = "\\.+[A-Za-z]{2,3}+(\\.)?+(/(.)*)?"
+    val urlRegEx = "$head+(.)+$tail"
+    return RegexUtils.isMatch(urlRegEx, this)
+}

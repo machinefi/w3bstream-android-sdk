@@ -60,16 +60,7 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
         }
         val binder = NftItemBinder().apply {
             setOnSelectedListener {
-                mSelectedNft = it
-                mTvApprove.isEnabled = true
-                mTvActivate.isEnabled = true
-                if (AddressUtil.isValidAddress(it.nft.approved ?: "")) {
-                    mTvApprove.gone()
-                    mTvActivate.visible()
-                } else {
-                    mTvApprove.visible()
-                    mTvActivate.gone()
-                }
+                selectNft(it)
             }
             setOnItemClickListener { nftEntry ->
                 val approved = AddressUtil.isValidAddress(nftEntry.nft.approved ?: "")
@@ -110,6 +101,19 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
                 Uri.parse("iopay://io.iotex.iopay/open?action=web&url=https://metapebble.app/faucet")
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             applicationContext.startActivity(intent)
+        }
+    }
+
+    private fun selectNft(nftEntry: NftEntry) {
+        mSelectedNft = nftEntry
+        mTvApprove.isEnabled = true
+        mTvActivate.isEnabled = true
+        if (AddressUtil.isValidAddress(nftEntry.nft.approved ?: "")) {
+            mTvApprove.gone()
+            mTvActivate.visible()
+        } else {
+            mTvApprove.visible()
+            mTvActivate.gone()
         }
     }
 
@@ -182,6 +186,10 @@ class NftListActivity : BaseActivity(R.layout.activity_nft_list) {
 
     override fun registerObserver() {
         mPebbleVM.mNftListLD.observe(this) {
+            mSelectedNft = it?.firstOrNull { nftEntry ->
+                nftEntry.nft.tokenId == mSelectedNft?.nft?.tokenId
+            }
+            mSelectedNft?.selected = true
             mSrlContent.isRefreshing = false
             if (!it.isNullOrEmpty()) {
                 mTlContentContainer.visible()

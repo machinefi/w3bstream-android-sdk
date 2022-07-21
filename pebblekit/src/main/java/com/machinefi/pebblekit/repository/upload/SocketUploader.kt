@@ -35,8 +35,6 @@ internal class SocketUploader(
         return withContext(Dispatchers.IO) {
             kotlin.runCatching {
                 LogUtils.i("url", url)
-//                val ip = InetAddress.getByName(url).hostAddress
-//                LogUtils.i("ip", ip)
                 val info = ConnectionInfo(url, 443)
                 OkSocket.open(info).apply {
                     this.registerReceiver(object : SocketActionAdapter() {
