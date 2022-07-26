@@ -1,13 +1,10 @@
 # webstream-android-framework
-______
 
 ## Integration
-_____
 Import `PebbleKit` into your project as a module, and sync you project.
 
 
 ## Usage
-_____
 ### Init
 
 ```
