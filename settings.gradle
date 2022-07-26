@@ -1,5 +1,3 @@
-rootProject.name = "pebble-android"
+rootProject.name = "webstream-android-framework"
 include ':app'
-include ':core'
-include ':walletconnect'
 include ':pebblekit'

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.machinefi.metapebble"
+    package="com.machinefi.sample"
     tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -13,74 +13,20 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".app.PebbleApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logo_large"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_logo_large"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".pages.activity.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/app_launcher">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".pages.activity.DevicePanelActivity"
-            android:label="@string/device"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".pages.activity.AboutActivity"
-            android:label="@string/about"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.SettingActivity"
-            android:label="@string/settings"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.HistoryActivity"
-            android:label="@string/history"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.CreateActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.OwnershipActivity"
-            android:label="@string/ownership"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.TransferOwnershipActivity"
-            android:label="@string/transfer_ownership"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.NftListActivity"
-            android:label="@string/meta_pebble_nfts"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.NftDetailActivity"
-            android:label="@string/meta_pebble_nft"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".pages.activity.ActivateCompleteActivity"
-            android:label="@string/device"
-            android:screenOrientation="portrait" />
-        <activity android:name=".pages.activity.DeeplinkActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <data android:scheme="source" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
         </activity>
 

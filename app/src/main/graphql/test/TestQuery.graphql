@@ -1,8 +1,0 @@
-query Record($imei: String!, $limit: Int, $offset: Int) {
-  pebble_device_record(where: {imei: {_eq: $imei}}, order_by: {timestamp: desc}, limit: $limit, offset: $offset) {
-    imei
-    latitude
-    longitude
-    timestamp
-  }
-}
