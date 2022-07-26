@@ -35,7 +35,7 @@ internal class HttpUploader(
         val requestBody =
             Gson().toJson(body)
                 .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        val url = SPUtils.getInstance().getString(SP_KEY_HTTPS_SERVER, config.httpsUploadUrl)
+        val url = SPUtils.getInstance().getString(SP_KEY_HTTPS_SERVER, config.httpsUploadApi)
         apiService.uploadMetadata(url, requestBody)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

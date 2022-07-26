@@ -38,7 +38,7 @@ internal class PebbleKitModule(config: PebbleKitConfig) {
     }
 
     private val apiService by lazy {
-        Retrofit.Builder().baseUrl(config.host)
+        Retrofit.Builder().baseUrl(config.authServer)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))

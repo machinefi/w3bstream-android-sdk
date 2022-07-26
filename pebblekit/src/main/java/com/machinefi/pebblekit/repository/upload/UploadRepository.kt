@@ -27,8 +27,8 @@ internal class UploadRepository(
 
     @SuppressLint("CheckResult")
     private fun polling(callback: () -> Unit) {
-        val interval = SPUtils.getInstance(SP_NAME).getInt(SP_KEY_UPLOAD_FREQUENCY, INTERVAL_SEND_DATA)
-        Observable.interval(0, interval.toLong(), TimeUnit.MINUTES)
+        val interval = SPUtils.getInstance(SP_NAME).getLong(SP_KEY_UPLOAD_FREQUENCY, INTERVAL_SEND_DATA)
+        Observable.interval(0, interval, TimeUnit.MILLISECONDS)
             .doOnSubscribe {
                 pollingComposite.add(it)
             }
@@ -54,16 +54,16 @@ internal class UploadRepository(
         webSocketUploader.close()
     }
 
-    override fun uploadFrequency(frequency: Int) {
-        SPUtils.getInstance(SP_NAME).put(SP_KEY_UPLOAD_FREQUENCY, frequency)
+    override fun uploadFrequency(mills: Long) {
+        SPUtils.getInstance(SP_NAME).put(SP_KEY_UPLOAD_FREQUENCY, mills)
     }
 
-    override fun httpsServerUrl(url: String) {
-        SPUtils.getInstance(SP_NAME).put(SP_KEY_HTTPS_SERVER, url)
+    override fun httpsServerApi(api: String) {
+        SPUtils.getInstance(SP_NAME).put(SP_KEY_HTTPS_SERVER, api)
     }
 
-    override fun socketServerUrl(url: String) {
-        SPUtils.getInstance(SP_NAME).put(SP_KEY_SOCKET_SERVER, url)
-        webSocketUploader.resume(url)
+    override fun socketServerApi(api: String) {
+        SPUtils.getInstance(SP_NAME).put(SP_KEY_SOCKET_SERVER, api)
+        webSocketUploader.resume(api)
     }
 }

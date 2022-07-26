@@ -1,6 +1,6 @@
 package com.machinefi.pebblekit.repository.upload
 
-internal const val INTERVAL_SEND_DATA = 5
+internal const val INTERVAL_SEND_DATA = 5000L
 
 internal interface UploadManager {
 
@@ -8,9 +8,9 @@ internal interface UploadManager {
 
     fun stopUploading()
 
-    fun uploadFrequency(frequency: Int)
+    fun uploadFrequency(mills: Long)
 
-    fun httpsServerUrl(url: String)
+    fun httpsServerApi(api: String)
 
-    fun socketServerUrl(url: String)
+    fun socketServerApi(api: String)
 }

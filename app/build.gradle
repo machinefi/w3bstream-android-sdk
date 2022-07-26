@@ -52,20 +52,16 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(path: ':pebblekit')
 
-    //test
-    testApi 'junit:junit:4.13.2'
-    androidTestApi 'androidx.test.ext:junit:1.1.3'
-    androidTestApi 'androidx.test.espresso:espresso-core:3.4.0'
-
     //core
-    api 'androidx.core:core-ktx:1.7.0'
-    api 'androidx.appcompat:appcompat:1.4.1'
-    api 'androidx.activity:activity-ktx:1.4.0'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
     //noinspection LifecycleAnnotationProcessorWithJava8
     kapt 'androidx.lifecycle:lifecycle-compiler:2.3.1'
-    api 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
-    api 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1'
-
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.3.1'
+    implementation 'com.blankj:utilcodex:1.31.0'
+    implementation 'com.google.code.gson:gson:2.8.8'
 }

@@ -39,7 +39,7 @@ class WebSocketUploader(
     }
 
     private fun initSocketClient() {
-        val url = SPUtils.getInstance().getString(SP_KEY_SOCKET_SERVER, config.socketUploadUrl)
+        val url = SPUtils.getInstance().getString(SP_KEY_SOCKET_SERVER, config.webSocketUploadApi)
         client = createClient(url)
     }
 
