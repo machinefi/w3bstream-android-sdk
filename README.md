@@ -37,7 +37,7 @@ Import `PebbleKit` into your project as a module, and sync you project.
 ### Upload data
 ```
 	pebbleKit.startUploading {
-	    return@startUploading "{}"
+	    return@startUploading "{"imei":"100374242236884","latitude":34.09589161,"location":106.42410187}"
 	}
 ```
 TIPS: The type of data must be json string
