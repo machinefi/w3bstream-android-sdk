@@ -47,6 +47,11 @@ TIPS: The type of data must be json string
 
 
 ### Other
+Sign the device
+```
+pebbleKit.sign(imei, sn, pubKey)
+```
+
 Set the server for uploading data
 ```
 pebbleKit.httpsServerApi(api)
