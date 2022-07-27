@@ -2,7 +2,7 @@ package com.machinefi.pebblekit.repository.upload
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.SPUtils
-import com.machinefi.pebblekit.api.PebbleKitConfig
+import com.machinefi.pebblekit.api.W3bstreamKitConfig
 import com.machinefi.pebblekit.common.request.ApiService
 import com.machinefi.pebblekit.constant.SP_KEY_HTTPS_SERVER
 import com.machinefi.pebblekit.constant.SP_KEY_SOCKET_SERVER
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 internal class UploadRepository(
     apiService: ApiService,
-    val config: PebbleKitConfig
+    val config: W3bstreamKitConfig
 ): UploadManager {
 
     private var pollingComposite = CompositeDisposable()

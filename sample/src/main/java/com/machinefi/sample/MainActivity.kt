@@ -6,30 +6,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.PermissionUtils
-import com.blankj.utilcode.util.TimeUtils
-import com.machinefi.pebblekit.api.PebbleKit
-import com.machinefi.pebblekit.api.PebbleKitConfig
+import com.machinefi.pebblekit.api.W3bstreamKit
+import com.machinefi.pebblekit.api.W3bstreamKitConfig
 import com.machinefi.pebblekit.repository.device.Device
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-const val AUTH_HOST = ""
-const val HTTPS_UPLOAD_API = ""
-const val WEB_SOCKET_UPLOAD_API = ""
+const val AUTH_HOST = "Your host"
+const val HTTPS_UPLOAD_API = "Your https server"
+const val WEB_SOCKET_UPLOAD_API = "Your WebSocket server"
 
 class MainActivity : AppCompatActivity() {
 
     private val config by lazy {
-        PebbleKitConfig(
+        W3bstreamKitConfig(
             AUTH_HOST,
             HTTPS_UPLOAD_API,
             WEB_SOCKET_UPLOAD_API
         )
     }
 
-    private val pebbleKit by lazy {
-        PebbleKit.Builder(config).build()
+    private val w3bstreamKit by lazy {
+        W3bstreamKit.Builder(config).build()
     }
 
     private lateinit var device: Device
@@ -49,13 +48,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         mBtnStopUpload.setOnClickListener {
-            pebbleKit.stopUploading()
+            w3bstreamKit.stopUploading()
         }
     }
 
     private fun create() {
         lifecycleScope.launch {
-            device = pebbleKit.createDevice()
+            device = w3bstreamKit.createDevice()
             mTvImei.text = "IMEI:${device.imei}"
             mTvSn.text = "SN:${device.sn}"
             mBtnCreate.visibility = View.GONE
@@ -79,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun uploadData(imei: String) {
-        pebbleKit.startUploading {
+        w3bstreamKit.startUploading {
             val location = GPSUtil.getLocation()
             mTvLocation.text = "lat:${location?.latitude}  long:${location?.longitude}"
             val jsonObj = JSONObject()

@@ -3,7 +3,7 @@ package com.machinefi.pebblekit.repository.upload
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.machinefi.pebblekit.api.PebbleKitConfig
+import com.machinefi.pebblekit.api.W3bstreamKitConfig
 import com.machinefi.pebblekit.common.request.ApiService
 import com.machinefi.pebblekit.common.request.UploadDataBody
 import com.machinefi.pebblekit.constant.SP_KEY_HTTPS_SERVER
@@ -18,7 +18,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 internal class HttpUploader(
     val apiService: ApiService,
-    val config: PebbleKitConfig
+    val config: W3bstreamKitConfig
 ) : UploadService {
 
     override fun uploadData(json: String) {
@@ -36,6 +36,7 @@ internal class HttpUploader(
             Gson().toJson(body)
                 .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
         val url = SPUtils.getInstance().getString(SP_KEY_HTTPS_SERVER, config.httpsUploadApi)
+        if (url.isNullOrBlank()) return
         apiService.uploadMetadata(url, requestBody)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

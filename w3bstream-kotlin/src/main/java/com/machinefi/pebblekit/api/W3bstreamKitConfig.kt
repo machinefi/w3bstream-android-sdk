@@ -1,6 +1,6 @@
 package com.machinefi.pebblekit.api
 
-class PebbleKitConfig(
+class W3bstreamKitConfig(
     val authServer: String,
     val httpsUploadApi: String,
     val webSocketUploadApi: String,

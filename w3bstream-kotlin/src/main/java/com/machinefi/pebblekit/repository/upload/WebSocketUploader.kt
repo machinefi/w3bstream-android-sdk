@@ -5,30 +5,25 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
-import com.machinefi.pebblekit.api.PebbleKitConfig
+import com.machinefi.pebblekit.api.W3bstreamKitConfig
 import com.machinefi.pebblekit.common.request.JSONRpcBody
 import com.machinefi.pebblekit.common.request.JSONRpcParams
 import com.machinefi.pebblekit.common.request.UploadDataBody
 import com.machinefi.pebblekit.constant.SP_KEY_IMEI
 import com.machinefi.pebblekit.constant.SP_KEY_SOCKET_SERVER
-import com.machinefi.pebblekit.constant.SP_KEY_UPLOAD_FREQUENCY
 import com.machinefi.pebblekit.constant.SP_NAME
 import com.machinefi.pebblekit.uitls.KeystoreUtil
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
 import java.lang.Exception
 import java.net.URI
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.thread
 
 class WebSocketUploader(
-    val config: PebbleKitConfig
+    val config: W3bstreamKitConfig
 ): UploadService {
 
     private var client: WebSocketClient? = null
@@ -40,6 +35,7 @@ class WebSocketUploader(
 
     private fun initSocketClient() {
         val url = SPUtils.getInstance().getString(SP_KEY_SOCKET_SERVER, config.webSocketUploadApi)
+        if (url.isNullOrBlank()) return
         client = createClient(url)
     }
 

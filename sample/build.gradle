@@ -50,7 +50,7 @@ androidExtensions {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation project(path: ':pebblekit')
+    implementation project(path: ':w3bstream-kotlin')
 
     //core
     implementation 'androidx.core:core-ktx:1.7.0'

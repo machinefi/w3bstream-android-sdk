@@ -4,7 +4,7 @@ import com.machinefi.pebblekit.repository.device.DeviceManager
 import com.machinefi.pebblekit.repository.sign.SignManager
 import com.machinefi.pebblekit.repository.upload.UploadManager
 
-class PebbleKit private constructor(
+class W3bstreamKit private constructor(
     uploadManager: UploadManager,
     deviceManager: DeviceManager,
     signManager: SignManager,
@@ -16,14 +16,14 @@ class PebbleKit private constructor(
 
     }
 
-    class Builder(config: PebbleKitConfig) {
+    class Builder(config: W3bstreamKitConfig) {
 
-        private val pebbleKitModule = PebbleKitModule(config)
+        private val w3bstreamKitModule = W3bstreamKitModule(config)
 
-        fun build() = PebbleKit(
-            pebbleKitModule.uploadManager,
-            pebbleKitModule.deviceManager,
-            pebbleKitModule.signManager
+        fun build() = W3bstreamKit(
+            w3bstreamKitModule.uploadManager,
+            w3bstreamKitModule.deviceManager,
+            w3bstreamKitModule.signManager
         )
     }
 
