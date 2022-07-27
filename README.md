@@ -1,7 +1,7 @@
 # webstream-android-framework
 
 ## Integration
-Import `PebbleKit` into your project as a module, and sync you project.
+Import `w3bstream-kotlin` into your project as a module, and sync you project.
 
 
 ## Usage
@@ -9,15 +9,15 @@ Import `PebbleKit` into your project as a module, and sync you project.
 
 ```
     private val config by lazy {
-        PebbleKitConfig(
+        W3bstreamKitConfig(
             AUTH_HOST,
             HTTPS_UPLOAD_API,
             WEB_SOCKET_UPLOAD_API
         )
     }
 
-    private val pebbleKit by lazy {
-        PebbleKit.Builder(config).build()
+    private val w3bstreamKit by lazy {
+        W3bstreamKit.Builder(config).build()
     }
 ```
 
@@ -26,7 +26,7 @@ Import `PebbleKit` into your project as a module, and sync you project.
 ```
     private fun create() {
         lifecycleScope.launch {
-            val device = pebbleKit.createDevice()
+            val device = w3bstreamKit.createDevice()
             mTvImei.text = "IMEI:${device.imei}"
             mTvSn.text = "SN:${device.sn}"
         }
@@ -36,7 +36,7 @@ Import `PebbleKit` into your project as a module, and sync you project.
 
 ### Upload data
 ```
-	pebbleKit.startUploading {
+	w3bstreamKit.startUploading {
 	    return@startUploading "{"imei":"100374242236884","latitude":34.09589161,"location":106.42410187}"
 	}
 ```
@@ -46,16 +46,16 @@ TIPS: The type of data must be json string
 ### Other
 Sign the device
 ```
-pebbleKit.sign(imei, sn, pubKey)
+w3bstreamKit.sign(imei, sn, pubKey)
 ```
 
 Set the server for uploading data
 ```
-pebbleKit.httpsServerApi(api)
-pebbleKit.socketServerApi(api)
+w3bstreamKit.httpsServerApi(api)
+w3bstreamKit.socketServerApi(api)
 ```
 
 Set the interval for uploading data
 ```
-pebbleKit.uploadFrequency(mills)
+w3bstreamKit.uploadFrequency(mills)
 ```
