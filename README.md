@@ -57,5 +57,5 @@ w3bStreamKit.setWebSocketServerApi(api)
 
 Set the interval for uploading data
 ```
-w3bstreamKit.setUploadInterval(seconds)
+w3bStreamKit.setUploadInterval(seconds)
 ```
