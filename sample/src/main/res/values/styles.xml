@@ -7,5 +7,10 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/AppTheme.buttonStyle</item>
+    </style>
+
+    <style name="AppTheme.buttonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 </resources>

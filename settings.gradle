@@ -1,3 +1,3 @@
 rootProject.name = "webstream-android-framework"
 include ':sample'
-include ':w3bstream-kotlin'
+include ':w3bstream'
