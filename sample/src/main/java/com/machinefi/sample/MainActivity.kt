@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.math.BigDecimal
 
-const val AUTH_HOST = "Your host"
 const val HTTPS_UPLOAD_API = "Your https server"
 const val WEB_SOCKET_UPLOAD_API = "Your WebSocket server"
 
@@ -26,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     private val config by lazy {
         W3bStreamKitConfig(
-            AUTH_HOST,
             HTTPS_UPLOAD_API,
             WEB_SOCKET_UPLOAD_API
         )

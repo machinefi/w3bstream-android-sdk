@@ -44,11 +44,6 @@ TIPS: The type of data must be json string
 
 
 ### Other
-Sign the device
-```
-w3bStreamKit.sign(imei, sn, pubKey)
-```
-
 Set the server for uploading data
 ```
 w3bStreamKit.setHttpsServerApi(api)

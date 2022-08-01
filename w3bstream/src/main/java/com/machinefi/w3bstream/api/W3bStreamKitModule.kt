@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.interceptor.GlobalInterceptor
 import com.machinefi.w3bstream.repository.device.DeviceRepository
-import com.machinefi.w3bstream.repository.sign.SignRepository
 import com.machinefi.w3bstream.repository.upload.UploadRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -17,9 +16,6 @@ import java.util.concurrent.TimeUnit
 internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
 
     init {
-        if (config.authServer.isBlank()) {
-            throw IllegalArgumentException("The parameter authServer cannot be an empty")
-        }
         if (config.httpsUploadApi.isBlank()) {
             throw IllegalArgumentException("The parameter httpsUploadApi cannot be an empty")
         }
@@ -50,7 +46,7 @@ internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
 
     private val apiService by lazy {
         val builder = Retrofit.Builder()
-            .baseUrl(config.authServer)
+            .baseUrl(config.httpsUploadApi)
             .client(okHttpClient)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
@@ -64,10 +60,6 @@ internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
 
     val deviceManager by lazy {
         DeviceRepository()
-    }
-
-    val signManager by lazy {
-        SignRepository(apiService)
     }
 
 }
