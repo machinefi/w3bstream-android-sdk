@@ -5,6 +5,8 @@ Import `w3bstream` into your project as a module, and sync you project.
 
 
 ## Usage
+TIPS: Android emulator does not support location service, please use a real machine to test.
+
 ### Init
 
 ```
