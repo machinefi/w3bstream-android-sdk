@@ -5,26 +5,31 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.constant.PermissionConstants
-import com.blankj.utilcode.util.*
-import com.machinefi.sample.utils.*
-import com.machinefi.w3bstream.api.W3bStreamKit
-import com.machinefi.w3bstream.api.W3bStreamKitConfig
+import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.TimeUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.machinefi.sample.utils.GPSUtil
+import com.machinefi.sample.utils.RandomUtil
+import com.machinefi.sample.utils.RxUtil
+import com.machinefi.sample.utils.ShakeUtil
+import com.machinefi.w3bstream.W3bStreamKit
+import com.machinefi.w3bstream.W3bStreamKitConfig
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 
-const val SIGN_API= "Your sign api"
-const val SERVER_API = "Your server api"
+const val SIGN_API= "https://w3w3bstream-example.onrender.com/api/sign/"
+const val SERVER_API = "https://w3w3bstream-example.onrender.com/api/data/"
 const val KEY_SHAKE_COUNT = "key_shake_count"
 const val KEY_IMEI = "key_imei"
 const val KEY_SN = "key_sn"
 const val KEY_HISTORY = "key_history"
-const val KEY_INTERVAL = "key_interval"
 class MainActivity : AppCompatActivity() {
 
     private val config by lazy {
@@ -38,7 +43,10 @@ class MainActivity : AppCompatActivity() {
         W3bStreamKit.Builder(config).build()
     }
 
+    private var pollingComposite = CompositeDisposable()
+
     private var shakeCount = 0
+    private var interval = 30L
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,13 +56,16 @@ class MainActivity : AppCompatActivity() {
         val imei = SPUtils.getInstance().getString(KEY_IMEI)
         if (!imei.isNullOrBlank()) {
             mEtImei.setText(imei)
+        } else {
+            mEtImei.setText(RandomUtil.number(15))
         }
         val sn = SPUtils.getInstance().getString(KEY_SN)
         if (!sn.isNullOrBlank()) {
             mEtSn.setText(sn)
+        } else {
+            mEtSn.setText(RandomUtil.string(10))
         }
 
-        val interval = SPUtils.getInstance().getLong(KEY_INTERVAL, 300)
         mEtInterval.setText(interval.toString())
         mEtServer.setText(SERVER_API)
 
@@ -63,9 +74,7 @@ class MainActivity : AppCompatActivity() {
             .compose(RxUtil.observableSchedulers())
             .subscribe {
                 kotlin.runCatching {
-                    val interval = mEtInterval.text.toString().toLong()
-                    SPUtils.getInstance().put(KEY_INTERVAL, interval)
-                    w3bStreamKit.setUploadInterval(interval)
+                    interval = mEtInterval.text.toString().toLong()
                 }
             }
 
@@ -94,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         mBtnStopUpload.setOnClickListener {
-            w3bStreamKit.stopUpload()
+            stopUpload()
             mBtnStartUpload.visibility = View.VISIBLE
             mBtnStopUpload.visibility = View.GONE
         }
@@ -116,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             .permission(PermissionConstants.LOCATION)
             .callback(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {
-                    uploadData()
+                    startUpload()
                 }
 
                 override fun onDenied() {
@@ -125,16 +134,15 @@ class MainActivity : AppCompatActivity() {
             .request()
     }
 
-    private fun uploadData() {
+    private fun startUpload() {
         mBtnStartUpload.visibility = View.GONE
         mBtnStopUpload.visibility = View.VISIBLE
-        w3bStreamKit.startUpload {
+        polling {
             val location = GPSUtil.getLocation()
             val lat = BigDecimal(location?.latitude ?: 0.0).multiply(BigDecimal.TEN.pow(7)).toLong()
             val long = BigDecimal(location?.longitude ?: 0.0).multiply(BigDecimal.TEN.pow(7)).toLong()
             val random = RandomUtil.integer(10000, 99999)
             val timestamp = TimeUtils.getNowMills().toBigDecimal().div(BigDecimal.TEN.pow(3)).toLong()
-//            val shakeCount = SPUtils.getInstance().getInt(KEY_SHAKE_COUNT, 0)
             val imei = SPUtils.getInstance().getString(KEY_IMEI)
             val jsonObj = JSONObject()
             jsonObj.put("snr", 1024)
@@ -146,14 +154,30 @@ class MainActivity : AppCompatActivity() {
             jsonObj.put("shakeCount", shakeCount)
             shakeCount = 0
             mTvShakeCount.text = shakeCount.toString()
-//            SPUtils.getInstance().put(KEY_SHAKE_COUNT, 0)
             mTvTime.text = TimeUtils.getNowString()
             mJsonViewer.bindJson(jsonObj)
+            w3bStreamKit.uploadData(jsonObj.toString())
             val historyList = SPUtils.getInstance().getStringSet(KEY_HISTORY).toMutableList()
             historyList.add(jsonObj.toString())
             SPUtils.getInstance().put(KEY_HISTORY, historyList.toSet())
-            return@startUpload jsonObj.toString()
         }
+    }
+
+    @SuppressLint("CheckResult")
+    private fun polling(callback: () -> Unit) {
+        Observable.interval(0, interval, TimeUnit.SECONDS)
+            .doOnSubscribe {
+                pollingComposite.add(it)
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                callback.invoke()
+            }
+    }
+
+    private fun stopUpload() {
+        pollingComposite.dispose()
+        pollingComposite.clear()
     }
 
     override fun onDestroy() {
