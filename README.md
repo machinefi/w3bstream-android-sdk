@@ -28,22 +28,24 @@ TIPS: Android emulator does not support location service, please use a real mach
 ```
     private fun create() {
         lifecycleScope.launch {
-            val device = w3bStreamKit.createDevice()
-            mTvImei.text = "IMEI:${device.imei}"
-            mTvSn.text = "SN:${device.sn}"
+            w3bStreamKit.createDevice()
         }
     }
 
 ```
 
+### Register
+```
+    w3bStreamKit.register(imei, sn)
+```
+
 ### Upload data
 ```
-	w3bStreamKit.startUpload {
-	    return@startUpload "{"imei":"100374242236884","latitude":34.09589161,"location":106.42410187}"
-	}
+    w3bStreamKit.startUpload {
+        return@startUpload "{"latitude":34.09589161,"location":106.42410187}"
+    }
 ```
 TIPS: The type of data must be json string
-
 
 ### Other
 Set the server for uploading data
