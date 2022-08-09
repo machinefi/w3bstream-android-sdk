@@ -1,4 +1,5 @@
-# webstream-android-framework
+# W3bstream Android SDK
+W3streamKit is the Android SDK of W3bstream. This is an alpha version, which may be changed over time.
 
 ## Integration
 Import `w3bstream` into your project as a module, and sync you project.
@@ -28,25 +29,23 @@ TIPS: Android emulator does not support location service, please use a real mach
     w3bStreamKit.authenticate(imei, sn, pubKey, signature)
 ```
 
-### Upload data
+### Get Public Key
 ```
-    w3bStreamKit.startUpload {
-        return@startUpload "{"latitude":"29,5640369","longitude":"106,4652020","random":"39647","timestamp":1660052772,"imei":"258897981888933","shakeCount":6}"
-    }
+    w3bStreamKit.getPublicKey()
 ```
-TIPS: The type of data must be json string
 
-### Other
-
-Sign data
+### Sign data with private key
 ```
     w3bStreamKit.signData(data)
 ```
 
-Get Public Key
+### Upload data
 ```
-    w3bStreamKit.getPublicKey()
+    w3bStreamKit.upload("{"latitude":"29,5640369","longitude":"106,4652020","random":"39647","timestamp":1660052772,"imei":"258897981888933","shakeCount":6}")
 ```
+TIPS: The type of data must be json string
+
+### Other
 
 Set the server for uploading data
 ```
@@ -58,9 +57,4 @@ TIPS: Support Https (https://) and WebSocket (wss://)
 Remove server
 ```
     w3bStreamKit.removeServerApi(api)
-```
-
-Set the interval for uploading data
-```
-    w3bStreamKit.setUploadInterval(seconds)
 ```
