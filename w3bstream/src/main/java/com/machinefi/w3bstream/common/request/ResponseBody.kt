@@ -1,6 +1,6 @@
 package com.machinefi.w3bstream.common.request
 
-data class SignDeviceResult(
+data class AuthResult(
     val imei: String,
     val sn: String,
     val timestamp: Long,

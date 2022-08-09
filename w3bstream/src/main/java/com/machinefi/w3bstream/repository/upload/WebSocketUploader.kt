@@ -2,30 +2,27 @@ package com.machinefi.w3bstream.repository.upload
 
 import android.annotation.SuppressLint
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
-import com.machinefi.w3bstream.common.request.JSONRpcBody
 import com.machinefi.w3bstream.common.request.JSONRpcParams
-import com.machinefi.w3bstream.common.request.UploadDataBody
-import com.machinefi.w3bstream.constant.SP_KEY_IMEI
-import com.machinefi.w3bstream.constant.SP_KEY_SOCKET_SERVER
-import com.machinefi.w3bstream.constant.SP_NAME
+import com.machinefi.w3bstream.common.request.JSONRpcRequest
+import com.machinefi.w3bstream.common.request.UploadDataRequest
 import com.machinefi.w3bstream.uitls.KeystoreUtil
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
-import java.lang.Exception
 import java.net.URI
 import java.util.concurrent.TimeUnit
+
+internal const val WEB_SOCKET_SCHEMA = "wss://"
 
 class WebSocketUploader(
     val config: com.machinefi.w3bstream.api.W3bStreamKitConfig
 ): UploadService {
 
-    private var client: WebSocketClient? = null
+    private val clients = mutableListOf<WebSocketClient>()
     private var pulseDispose: Disposable? = null
 
     init {
@@ -33,9 +30,14 @@ class WebSocketUploader(
     }
 
     private fun initSocketClient() {
-        val url = SPUtils.getInstance(SP_NAME).getString(SP_KEY_SOCKET_SERVER, config.webSocketUploadApi)
-        if (url.isNullOrBlank()) return
-        client = createClient(url)
+        config.innerServerApis.filter {
+            it.startsWith("wss://")
+        }.forEach { url ->
+            if (url.isNotBlank()) {
+                val client = createClient(url)
+                clients.add(client)
+            }
+        }
     }
 
     private fun createClient(url: String): WebSocketClient {
@@ -43,7 +45,7 @@ class WebSocketUploader(
         return object : WebSocketClient(uri) {
             override fun onOpen(handshakedata: ServerHandshake?) {
                 LogUtils.i("onOpen")
-                pulse()
+                pulse(uri.toString())
             }
 
             override fun onMessage(message: String?) {
@@ -59,51 +61,65 @@ class WebSocketUploader(
         }
     }
 
-    fun resume(url: String) {
+    fun resume() {
         close()
-        client = createClient(url)
+        config.innerServerApis.filter {
+            it.startsWith("wss://")
+        }.forEach { url ->
+            if (url.isNotBlank()) {
+                val client = createClient(url)
+                clients.add(client)
+            }
+        }
     }
 
     fun connect() {
-        if (client?.isOpen != true) {
-            client?.connect()
+        clients.forEach { client ->
+            if (!client.isOpen) {
+                client.connect()
+            }
         }
     }
 
     fun close() {
         pulseDispose?.dispose()
-        client?.close()
-        client = null
+        clients.forEach { client ->
+            client.close()
+        }
+        clients.clear()
     }
 
     @SuppressLint("CheckResult")
-    private fun pulse() {
+    private fun pulse(uri: String) {
         Observable.interval(0, 10, TimeUnit.SECONDS)
             .doOnSubscribe {
                 pulseDispose = it
             }
             .observeOn(Schedulers.io())
             .subscribe {
-                if (client == null) {
-                    initSocketClient()
-                } else {
-                    if (client?.isClosed == true) {
-                        client?.reconnect()
-                    }
+                val client = clients.firstOrNull { client ->
+                    client.uri?.toString() == uri
+                }
+                if (client?.isClosed == true) {
+                    client.reconnect()
                 }
             }
     }
 
     override fun uploadData(json: String) {
-        if (client?.isOpen != true) return
+        if (clients.isEmpty()) return
         val data = Gson().fromJson(json, Any::class.java)
         val id = TimeUtils.getNowMills()
-        val imei = SPUtils.getInstance(SP_NAME).getString(SP_KEY_IMEI)
         val signature = KeystoreUtil.signData(json.toByteArray())
-        val dataBody = UploadDataBody(imei, KeystoreUtil.getPubKey() ?: "", signature, data)
+        val dataBody = UploadDataRequest(KeystoreUtil.getPubKey(), signature, data)
         val jsonRpcParams = JSONRpcParams(dataBody)
-        val jsonRpcBody = JSONRpcBody(id, params = jsonRpcParams)
-        client?.send(Gson().toJson(jsonRpcBody).toByteArray())
+        val jsonRpcBody = JSONRpcRequest(id, params = jsonRpcParams)
+        val result = Gson().toJson(jsonRpcBody).toByteArray()
+        clients.forEach { client ->
+            if (client.isOpen) {
+                client.send(result)
+            }
+        }
     }
 
 }

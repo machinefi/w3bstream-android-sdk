@@ -1,6 +1,7 @@
 package com.machinefi.w3bstream.repository.upload
 
 internal const val INTERVAL_SEND_DATA = 300L
+internal const val KEY_SERVER_APIS = "key_server_apis"
 
 internal interface UploadManager {
 
@@ -10,7 +11,9 @@ internal interface UploadManager {
 
     fun setUploadInterval(seconds: Long)
 
-    fun setHttpsServerApi(api: String)
+    fun addServerApi(api: String)
 
-    fun setWebSocketServerApi(api: String)
+    fun removeServerApi(api: String)
+
+    fun addServerApis(apis: List<String>)
 }

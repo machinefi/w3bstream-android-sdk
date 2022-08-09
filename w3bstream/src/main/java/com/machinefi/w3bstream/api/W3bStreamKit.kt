@@ -1,19 +1,22 @@
 package com.machinefi.w3bstream.api
 
-import com.machinefi.w3bstream.repository.device.DeviceManager
+import com.machinefi.w3bstream.repository.auth.AuthManager
 import com.machinefi.w3bstream.repository.upload.UploadManager
+import com.machinefi.w3bstream.uitls.KeystoreUtil
 import io.reactivex.plugins.RxJavaPlugins
 
 class W3bStreamKit private constructor(
     uploadManager: UploadManager,
-    deviceManager: DeviceManager,
+    authManager: AuthManager,
 ) : UploadManager by uploadManager,
-    DeviceManager by deviceManager {
+    AuthManager by authManager {
 
     init {
         RxJavaPlugins.setErrorHandler {
             it.printStackTrace()
         }
+
+        KeystoreUtil.initPk()
     }
 
     class Builder(config: W3bStreamKitConfig) {
@@ -22,7 +25,7 @@ class W3bStreamKit private constructor(
 
         fun build() = W3bStreamKit(
             w3bStreamKitModule.uploadManager,
-            w3bStreamKitModule.deviceManager
+            w3bStreamKitModule.authManager,
         )
     }
 

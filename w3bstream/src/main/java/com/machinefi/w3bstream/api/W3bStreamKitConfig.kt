@@ -1,6 +1,8 @@
 package com.machinefi.w3bstream.api
 
 class W3bStreamKitConfig(
-    val httpsUploadApi: String,
-    val webSocketUploadApi: String,
-)
+    val signApi: String,
+    val serverApis: List<String>
+) {
+    internal val innerServerApis = serverApis.toMutableList()
+}

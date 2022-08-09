@@ -1,80 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingStart="20dp"
-    android:paddingTop="40dp"
-    android:paddingEnd="20dp">
+    android:fillViewport="true"
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/mBtnCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:text="Create Device"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/mTvImei"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="IMEI:"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
-        app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
-
-    <TextView
-        android:id="@+id/mTvSn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="SN:"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/mTvImei"
-        app:layout_constraintTop_toBottomOf="@+id/mTvImei" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mClContent"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/mTvHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="History"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="1. Input the imei and sn"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
+            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
 
         <LinearLayout
-            android:id="@+id/mLlUploadInterval"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:text="Interval(seconds):"
+                android:text="IMEI:"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/mEtInterval"
-                android:layout_width="100dp"
+                android:id="@+id/mEtImei"
+                android:layout_width="200dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/shape_input_bg"
+                android:maxLines="1"
                 android:inputType="number"
-                android:maxLines="1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="14sp" />
@@ -82,106 +69,203 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/mLlHttpsServer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLlUploadInterval">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:text="Https server:"
+                android:text="SN:"
                 android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/mEtHttps"
-                android:layout_width="match_parent"
+                android:id="@+id/mEtSn"
+                android:layout_width="200dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="6dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/shape_input_bg"
-                android:inputType="textUri"
                 android:maxLines="1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textSize="14sp" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mLlWebSocketServer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLlHttpsServer">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WebSocket server:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/mEtWebSocket"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/shape_input_bg"
-                android:inputType="textUri"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/mBtnStartUpload"
-            android:layout_width="200dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="60dp"
-            android:text="Start upload"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLlWebSocketServer" />
-
-        <Button
-            android:id="@+id/mBtnStopUpload"
-            android:layout_width="200dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="60dp"
-            android:maxLines="1"
-            android:text="Stop upload"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLlWebSocketServer" />
 
         <TextView
-            android:id="@+id/mTvLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            tools:text="latitude:30.74409  longitude:120.62608"
+            android:layout_marginTop="25dp"
+            android:text="2. Upload the shake count"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mLlWebSocketServer" />
+            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
+            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mClContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
 
-</LinearLayout>
+            <LinearLayout
+                android:id="@+id/mLlUploadInterval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Interval(seconds):"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mEtInterval"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_input_bg"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mLlHttpsServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mLlUploadInterval">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Server URL:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mEtServer"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_input_bg"
+                    android:hint="https or websocket"
+                    android:inputType="textUri"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mLlShakeCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mLlHttpsServer">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shake count:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/mTvShakeCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:inputType="textUri"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/mBtnStartUpload"
+                android:layout_width="200dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="30dp"
+                android:text="Start upload"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mLlShakeCount" />
+
+            <Button
+                android:id="@+id/mBtnStopUpload"
+                android:layout_width="200dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="30dp"
+                android:maxLines="1"
+                android:text="Stop upload"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/mLlShakeCount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="3. Json Viewer"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
+            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
+
+        <TextView
+            android:id="@+id/mTvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            tools:text="time"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
+            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+            <com.yuyh.jsonviewer.library.JsonRecyclerView
+                android:id="@+id/mJsonViewer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </HorizontalScrollView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,8 +1,0 @@
-<resources>
-    <string name="server_error">Server error</string>
-    <string name="request_not_exist">Request address does not exist</string>
-    <string name="request_redirected">Request redirected</string>
-    <string name="network_unavailable">Network unavailable</string>
-    <string name="network_timeout">Network timeout</string>
-    <string name="data_parsing_error">Data parsing error</string>
-</resources>

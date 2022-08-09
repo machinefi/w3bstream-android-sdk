@@ -13,26 +13,27 @@ import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.Signature
+import java.security.cert.CertificateException
 import java.security.spec.ECGenParameterSpec
 
 internal const val ANDROID_KEY_STORE = "AndroidKeyStore"
-internal const val PEBBLE_KEYSTORE_ALIAS = "w3bstream_keystore"
+internal const val W3BSTREAM_KEYSTORE_ALIAS = "w3bstream_keystore"
 
 internal object KeystoreUtil {
 
-    fun createPk() {
+    fun initPk() {
         val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
 
-        if (ks.containsAlias(PEBBLE_KEYSTORE_ALIAS)) return
+        if (ks.containsAlias(W3BSTREAM_KEYSTORE_ALIAS)) return
 
         val kpg = KeyPairGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_EC, ANDROID_KEY_STORE
         )
 
         val parameterSpec = KeyGenParameterSpec.Builder(
-            PEBBLE_KEYSTORE_ALIAS,
+            W3BSTREAM_KEYSTORE_ALIAS,
             KeyProperties.PURPOSE_SIGN
         ).run {
             setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
@@ -49,9 +50,9 @@ internal object KeystoreUtil {
             load(null)
         }
 
-        val entry = ks.getEntry(PEBBLE_KEYSTORE_ALIAS, null)
+        val entry = ks.getEntry(W3BSTREAM_KEYSTORE_ALIAS, null)
         if (entry !is KeyStore.PrivateKeyEntry) {
-            throw Exception("Not an instance of a PrivateKeyEntry")
+            throw CertificateException("Not an instance of a PrivateKeyEntry")
         }
 
         val signedData = Signature.getInstance("SHA256withECDSA").run {
@@ -65,7 +66,7 @@ internal object KeystoreUtil {
 
     private fun generateSignature(msg: String): String {
         val sigStr = msg.cleanHexPrefix()
-        if (sigStr.length < 8) throw Exception("Signature message is too short")
+        if (sigStr.length < 8) throw CertificateException("Signature message is too short")
         val len = sigStr.substring(6, 8).toBigInteger(16)
             .times(BigInteger.valueOf(2)).toInt()
         val middle = sigStr.substring(8)
@@ -76,16 +77,17 @@ internal object KeystoreUtil {
         return Numeric.prependHexPrefix(arg01Encode + arg02Encode)
     }
 
-    fun getPubKey(): String? {
+    fun getPubKey(): String {
         val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
 
-        if (!ks.containsAlias(PEBBLE_KEYSTORE_ALIAS)) {
-            createPk()
+        if (!ks.containsAlias(W3BSTREAM_KEYSTORE_ALIAS)) {
+            initPk()
         }
 
-        val pubKeyEncoded = ks.getCertificate(PEBBLE_KEYSTORE_ALIAS).publicKey?.encoded ?: return null
+        val pubKeyEncoded = ks.getCertificate(W3BSTREAM_KEYSTORE_ALIAS).publicKey?.encoded
+            ?: throw CertificateException("Public key is null")
         val subjectPublicKey = DERSequence.getInstance(pubKeyEncoded).getObjectAt(1) as DERBitString
         return Numeric.prependHexPrefix(subjectPublicKey.bytes.toHexString().substring(4))
     }

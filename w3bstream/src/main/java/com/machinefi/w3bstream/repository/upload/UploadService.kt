@@ -4,5 +4,4 @@ internal interface UploadService {
 
     fun uploadData(json: String)
 
-
 }
