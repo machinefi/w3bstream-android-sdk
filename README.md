@@ -12,9 +12,8 @@ TIPS: Android emulator does not support location service, please use a real mach
 ```
     private val config by lazy {
         W3bStreamKitConfig(
-            AUTH_HOST,
-            HTTPS_UPLOAD_API,
-            WEB_SOCKET_UPLOAD_API
+            SIGN_API,
+            listOf(SERVER_API),
         )
     }
 
@@ -24,37 +23,44 @@ TIPS: Android emulator does not support location service, please use a real mach
 ```
 
 
-### Create device
+### Authentication
 ```
-    private fun create() {
-        lifecycleScope.launch {
-            w3bStreamKit.createDevice()
-        }
-    }
-
-```
-
-### Register
-```
-    w3bStreamKit.register(imei, sn)
+    w3bStreamKit.authenticate(imei, sn, pubKey, signature)
 ```
 
 ### Upload data
 ```
     w3bStreamKit.startUpload {
-        return@startUpload "{"latitude":34.09589161,"location":106.42410187}"
+        return@startUpload "{"imei":"126378", "latitude":34.09589161, "location":106.42410187}"
     }
 ```
 TIPS: The type of data must be json string
 
 ### Other
+
+Sign data
+```
+    w3bStreamKit.signData(data)
+```
+
+Get Public Key
+```
+    w3bStreamKit.getPublicKey()
+```
+
 Set the server for uploading data
 ```
-w3bStreamKit.setHttpsServerApi(api)
-w3bStreamKit.setWebSocketServerApi(api)
+    w3bStreamKit.addServerApi(api)
+    w3bStreamKit.addServerApis(apis)
+```
+TIPS: Support Https (https://) and WebSocket (wss://)
+
+Remove server
+```
+    w3bStreamKit.removeServerApi(api)
 ```
 
 Set the interval for uploading data
 ```
-w3bStreamKit.setUploadInterval(seconds)
+    w3bStreamKit.setUploadInterval(seconds)
 ```

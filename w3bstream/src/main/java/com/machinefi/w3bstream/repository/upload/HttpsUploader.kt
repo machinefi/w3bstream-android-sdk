@@ -5,6 +5,7 @@ import com.machinefi.w3bstream.api.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.exception.JsonSyntaxException
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.UploadDataRequest
+import com.machinefi.w3bstream.repository.auth.AuthManager
 import com.machinefi.w3bstream.utils.KeystoreUtil
 import com.machinefi.w3bstream.utils.extension.isJsonValid
 import io.reactivex.schedulers.Schedulers
@@ -13,9 +14,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 internal const val HTTPS_SCHEMA = "https://"
 
-internal class HttpUploader(
-    val apiService: ApiService,
-    val config: W3bStreamKitConfig
+internal class HttpsUploader(
+    private val apiService: ApiService,
+    private val config: W3bStreamKitConfig,
+    private val authManager: AuthManager
 ) : UploadService {
 
     override fun uploadData(json: String) {
@@ -24,7 +26,7 @@ internal class HttpUploader(
             throw JsonSyntaxException("The json is not a valid representation")
         }
         val result = json.toByteArray()
-        val signature = KeystoreUtil.signData(result)
+        val signature = authManager.signData(result)
         val data = Gson().fromJson(json, Any::class.java)
         val body = UploadDataRequest(KeystoreUtil.getPubKey(), signature, data)
         val requestBody =

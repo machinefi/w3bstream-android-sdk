@@ -6,7 +6,7 @@ internal interface AuthManager {
 
     suspend fun authenticate(imei: String, sn: String, pubKey: String, signature: String): AuthResult
 
-    suspend fun signData(data: ByteArray): String
+    fun signData(data: ByteArray): String
 
-    suspend fun getPublicKey(): String
+    fun getPublicKey(): String
 }

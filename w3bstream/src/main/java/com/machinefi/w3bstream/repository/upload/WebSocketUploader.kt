@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
+import com.machinefi.w3bstream.api.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.request.JSONRpcParams
 import com.machinefi.w3bstream.common.request.JSONRpcRequest
 import com.machinefi.w3bstream.common.request.UploadDataRequest
+import com.machinefi.w3bstream.repository.auth.AuthManager
 import com.machinefi.w3bstream.utils.KeystoreUtil
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -18,8 +20,9 @@ import java.util.concurrent.TimeUnit
 
 internal const val WEB_SOCKET_SCHEMA = "wss://"
 
-class WebSocketUploader(
-    val config: com.machinefi.w3bstream.api.W3bStreamKitConfig
+internal class WebSocketUploader(
+    private val config: W3bStreamKitConfig,
+    private val authManager: AuthManager
 ): UploadService {
 
     private val clients = mutableListOf<WebSocketClient>()
@@ -110,7 +113,7 @@ class WebSocketUploader(
         if (clients.isEmpty()) return
         val data = Gson().fromJson(json, Any::class.java)
         val id = TimeUtils.getNowMills()
-        val signature = KeystoreUtil.signData(json.toByteArray())
+        val signature = authManager.signData(json.toByteArray())
         val dataBody = UploadDataRequest(KeystoreUtil.getPubKey(), signature, data)
         val jsonRpcParams = JSONRpcParams(dataBody)
         val jsonRpcBody = JSONRpcRequest(id, params = jsonRpcParams)

@@ -72,12 +72,12 @@ internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
         builder.build().create(ApiService::class.java)
     }
 
-    val uploadManager by lazy {
-        UploadRepository(apiService, config)
-    }
-
     val authManager by lazy {
         AuthRepository(apiService, config)
+    }
+
+    val uploadManager by lazy {
+        UploadRepository(apiService, config, authManager)
     }
 
 }

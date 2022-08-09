@@ -17,7 +17,7 @@ import java.security.cert.CertificateException
 import java.security.spec.ECGenParameterSpec
 
 internal const val ANDROID_KEY_STORE = "AndroidKeyStore"
-internal const val W3BSTREAM_KEYSTORE_ALIAS = "w3bstream_keystore"
+internal const val W3BSTREAM_KEY_ALIAS = "w3bstream_key_alias"
 
 internal object KeystoreUtil {
 
@@ -26,14 +26,14 @@ internal object KeystoreUtil {
             load(null)
         }
 
-        if (ks.containsAlias(W3BSTREAM_KEYSTORE_ALIAS)) return
+        if (ks.containsAlias(W3BSTREAM_KEY_ALIAS)) return
 
         val kpg = KeyPairGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_EC, ANDROID_KEY_STORE
         )
 
         val parameterSpec = KeyGenParameterSpec.Builder(
-            W3BSTREAM_KEYSTORE_ALIAS,
+            W3BSTREAM_KEY_ALIAS,
             KeyProperties.PURPOSE_SIGN
         ).run {
             setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
@@ -50,7 +50,7 @@ internal object KeystoreUtil {
             load(null)
         }
 
-        val entry = ks.getEntry(W3BSTREAM_KEYSTORE_ALIAS, null)
+        val entry = ks.getEntry(W3BSTREAM_KEY_ALIAS, null)
         if (entry !is KeyStore.PrivateKeyEntry) {
             throw CertificateException("Not an instance of a PrivateKeyEntry")
         }
@@ -82,11 +82,11 @@ internal object KeystoreUtil {
             load(null)
         }
 
-        if (!ks.containsAlias(W3BSTREAM_KEYSTORE_ALIAS)) {
+        if (!ks.containsAlias(W3BSTREAM_KEY_ALIAS)) {
             initPk()
         }
 
-        val pubKeyEncoded = ks.getCertificate(W3BSTREAM_KEYSTORE_ALIAS).publicKey?.encoded
+        val pubKeyEncoded = ks.getCertificate(W3BSTREAM_KEY_ALIAS).publicKey?.encoded
             ?: throw CertificateException("Public key is null")
         val subjectPublicKey = DERSequence.getInstance(pubKeyEncoded).getObjectAt(1) as DERBitString
         return Numeric.prependHexPrefix(subjectPublicKey.bytes.toHexString().substring(4))

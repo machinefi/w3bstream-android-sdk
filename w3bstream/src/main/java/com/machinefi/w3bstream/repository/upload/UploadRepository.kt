@@ -6,6 +6,7 @@ import com.machinefi.w3bstream.api.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.constant.SP_KEY_UPLOAD_FREQUENCY
 import com.machinefi.w3bstream.constant.SP_NAME
+import com.machinefi.w3bstream.repository.auth.AuthManager
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,13 +14,14 @@ import java.util.concurrent.TimeUnit
 
 internal class UploadRepository(
     apiService: ApiService,
-    val config: W3bStreamKitConfig
+    private val config: W3bStreamKitConfig,
+    authManager: AuthManager
 ): UploadManager {
 
     private var pollingComposite = CompositeDisposable()
 
-    private val httpUploader = HttpUploader(apiService, config)
-    private val webSocketUploader = WebSocketUploader(config).apply {
+    private val httpsUploader = HttpsUploader(apiService, config, authManager)
+    private val webSocketUploader = WebSocketUploader(config, authManager).apply {
         this.connect()
     }
 
@@ -41,7 +43,7 @@ internal class UploadRepository(
         pollingComposite = CompositeDisposable()
         polling {
             val json = hook.invoke()
-            httpUploader.uploadData(json)
+            httpsUploader.uploadData(json)
             webSocketUploader.uploadData(json)
         }
     }

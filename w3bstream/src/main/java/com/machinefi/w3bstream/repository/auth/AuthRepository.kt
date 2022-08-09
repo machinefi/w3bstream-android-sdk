@@ -14,8 +14,8 @@ import io.reactivex.schedulers.Schedulers
 import kotlin.coroutines.suspendCoroutine
 
 internal class AuthRepository(
-    val apiService: ApiService,
-    val config: W3bStreamKitConfig
+    private val apiService: ApiService,
+    private val config: W3bStreamKitConfig
 ): AuthManager {
 
     override suspend fun authenticate(
@@ -52,11 +52,11 @@ internal class AuthRepository(
         }
     }
 
-    override suspend fun signData(data: ByteArray): String {
+    override fun signData(data: ByteArray): String {
         return KeystoreUtil.signData(data)
     }
 
-    override suspend fun getPublicKey(): String {
+    override fun getPublicKey(): String {
         return KeystoreUtil.getPubKey()
     }
 }
