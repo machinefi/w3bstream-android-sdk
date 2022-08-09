@@ -1,4 +1,4 @@
-package com.machinefi.w3bstream.uitls.extension
+package com.machinefi.w3bstream.utils.extension
 
 import org.web3j.utils.Numeric
 

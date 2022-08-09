@@ -5,8 +5,8 @@ import com.machinefi.w3bstream.api.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.exception.JsonSyntaxException
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.UploadDataRequest
-import com.machinefi.w3bstream.uitls.KeystoreUtil
-import com.machinefi.w3bstream.uitls.extension.isJsonValid
+import com.machinefi.w3bstream.utils.KeystoreUtil
+import com.machinefi.w3bstream.utils.extension.isJsonValid
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody

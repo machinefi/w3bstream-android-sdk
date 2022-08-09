@@ -1,4 +1,4 @@
-package com.machinefi.w3bstream.uitls.extension
+package com.machinefi.w3bstream.utils.extension
 
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson

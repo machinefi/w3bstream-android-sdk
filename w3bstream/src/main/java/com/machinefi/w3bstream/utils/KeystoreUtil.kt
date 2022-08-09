@@ -1,9 +1,9 @@
-package com.machinefi.w3bstream.uitls
+package com.machinefi.w3bstream.utils
 
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
-import com.machinefi.w3bstream.uitls.extension.cleanHexPrefix
-import com.machinefi.w3bstream.uitls.extension.toHexString
+import com.machinefi.w3bstream.utils.extension.cleanHexPrefix
+import com.machinefi.w3bstream.utils.extension.toHexString
 import org.bouncycastle.asn1.DERBitString
 import org.bouncycastle.asn1.DERSequence
 import org.web3j.abi.TypeEncoder

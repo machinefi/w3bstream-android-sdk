@@ -2,7 +2,7 @@ package com.machinefi.w3bstream.api
 
 import com.machinefi.w3bstream.repository.auth.AuthManager
 import com.machinefi.w3bstream.repository.upload.UploadManager
-import com.machinefi.w3bstream.uitls.KeystoreUtil
+import com.machinefi.w3bstream.utils.KeystoreUtil
 import io.reactivex.plugins.RxJavaPlugins
 
 class W3bStreamKit private constructor(
