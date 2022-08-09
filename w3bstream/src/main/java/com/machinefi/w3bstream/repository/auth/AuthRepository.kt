@@ -1,6 +1,6 @@
 package com.machinefi.w3bstream.repository.auth
 
-import com.machinefi.w3bstream.api.W3bStreamKitConfig
+import com.machinefi.w3bstream.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.exception.AuthException
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.AuthRequest

@@ -41,7 +41,7 @@ object ShakeUtil {
                 Handler(Looper.getMainLooper())
                     .postDelayed({
                         isShake = false
-                    }, 2000)
+                    }, 1000)
             }
         }
 

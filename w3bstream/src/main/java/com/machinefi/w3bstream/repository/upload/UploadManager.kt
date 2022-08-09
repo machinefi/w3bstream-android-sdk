@@ -5,11 +5,7 @@ internal const val KEY_SERVER_APIS = "key_server_apis"
 
 internal interface UploadManager {
 
-    fun startUpload(hook: () -> String)
-
-    fun stopUpload()
-
-    fun setUploadInterval(seconds: Long)
+    fun uploadData(data: String)
 
     fun addServerApi(api: String)
 

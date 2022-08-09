@@ -1,4 +1,4 @@
-package com.machinefi.w3bstream.api
+package com.machinefi.w3bstream
 
 import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.SPUtils

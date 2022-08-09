@@ -41,7 +41,7 @@ TIPS: Android emulator does not support location service, please use a real mach
 
 ### Upload data
 ```
-    w3bStreamKit.upload("{"imei":"126378", "latitude":34.09589161, "location":106.42410187}")
+    w3bStreamKit.upload("{"latitude":"29,5640369","longitude":"106,4652020","random":"39647","timestamp":1660052772,"imei":"258897981888933","shakeCount":6}")
 ```
 TIPS: The type of data must be json string
 

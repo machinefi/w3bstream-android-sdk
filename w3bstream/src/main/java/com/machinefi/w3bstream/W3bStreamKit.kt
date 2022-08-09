@@ -1,4 +1,4 @@
-package com.machinefi.w3bstream.api
+package com.machinefi.w3bstream
 
 import com.machinefi.w3bstream.repository.auth.AuthManager
 import com.machinefi.w3bstream.repository.upload.UploadManager
