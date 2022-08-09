@@ -165,6 +165,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     private fun polling(callback: () -> Unit) {
+        pollingComposite = CompositeDisposable()
         Observable.interval(0, interval, TimeUnit.SECONDS)
             .doOnSubscribe {
                 pollingComposite.add(it)
