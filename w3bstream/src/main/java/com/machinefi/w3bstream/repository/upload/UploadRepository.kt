@@ -12,9 +12,7 @@ internal class UploadRepository(
 ): UploadManager {
 
     private val httpsUploader = HttpsUploader(apiService, config)
-    private val webSocketUploader = WebSocketUploader(config).apply {
-        this.connect()
-    }
+    private val webSocketUploader = WebSocketUploader(config)
 
     override fun uploadData(data: String) {
         val signature = authManager.signData(data.toByteArray())
@@ -29,9 +27,10 @@ internal class UploadRepository(
             val serverApis = SPUtils.getInstance().getStringSet(KEY_SERVER_APIS).toMutableSet()
             serverApis.add(api)
             SPUtils.getInstance().put(KEY_SERVER_APIS, serverApis)
-        }
-        if (api.startsWith(WEB_SOCKET_SCHEMA)) {
-            webSocketUploader.resume()
+
+            if (api.startsWith(WEB_SOCKET_SCHEMA)) {
+                webSocketUploader.resume()
+            }
         }
     }
 
@@ -43,19 +42,25 @@ internal class UploadRepository(
             val serverApis = SPUtils.getInstance().getStringSet(KEY_SERVER_APIS).toMutableSet()
             serverApis.addAll(apis)
             SPUtils.getInstance().put(KEY_SERVER_APIS, serverApis)
-        }
-        val webSocketApi = apis.firstOrNull { it.startsWith(WEB_SOCKET_SCHEMA) }
-        if (webSocketApi != null) {
-            webSocketUploader.resume()
+
+            val webSocketApi = apis.firstOrNull { it.startsWith(WEB_SOCKET_SCHEMA) }
+            if (webSocketApi != null) {
+                webSocketUploader.resume()
+            }
         }
     }
 
     override fun removeServerApi(api: String) {
         if (config.innerServerApis.contains(api)) {
             config.innerServerApis.remove(api)
-        }
-        if (api.startsWith(WEB_SOCKET_SCHEMA)) {
-            webSocketUploader.resume()
+
+            val serverApis = SPUtils.getInstance().getStringSet(KEY_SERVER_APIS).toMutableSet()
+            serverApis.remove(api)
+            SPUtils.getInstance().put(KEY_SERVER_APIS, serverApis)
+
+            if (api.startsWith(WEB_SOCKET_SCHEMA)) {
+                webSocketUploader.resume()
+            }
         }
     }
 
