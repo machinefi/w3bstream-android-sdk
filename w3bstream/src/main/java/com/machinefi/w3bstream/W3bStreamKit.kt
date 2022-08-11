@@ -15,8 +15,6 @@ class W3bStreamKit private constructor(
         RxJavaPlugins.setErrorHandler {
             it.printStackTrace()
         }
-
-        KeystoreUtil.initPk()
     }
 
     class Builder(config: W3bStreamKitConfig) {

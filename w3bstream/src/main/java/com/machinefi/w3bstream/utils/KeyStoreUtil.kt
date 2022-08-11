@@ -15,47 +15,49 @@ import java.security.KeyStore
 import java.security.Signature
 import java.security.cert.CertificateException
 import java.security.spec.ECGenParameterSpec
+import kotlin.jvm.Throws
 
 internal const val ANDROID_KEY_STORE = "AndroidKeyStore"
 internal const val W3BSTREAM_KEY_ALIAS = "w3bstream_key_alias"
+internal const val ALGORITHM_SIGN = "SHA256withECDSA"
+internal const val ALGORITHM_EC = "secp256r1"
 
 internal object KeystoreUtil {
 
-    fun initPk() {
+    init {
         val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
             load(null)
         }
 
-        if (ks.containsAlias(W3BSTREAM_KEY_ALIAS)) return
+        if (!ks.containsAlias(W3BSTREAM_KEY_ALIAS)) {
+            val kpg = KeyPairGenerator.getInstance(
+                KeyProperties.KEY_ALGORITHM_EC, ANDROID_KEY_STORE
+            )
 
-        val kpg = KeyPairGenerator.getInstance(
-            KeyProperties.KEY_ALGORITHM_EC, ANDROID_KEY_STORE
-        )
+            val parameterSpec = KeyGenParameterSpec.Builder(
+                W3BSTREAM_KEY_ALIAS,
+                KeyProperties.PURPOSE_SIGN
+            ).run {
+                setAlgorithmParameterSpec(ECGenParameterSpec(ALGORITHM_EC))
+                setDigests(KeyProperties.DIGEST_SHA256)
+                build()
+            }
 
-        val parameterSpec = KeyGenParameterSpec.Builder(
-            W3BSTREAM_KEY_ALIAS,
-            KeyProperties.PURPOSE_SIGN
-        ).run {
-            setAlgorithmParameterSpec(ECGenParameterSpec("secp256r1"))
-            setDigests(KeyProperties.DIGEST_SHA256)
-            build()
+            kpg.initialize(parameterSpec)
+            kpg.generateKeyPair()
         }
-
-        kpg.initialize(parameterSpec)
-        kpg.generateKeyPair()
     }
 
+    @Throws(CertificateException::class)
     fun signData(data: ByteArray): String {
-        val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
-            load(null)
-        }
+        val ks = getKeyStore()
 
         val entry = ks.getEntry(W3BSTREAM_KEY_ALIAS, null)
         if (entry !is KeyStore.PrivateKeyEntry) {
             throw CertificateException("Not an instance of a PrivateKeyEntry")
         }
 
-        val signedData = Signature.getInstance("SHA256withECDSA").run {
+        val signedData = Signature.getInstance(ALGORITHM_SIGN).run {
             initSign(entry.privateKey)
             update(data)
             sign()
@@ -64,6 +66,7 @@ internal object KeystoreUtil {
         return generateSignature(signedData.toHexString())
     }
 
+    @Throws(CertificateException::class)
     private fun generateSignature(msg: String): String {
         val sigStr = msg.cleanHexPrefix()
         if (sigStr.length < 8) throw CertificateException("Signature message is too short")
@@ -77,14 +80,13 @@ internal object KeystoreUtil {
         return Numeric.prependHexPrefix(arg01Encode + arg02Encode)
     }
 
-    fun getPubKey(): String {
-        val ks = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
-            load(null)
-        }
+    private fun getKeyStore() = KeyStore.getInstance(ANDROID_KEY_STORE).apply {
+        load(null)
+    }
 
-        if (!ks.containsAlias(W3BSTREAM_KEY_ALIAS)) {
-            initPk()
-        }
+    @Throws(CertificateException::class)
+    fun getPubKey(): String {
+        val ks = getKeyStore()
 
         val pubKeyEncoded = ks.getCertificate(W3BSTREAM_KEY_ALIAS).publicKey?.encoded
             ?: throw CertificateException("Public key is null")

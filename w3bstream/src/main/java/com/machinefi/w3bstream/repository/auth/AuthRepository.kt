@@ -52,7 +52,7 @@ internal class AuthRepository(
         }
     }
 
-    override fun signData(data: ByteArray): String {
+    override fun sign(data: ByteArray): String {
         return KeystoreUtil.signData(data)
     }
 

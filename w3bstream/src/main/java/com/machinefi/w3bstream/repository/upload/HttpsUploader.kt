@@ -5,7 +5,7 @@ import com.machinefi.w3bstream.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.exception.JsonSyntaxException
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.UploadDataRequest
-import com.machinefi.w3bstream.utils.extension.isJsonValid
+import com.machinefi.w3bstream.utils.extension.isValidJson
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -19,7 +19,7 @@ internal class HttpsUploader(
 
     override fun uploadData(json: String, signature: String, pubKey: String) {
         if (json.isBlank()) return
-        if (!json.isJsonValid()) {
+        if (!json.isValidJson()) {
             throw JsonSyntaxException("The json is not a valid representation")
         }
         val data = Gson().fromJson(json, Any::class.java)
@@ -27,7 +27,7 @@ internal class HttpsUploader(
         val requestBody =
             Gson().toJson(body)
                 .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-        val urls = config.innerServerApis.filter {
+        val urls = config.serverApis.filter {
             it.startsWith(HTTPS_SCHEMA)
         }
         if (urls.isEmpty()) return

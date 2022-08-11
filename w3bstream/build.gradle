@@ -44,7 +44,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.0'
     implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
     implementation 'org.web3j:utils:4.9.2'
     implementation 'org.web3j:abi:4.9.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
