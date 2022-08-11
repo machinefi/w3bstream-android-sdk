@@ -45,7 +45,7 @@ Then sync your project.
 ```
     w3bStreamKit.upload("{"latitude":"29,5640369","longitude":"106,4652020","random":"39647","timestamp":1660052772,"imei":"258897981888933","shakeCount":6}")
 ```
-NOTICE: The type of data must be json string
+Notice: The type of data must be json string
 
 ### Other
 
@@ -53,4 +53,4 @@ Update server apis
 ```
     w3bStreamKit.updateServerApis(listOf(api))
 ```
-NOTICE: Support Https (https://) and WebSocket (wss://)
+Notice: Support Https (https://) and WebSocket (wss://)
