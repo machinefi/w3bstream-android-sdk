@@ -1,16 +1,13 @@
 package com.machinefi.w3bstream
 
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.SPUtils
 import com.google.gson.GsonBuilder
 import com.machinefi.w3bstream.common.exception.IllegalServerException
 import com.machinefi.w3bstream.common.request.ApiService
-import com.machinefi.w3bstream.common.request.interceptor.GlobalInterceptor
+import com.machinefi.w3bstream.constant.NETWORK_TIMEOUT
 import com.machinefi.w3bstream.repository.auth.AuthRepository
-import com.machinefi.w3bstream.repository.upload.KEY_SERVER_APIS
 import com.machinefi.w3bstream.repository.upload.UploadRepository
+import com.machinefi.w3bstream.utils.extension.isValidServer
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -21,42 +18,25 @@ internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
 
     init {
         if (config.signApi.isBlank()) {
-            throw IllegalArgumentException("The parameter authServer cannot be an empty")
+            throw IllegalArgumentException("The parameter signApi cannot be an empty")
         }
         if (config.serverApis.isEmpty()) {
             throw IllegalArgumentException("The parameter serverApis cannot be empty")
         }
         val invalidServer = config.serverApis.firstOrNull {
-            !it.startsWith("https://") && !it.startsWith("wss://")
+            !it.isValidServer()
         }
         if (invalidServer != null) {
             throw IllegalServerException("This server $invalidServer is illegal")
         }
-        val serverApis = SPUtils.getInstance().getStringSet(KEY_SERVER_APIS)
-        serverApis.filter {
-            !config.innerServerApis.contains(it)
-        }.also {
-            config.innerServerApis.addAll(it)
-        }
     }
 
     private val okHttpClient by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level =
-            if (AppUtils.isAppDebug())
-                HttpLoggingInterceptor.Level.BODY
-            else
-                HttpLoggingInterceptor.Level.NONE
-
-        val builder = OkHttpClient.Builder()
-
-        builder
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .callTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(GlobalInterceptor())
+        OkHttpClient.Builder()
+            .connectTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .callTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .build()
     }
 

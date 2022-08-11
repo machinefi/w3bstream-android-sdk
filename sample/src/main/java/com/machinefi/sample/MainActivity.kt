@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     private val config by lazy {
         W3bStreamKitConfig(
             SIGN_API,
-            listOf(SERVER_API),
+            mutableListOf(SERVER_API),
         )
     }
 
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             .compose(RxUtil.observableSchedulers())
             .subscribe {
                 val httpsServer = mEtServer.text.toString()
-                w3bStreamKit.addServerApi(httpsServer)
+                w3bStreamKit.updateServerApis(listOf(httpsServer))
             }
 
         mBtnStartUpload.setOnClickListener {
@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             mTvShakeCount.text = shakeCount.toString()
             mTvTime.text = TimeUtils.getNowString()
             mJsonViewer.bindJson(jsonObj)
-            w3bStreamKit.uploadData(jsonObj.toString())
+            w3bStreamKit.upload(jsonObj.toString())
             val historyList = SPUtils.getInstance().getStringSet(KEY_HISTORY).toMutableList()
             historyList.add(jsonObj.toString())
             SPUtils.getInstance().put(KEY_HISTORY, historyList.toSet())

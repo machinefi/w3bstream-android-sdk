@@ -27,15 +27,18 @@ internal class WebSocketUploader(
 
     init {
         initSocketClient()
-        connect()
     }
 
     private fun initSocketClient() {
-        config.innerServerApis.filter {
+        config.serverApis.filter {
             it.startsWith(WEB_SOCKET_SCHEMA)
         }.forEach { url ->
             if (url.isNotBlank()) {
-                val client = createClient(url)
+                val client = createClient(url).apply {
+                    if (!this.isOpen) {
+                        this.connect()
+                    }
+                }
                 clients.add(client)
             }
         }
@@ -59,6 +62,7 @@ internal class WebSocketUploader(
 
             override fun onError(ex: Exception?) {
                 LogUtils.i("onError", ex?.message)
+                ex?.printStackTrace()
             }
         }
     }
@@ -66,15 +70,6 @@ internal class WebSocketUploader(
     fun resume() {
         close()
         initSocketClient()
-        connect()
-    }
-
-    private fun connect() {
-        clients.forEach { client ->
-            if (!client.isOpen) {
-                client.connect()
-            }
-        }
     }
 
     private fun close() {
