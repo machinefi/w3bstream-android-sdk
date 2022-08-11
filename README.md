@@ -6,7 +6,7 @@ You can use AndroidStudio to open the project, then sync the project, and then r
 Notice. Android emulator does not support location service, please use a real machine to test.
 
 ## Integration
-Import the module `w3bstream` into your project as a module, and add `implementation project(path: ':w3bstream')` in your build.gradle file. 
+Import the module `w3bstream` into your project as a module, and add `implementation project(path: ':w3bstream')` in your `build.gradle` file. 
 Then sync your project.
 
 ## Usage
