@@ -9,7 +9,6 @@ import android.hardware.SensorManager
 import android.os.Handler
 import android.os.Looper
 import android.os.Vibrator
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 
 object ShakeUtil {
