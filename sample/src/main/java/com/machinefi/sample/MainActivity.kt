@@ -25,7 +25,7 @@ import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 
 const val SIGN_API= "https://w3w3bstream-example.onrender.com/api/sign/"
-const val SERVER_API = "https://w3w3bstream-example.onrender.com/api/data/"
+const val SERVER_API = "https://w3bstream-shake-demo.onrender.com/api/data"
 const val KEY_SHAKE_COUNT = "key_shake_count"
 const val KEY_IMEI = "key_imei"
 const val KEY_SN = "key_sn"

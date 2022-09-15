@@ -1,7 +1,6 @@
 package com.machinefi.w3bstream.repository.upload
 
 import android.annotation.SuppressLint
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.Gson
 import com.machinefi.w3bstream.W3bStreamKitConfig
@@ -48,20 +47,16 @@ internal class WebSocketUploader(
         val uri = URI(url)
         return object : WebSocketClient(uri) {
             override fun onOpen(handshakedata: ServerHandshake?) {
-                LogUtils.i("onOpen")
                 pulse(uri.toString())
             }
 
             override fun onMessage(message: String?) {
-                LogUtils.i("onMessage", message)
             }
 
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                LogUtils.i("onClose", reason)
             }
 
             override fun onError(ex: Exception?) {
-                LogUtils.i("onError", ex?.message)
                 ex?.printStackTrace()
             }
         }
