@@ -156,7 +156,7 @@ class MainActivity : AppCompatActivity() {
             mTvShakeCount.text = shakeCount.toString()
             mTvTime.text = TimeUtils.getNowString()
             mJsonViewer.bindJson(jsonObj)
-            w3bStreamKit.uploadData(jsonObj.toString())
+            w3bStreamKit.uploadData(jsonObj.toString(), "", "")
             val historyList = SPUtils.getInstance().getStringSet(KEY_HISTORY).toMutableList()
             historyList.add(jsonObj.toString())
             SPUtils.getInstance().put(KEY_HISTORY, historyList.toSet())

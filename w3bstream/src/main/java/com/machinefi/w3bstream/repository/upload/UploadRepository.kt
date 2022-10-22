@@ -3,24 +3,16 @@ package com.machinefi.w3bstream.repository.upload
 import com.blankj.utilcode.util.SPUtils
 import com.machinefi.w3bstream.W3bStreamKitConfig
 import com.machinefi.w3bstream.common.request.ApiService
-import com.machinefi.w3bstream.repository.auth.AuthManager
 
 internal class UploadRepository(
     apiService: ApiService,
-    private val config: W3bStreamKitConfig,
-    private val authManager: AuthManager
+    private val config: W3bStreamKitConfig
 ): UploadManager {
 
     private val httpsUploader = HttpsUploader(apiService, config)
-    private val webSocketUploader = WebSocketUploader(config).apply {
-        this.connect()
-    }
 
-    override fun uploadData(data: String) {
-        val signature = authManager.signData(data.toByteArray())
-        val pubKey = authManager.getPublicKey()
-        httpsUploader.uploadData(data, signature, pubKey)
-        webSocketUploader.uploadData(data, signature, pubKey)
+    override fun uploadData(data: String, publisherKey: String, publisherToken: String) {
+        httpsUploader.uploadData(data, publisherKey, publisherToken)
     }
 
     override fun addServerApi(api: String) {
@@ -29,9 +21,6 @@ internal class UploadRepository(
             val serverApis = SPUtils.getInstance().getStringSet(KEY_SERVER_APIS).toMutableSet()
             serverApis.add(api)
             SPUtils.getInstance().put(KEY_SERVER_APIS, serverApis)
-        }
-        if (api.startsWith(WEB_SOCKET_SCHEMA)) {
-            webSocketUploader.resume()
         }
     }
 
@@ -44,22 +33,11 @@ internal class UploadRepository(
             serverApis.addAll(apis)
             SPUtils.getInstance().put(KEY_SERVER_APIS, serverApis)
         }
-        val webSocketApi = apis.firstOrNull { it.startsWith(WEB_SOCKET_SCHEMA) }
-        if (webSocketApi != null) {
-            webSocketUploader.resume()
-        }
     }
 
     override fun removeServerApi(api: String) {
         if (config.innerServerApis.contains(api)) {
             config.innerServerApis.remove(api)
         }
-        if (api.startsWith(WEB_SOCKET_SCHEMA)) {
-            webSocketUploader.resume()
-        }
-    }
-
-    private fun isValidApi(api: String): Boolean {
-        return api.startsWith(HTTPS_SCHEMA) || api.startsWith(WEB_SOCKET_SCHEMA)
     }
 }

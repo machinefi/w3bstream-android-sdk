@@ -10,9 +10,15 @@ internal data class AuthRequest(
 )
 
 internal data class UploadDataRequest(
-    val pubKey: String,
-    val signature: String,
-    val data: Any
+    val header: Header,
+    val payload: String
+) : Serializable
+
+internal data class Header(
+    val event_type: Long,
+    val pub_id: String,
+    val pub_time: Long,
+    val token: String
 ) : Serializable
 
 internal data class JSONRpcRequest(

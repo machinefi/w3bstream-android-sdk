@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder
 import com.machinefi.w3bstream.common.exception.IllegalServerException
 import com.machinefi.w3bstream.common.request.ApiService
 import com.machinefi.w3bstream.common.request.interceptor.GlobalInterceptor
-import com.machinefi.w3bstream.repository.auth.AuthRepository
 import com.machinefi.w3bstream.repository.upload.KEY_SERVER_APIS
 import com.machinefi.w3bstream.repository.upload.UploadRepository
 import okhttp3.OkHttpClient
@@ -72,12 +71,8 @@ internal class W3bStreamKitModule(config: W3bStreamKitConfig) {
         builder.build().create(ApiService::class.java)
     }
 
-    val authManager by lazy {
-        AuthRepository(apiService, config)
-    }
-
     val uploadManager by lazy {
-        UploadRepository(apiService, config, authManager)
+        UploadRepository(apiService, config)
     }
 
 }
