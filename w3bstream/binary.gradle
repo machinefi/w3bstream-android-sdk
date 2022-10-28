@@ -1,0 +1,63 @@
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    from android.sourceSets.main.java.source
+    exclude "**/R.class"
+    exclude "**/BuildConfig.class"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact "build/outputs/aar/w3bstream-release.aar"
+            artifact sourcesJar
+
+            groupId = 'com.w3bstream'
+            artifactId = 'w3bstream-android'
+            version = '0.1'
+
+            pom {
+                name = 'w3bstream-android-sdk'
+                packaging = 'aar'
+                url = 'https://github.com/machinefi/w3bstream-android-sdk'
+                description = 'w3bstream'
+
+                scm {
+                    connection = 'scm:git:git@github.com:machinefi/w3bstream-android-sdk.git'
+                    developerConnection = 'scm:git:git@github.com:machinefi/w3bstream-android-sdk.git'
+                    url = 'git@github.com:machinefi/w3bstream-android-sdk.git'
+                }
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        name = 'qevan'
+                        email = 'qevan@iotex.io'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+//        mavenLocal()
+        maven {
+            name 'w3bstream-android'
+            url 'https://s01.oss.sonatype.org/content/repositories/releases/'
+            credentials {
+                username = sonatypeUsername
+                password = sonatypePassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}

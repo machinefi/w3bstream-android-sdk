@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fillViewport="true"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,118 +29,13 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="1. Input the imei and sn"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
-            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="IMEI:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/mEtImei"
-                android:layout_width="200dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/shape_input_bg"
-                android:maxLines="1"
-                android:inputType="number"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:text="SN:"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/mEtSn"
-                android:layout_width="200dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/shape_input_bg"
-                android:maxLines="1"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="2. Upload the shake count"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
-            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mClContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp">
-
-            <LinearLayout
-                android:id="@+id/mLlUploadInterval"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Interval(seconds):"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/mEtInterval"
-                    android:layout_width="100dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/shape_input_bg"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/mLlHttpsServer"
@@ -165,7 +60,7 @@
                     android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/shape_input_bg"
-                    android:hint="https or websocket"
+                    android:hint="https"
                     android:inputType="textUri"
                     android:maxLines="1"
                     android:paddingStart="12dp"
@@ -175,42 +70,100 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/mLlShakeCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Publisher Key:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mEtPublisherKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_input_bg"
+                    android:hint="Publisher Key"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Publisher Token:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mEtPublisherToken"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_input_bg"
+                    android:gravity="top"
+                    android:hint="Publisher Token"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:padding="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mLlHttpsServer">
+                app:layout_constraintTop_toBottomOf="@+id/mLlUploadInterval">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Shake count:"
+                    android:text="Content:"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/mTvShakeCount"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/mEtContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:inputType="textUri"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:text="0"
-                    android:textColor="@color/black"
+                    android:background="@drawable/shape_input_bg"
+                    android:gravity="top"
+                    android:hint="Please input something"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:padding="12dp"
                     android:textSize="14sp" />
 
             </LinearLayout>
 
             <Button
-                android:id="@+id/mBtnStartUpload"
+                android:id="@+id/mBtnUpload"
                 android:layout_width="200dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="30dp"
-                android:text="Start upload"
+                android:text="upload"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -218,22 +171,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mLlShakeCount" />
 
-            <Button
-                android:id="@+id/mBtnStopUpload"
-                android:layout_width="200dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="30dp"
-                android:maxLines="1"
-                android:text="Stop upload"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mLlShakeCount" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -250,16 +188,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            tools:text="time"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/mBtnCreate"
-            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate" />
+            app:layout_constraintTop_toBottomOf="@+id/mBtnCreate"
+            tools:text="time" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <com.yuyh.jsonviewer.library.JsonRecyclerView
                 android:id="@+id/mJsonViewer"
