@@ -3,7 +3,7 @@
 
 ## Integration
 Import `w3bstream` into your project, and sync you project.
-`implementation 'com.w3bstream:w3bstream-android:0.1'`
+`implementation 'com.machinefi.w3bstream:w3bstream-android:0.1'`
 
 
 ## Usage
@@ -18,5 +18,5 @@ Import `w3bstream` into your project, and sync you project.
 
 ### Upload data
 ```
-    val response = w3bStream.uploadData(url, payload, publisherKey, publisherToken)
+    val response = w3bStream.publishEvent(url, payload, publisherKey, publisherToken)
 ```

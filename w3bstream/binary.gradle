@@ -14,7 +14,7 @@ publishing {
             artifact "build/outputs/aar/w3bstream-release.aar"
             artifact sourcesJar
 
-            groupId = 'com.w3bstream'
+            groupId = 'com.machinefi.w3bstream'
             artifactId = 'w3bstream-android'
             version = '0.1'
 

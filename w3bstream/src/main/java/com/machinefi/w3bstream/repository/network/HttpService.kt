@@ -1,8 +1,8 @@
-package com.machinefi.w3bstream.repository
+package com.machinefi.w3bstream.repository.network
 
 import android.accounts.NetworkErrorException
-import com.blankj.utilcode.util.AppUtils
 import com.fasterxml.jackson.core.type.TypeReference
+import com.machinefi.w3bstream.BuildConfig
 import com.machinefi.w3bstream.utils.JsonUtil
 import okhttp3.Headers
 import okhttp3.Headers.Companion.toHeaders
@@ -56,7 +56,7 @@ class HttpService: Service {
     private fun configureLogging(builder: OkHttpClient.Builder) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level =
-            if (AppUtils.isAppDebug())
+            if (BuildConfig.DEBUG)
                 HttpLoggingInterceptor.Level.BODY
             else
                 HttpLoggingInterceptor.Level.NONE

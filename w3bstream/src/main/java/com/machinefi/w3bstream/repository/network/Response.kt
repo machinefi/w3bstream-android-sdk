@@ -1,10 +1,10 @@
-package com.machinefi.w3bstream.repository
+package com.machinefi.w3bstream.repository.network
 
 open class Response<T> {
     var id: Long = 0
     var url: String = ""
     val error: Error? = null
-    val result: T? = null
+    val results: T? = null
 }
 
 data class Error(

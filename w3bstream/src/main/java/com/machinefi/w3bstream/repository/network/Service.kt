@@ -1,4 +1,4 @@
-package com.machinefi.w3bstream.repository
+package com.machinefi.w3bstream.repository.network
 
 import com.fasterxml.jackson.core.type.TypeReference
 

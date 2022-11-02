@@ -1,16 +1,16 @@
 package com.machinefi.w3bstream
 
-import com.machinefi.w3bstream.repository.Service
-import com.machinefi.w3bstream.repository.upload.UploadManager
-import com.machinefi.w3bstream.repository.upload.UploadRepository
+import com.machinefi.w3bstream.repository.network.Service
+import com.machinefi.w3bstream.repository.publish.PublishManager
+import com.machinefi.w3bstream.repository.publish.PublishRepository
 
 class W3bStream(
-    uploadManager: UploadManager
-) : UploadManager by uploadManager {
+    publishManager: PublishManager
+) : PublishManager by publishManager {
 
     companion object {
         fun build(service: Service) = W3bStream(
-            UploadRepository(service)
+            PublishRepository(service)
         )
     }
 
