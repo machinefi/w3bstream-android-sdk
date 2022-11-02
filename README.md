@@ -4,7 +4,7 @@
 ## Integration
 Import `w3bstream` into your project, and sync you project. 
 ```
-    implementation 'com.w3bstream:w3bstream-android:0.1'
+    implementation 'com.w3bstream:w3bstream-android:1.0.0'
 ```
 
 
