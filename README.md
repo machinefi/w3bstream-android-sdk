@@ -13,7 +13,7 @@ See the [project website](https://handbook-mug-590108.framer.app/) for documenta
 The latest release is available on [Maven Central](https://search.maven.org/artifact/com.w3bstream/w3bstream-android/1.0/aar).
 
 ```
-    implementation 'com.w3bstream:w3bstream-android:1.0'
+    implementation 'com.w3bstream:w3bstream-android:1.0.0'
 ```
 
 
