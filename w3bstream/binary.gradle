@@ -16,7 +16,7 @@ publishing {
 
             groupId = 'com.w3bstream'
             artifactId = 'w3bstream-android'
-            version = '1.0.0'
+            version = '1.0.1'
 
             pom {
                 name = 'w3bstream-android-sdk'
