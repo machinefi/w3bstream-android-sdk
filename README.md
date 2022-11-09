@@ -23,5 +23,5 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
         W3bStream.build(HttpService())
     }
 
-    val response = w3bStream.publishEvent(url, payload, publisherKey, publisherToken)
+    val response = w3bStream.publishEvent(serverUrl, payload, publisherKey, publisherToken)
 ```
