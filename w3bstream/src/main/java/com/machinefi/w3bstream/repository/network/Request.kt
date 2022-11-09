@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference
 import java.util.concurrent.atomic.AtomicLong
 
 class Request<T>(
-    val url: String,
+    val method: String,
     val payload: String,
     val service: Service,
     val responseType: TypeReference<Response<T>>

@@ -5,6 +5,6 @@ import com.machinefi.w3bstream.repository.network.response.PublishResult
 
 interface PublishManager {
 
-    fun publishEvent(url: String, publisherKey: String, publisherToken: String, payload: String): Response<Array<PublishResult>>?
+    fun publishEvent(publisherKey: String, publisherToken: String, payload: String): Response<Array<PublishResult>>?
 
 }

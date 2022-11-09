@@ -19,8 +19,8 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
 
 ### Publish event to server by http
 ```
-    private val w3bStream by lazy {
-        W3bStream.build(HttpService())
+    val w3bStream by lazy {
+        W3bStream.build(HttpService(host, projectName))
     }
 
     val response = w3bStream.publishEvent(serverUrl, payload, publisherKey, publisherToken)

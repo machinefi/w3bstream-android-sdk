@@ -12,14 +12,13 @@ internal class PublishRepository(
 ) : PublishManager {
 
     override fun publishEvent(
-        url: String,
         publisherKey: String,
         publisherToken: String,
         payload: String
     ): Response<Array<PublishResult>>? {
         val event = PublishEvent(publisherKey, publisherToken, payload).toJson()
         val request =
-            Request(url, event, service, object : TypeReference<Response<Array<PublishResult>>>() {})
+            Request("event", event, service, object : TypeReference<Response<Array<PublishResult>>>() {})
         return request.send()
     }
 }
