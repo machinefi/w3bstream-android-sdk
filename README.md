@@ -16,12 +16,14 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
     implementation 'com.w3bstream:w3bstream-android:1.0.1'
 ```
 
-
-### Publish event to server by http
+### Init
 ```
     val w3bStream by lazy {
-        W3bStream.build(HttpService(host, projectName))
+        W3bStream.build(HttpService(HOST, PROJECT_NAME))
     }
+```
 
-    val response = w3bStream.publishEvent(payload, publisherKey, publisherToken)
+### Publish event to Webstream server by http
+```   
+    val response = w3bStream.publishEvent(PAYLOAD, PUBLISHER_KEY, PUBLISHER_TOKEN)
 ```
