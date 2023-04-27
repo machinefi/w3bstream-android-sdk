@@ -4,11 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.machinefi.w3bstream.W3bStream
 import com.machinefi.w3bstream.repository.network.HttpService
+import com.machinefi.w3bstream.repository.network.request.Event
+import com.machinefi.w3bstream.repository.network.request.Header
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Base64
 
 const val KEY_HISTORY = "key_history"
 
@@ -30,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private fun upload() {
         val host = mEtHost.text.toString().trim()
         val projectName = mEtProjectName.text.toString().trim()
+        val eventType = mEtType.text.toString().trim()
         val payload = mEtContent.text.toString()
         val publisherKey = mEtPublisherKey.text.toString()
         val publisherToken = mEtPublisherToken.text.toString()
@@ -45,6 +54,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Data can not be empty", Toast.LENGTH_SHORT).show()
             return
         }
+        if (eventType.isBlank()) {
+            Toast.makeText(this, "Event type can not be empty", Toast.LENGTH_SHORT).show()
+            return
+        }
         if (publisherKey.isBlank()) {
             Toast.makeText(this, "PublisherKey can not be empty", Toast.LENGTH_SHORT).show()
             return
@@ -53,21 +66,28 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "PublisherToken can not be empty", Toast.LENGTH_SHORT).show()
             return
         }
+        val loading = LoadingDialog(this@MainActivity).apply {
+            show()
+        }
         val w3bStream = W3bStream.build(HttpService(host, projectName))
-        Thread {
-            try {
-                val response =
-                    w3bStream.publishEvent(publisherKey, publisherToken, payload) ?: return@Thread
-                val json = Gson().toJson(response)
-                val historyList = SPUtils.getInstance().getStringSet(KEY_HISTORY).toMutableList()
-                historyList.add(json)
-                SPUtils.getInstance().put(KEY_HISTORY, historyList.toSet())
-                runOnUiThread {
-                    mJsonViewer.bindJson(json)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+        val errorHandler = CoroutineExceptionHandler{ _, e ->
+            e.printStackTrace()
+            loading.dismiss()
+        }
+        lifecycleScope.launch(errorHandler) {
+            val eventId = System.currentTimeMillis().toString()
+            val pubTime = System.currentTimeMillis()
+            val response = withContext(Dispatchers.IO) {
+                val encodedPayload = Base64.getEncoder().encodeToString(payload.toByteArray())
+                val event = Event(Header(eventId, eventType, publisherKey, pubTime, publisherToken), encodedPayload)
+                w3bStream.publishEvents(listOf(event))
             }
-        }.start()
+            loading.dismiss()
+            val json = Gson().toJson(response)
+            val historyList = SPUtils.getInstance().getStringSet(KEY_HISTORY).toMutableList()
+            historyList.add(json)
+            SPUtils.getInstance().put(KEY_HISTORY, historyList.toSet())
+            mJsonViewer.bindJson(json)
+        }
     }
 }

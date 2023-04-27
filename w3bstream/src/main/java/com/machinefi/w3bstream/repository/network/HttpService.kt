@@ -19,7 +19,7 @@ class HttpService(private val host: String, private val projectName: String): Se
     private val headers = HashMap<String, String>()
     private val httpClient = createOkHttpClient()
 
-    override fun <T> send(request: Request<T>, responseType: TypeReference<Response<T>>): Response<T>? {
+    override fun <T> send(request: Request<T>, responseType: TypeReference<T>): Response<T> {
         val requestBody = request.payload.toRequestBody(JSON_MEDIA_TYPE)
         val headers = buildHeaders()
         val url = "$host/srv-applet-mgr/v0/${request.method}/$projectName"
@@ -34,12 +34,10 @@ class HttpService(private val host: String, private val projectName: String): Se
             throw NetworkErrorException("Invalid response received: $code; $text")
         }
 
-        return `is`?.use {
+         val result = `is`?.use {
             JsonUtil.parseJson(it, responseType)
-        }?.apply {
-            this.id = request.id
-            this.url = url
         }
+        return Response(request.id, url, result)
     }
 
     private fun buildHeaders(): Headers {

@@ -2,17 +2,12 @@ package com.machinefi.w3bstream.repository.network.request
 
 import com.machinefi.w3bstream.utils.JsonUtil
 
-data class PublishEvent(
-    val publisherKey: String,
-    val publisherToken: String,
-    val payload: String
+data class PublishEvents(
+    val events: List<Event>
 ): Payload {
 
     override fun toJson(): String {
-        val time = System.currentTimeMillis() / 1000
-        val header = Header("0x7FFFFFFF", publisherKey, time, publisherToken)
-        val event = Event(header, payload)
-        return JsonUtil.toJson(event)
+        return JsonUtil.toJson(this)
     }
 }
 
@@ -22,6 +17,7 @@ data class Event(
 )
 
 data class Header(
+    val event_id: String,
     val event_type: String,
     val pub_id: String,
     val pub_time: Long,

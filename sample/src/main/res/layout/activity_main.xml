@@ -60,7 +60,7 @@
                     android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/shape_input_bg"
-                    android:hint="https or http"
+                    android:hint="W3bstream host"
                     android:inputType="textUri"
                     android:maxLines="1"
                     android:paddingStart="12dp"
@@ -94,6 +94,35 @@
                     android:background="@drawable/shape_input_bg"
                     android:hint="Project name"
                     android:inputType="textUri"
+                    android:maxLines="1"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Event type:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/mEtType"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/shape_input_bg"
+                    android:hint="Event type"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
@@ -238,4 +267,5 @@
 
         </HorizontalScrollView>
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

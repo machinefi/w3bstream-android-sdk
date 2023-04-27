@@ -13,4 +13,9 @@
     <style name="AppTheme.buttonStyle" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:background">@color/colorPrimary</item>
     </style>
+
+    <style name="LoadingDialogStyle" parent="android:Theme.Material.Dialog.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
 </resources>

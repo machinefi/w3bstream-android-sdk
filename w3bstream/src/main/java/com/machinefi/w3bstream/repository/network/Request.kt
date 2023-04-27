@@ -7,11 +7,11 @@ class Request<T>(
     val method: String,
     val payload: String,
     val service: Service,
-    val responseType: TypeReference<Response<T>>
+    val responseType: TypeReference<T>
 ) {
     val id: Long = nextId.getAndIncrement()
 
-    fun send(): Response<T>? {
+    fun send(): Response<T> {
         return service.send(this, responseType)
     }
 
