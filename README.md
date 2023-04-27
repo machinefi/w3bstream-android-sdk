@@ -24,8 +24,8 @@ In your app, initialize the SDK with your project values as shown below:
     }
 ```
 
-### Publish event to Webstream server by http
-To publish events to the W3bstream server via HTTP, use the following code:
+### Publish event to Webstream server by https
+To publish events to the W3bstream server via HTTPS, use the following code:
 ```   
-    val response = w3bStream.publishEvent(PAYLOAD, PUBLISHER_KEY, PUBLISHER_TOKEN)
+    val response = w3bStream.publishEvent(listof<Event>())
 ```
