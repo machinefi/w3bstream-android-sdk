@@ -19,13 +19,38 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
 ### Initialization
 In your app, initialize the SDK with your project values as shown below:
 ```
+    val url = "https://api.w3bstream.com/srv-applet-mgr/v0/event/yourprojectname"
     val w3bStream by lazy {
-        W3bStream.build(HttpService(HOST, PROJECT_NAME))
+        W3bStream.build(HttpService(url))
     }
+```
+
+### Make the payload
+Create the payload in JSON format and then encode it as Base64, as shown below:
+```
+    val latitude = 31.8912140
+    val longitude = 108.7645030
+    val timestamp = System.currentTimeMillis() / 1000
+    val json = """
+        {
+            "latitude": latitude,
+            "longitude": longitude,
+            "timestamp": timestamp
+        }
+    """
+    val encodedPayload = Base64.getEncoder().encodeToString(json.toByteArray())
 ```
 
 ### Publish event to Webstream server by https
 To publish events to the W3bstream server via HTTPS, use the following code:
 ```   
+    val eventId = System.currentTimeMillis().toString() //Created by the developer
+    val eventType = "ANY" //Created by the developer.
+    val publisherId = "Your publisher id"
+    val publisherToken = "Your publisher token"
+    val pubTime = System.currentTimeMillis()
+    
+    val event = Event(Header(eventId, eventType, publisherId, pubTime, publisherToken), encodedPayload)
+
     val response = w3bStream.publishEvent(listof<Event>())
 ```

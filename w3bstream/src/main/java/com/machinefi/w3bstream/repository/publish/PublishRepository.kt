@@ -17,7 +17,7 @@ internal class PublishRepository(
     ): Response<Array<PublishResult>> {
         val payload = PublishEvents(events).toJson()
         val request =
-            Request("event", payload, service, object : TypeReference<Array<PublishResult>>() {})
+            Request(payload, service, object : TypeReference<Array<PublishResult>>() {})
         return request.send()
     }
 }

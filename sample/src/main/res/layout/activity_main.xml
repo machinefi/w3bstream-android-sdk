@@ -50,49 +50,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Host:"
+                    android:text="Url:"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/mEtHost"
+                    android:id="@+id/mEtUrl"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/shape_input_bg"
-                    android:hint="W3bstream host"
-                    android:inputType="textUri"
-                    android:maxLines="1"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/mLlProjectName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mLlUploadInterval">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Project name:"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/mEtProjectName"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/shape_input_bg"
-                    android:hint="Project name"
+                    android:hint="W3bstream url"
                     android:inputType="textUri"
                     android:maxLines="1"
                     android:paddingStart="12dp"
@@ -140,17 +108,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Publisher Key:"
+                    android:text="Publisher Id:"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/mEtPublisherKey"
+                    android:id="@+id/mEtPublisherId"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:layout_marginTop="6dp"
                     android:background="@drawable/shape_input_bg"
-                    android:hint="Publisher Key"
+                    android:hint="Publisher Id"
                     android:inputType="text"
                     android:maxLines="1"
                     android:paddingStart="12dp"
