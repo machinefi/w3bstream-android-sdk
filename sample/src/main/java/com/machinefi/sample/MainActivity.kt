@@ -9,14 +9,12 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.machinefi.w3bstream.W3bStream
 import com.machinefi.w3bstream.repository.network.HttpService
-import com.machinefi.w3bstream.repository.network.request.Event
-import com.machinefi.w3bstream.repository.network.request.Header
+import com.machinefi.w3bstream.utils.JsonUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Base64
 
 const val KEY_HISTORY = "key_history"
 
@@ -39,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         val url = mEtUrl.text.toString().trim()
         val eventType = mEtType.text.toString().trim()
         val payload = mEtContent.text.toString()
-        val publisherId = mEtPublisherId.text.toString()
         val publisherToken = mEtPublisherToken.text.toString()
         if (url.isBlank()) {
             Toast.makeText(this, "Url can not be empty", Toast.LENGTH_SHORT).show()
@@ -53,10 +50,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Event type can not be empty", Toast.LENGTH_SHORT).show()
             return
         }
-        if (publisherId.isBlank()) {
-            Toast.makeText(this, "PublisherKey can not be empty", Toast.LENGTH_SHORT).show()
-            return
-        }
         if (publisherToken.isBlank()) {
             Toast.makeText(this, "PublisherToken can not be empty", Toast.LENGTH_SHORT).show()
             return
@@ -64,18 +57,18 @@ class MainActivity : AppCompatActivity() {
         val loading = LoadingDialog(this@MainActivity).apply {
             show()
         }
-        val w3bStream = W3bStream.build(HttpService(url))
+        val w3bStream = W3bStream.build(
+            HttpService(url)
+                .addHeader("Authorization", publisherToken)
+                .addHeader("Content-Type", "application/octet-stream")
+        )
         val errorHandler = CoroutineExceptionHandler{ _, e ->
             e.printStackTrace()
             loading.dismiss()
         }
         lifecycleScope.launch(errorHandler) {
-            val eventId = System.currentTimeMillis().toString()
-            val pubTime = System.currentTimeMillis()
             val response = withContext(Dispatchers.IO) {
-                val encodedPayload = Base64.getEncoder().encodeToString(payload.toByteArray())
-                val event = Event(Header(eventId, eventType, publisherId, pubTime, publisherToken), encodedPayload)
-                w3bStream.publishEvents(listOf(event))
+                w3bStream.publishEvents(eventType, payload)
             }
             loading.dismiss()
             val json = Gson().toJson(response)

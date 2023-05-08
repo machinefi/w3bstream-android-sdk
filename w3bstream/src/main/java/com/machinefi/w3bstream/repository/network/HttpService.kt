@@ -19,10 +19,15 @@ class HttpService(private val url: String): Service {
     private val headers = HashMap<String, String>()
     private val httpClient = createOkHttpClient()
 
-    override fun <T> send(request: Request<T>, responseType: TypeReference<T>): Response<T> {
+    override fun send(request: Request): Response? {
         val requestBody = request.payload.toRequestBody(JSON_MEDIA_TYPE)
         val headers = buildHeaders()
-        val httpRequest = okhttp3.Request.Builder().url(url).headers(headers).post(requestBody).build()
+        val httpUrl = url.toHttpUrl().newBuilder()
+            .addQueryParameter("eventType", request.type)
+            .addQueryParameter("timestamp", System.currentTimeMillis().toString())
+            .build()
+        val httpRequest = okhttp3.Request.Builder().url(httpUrl)
+            .headers(headers).post(requestBody).build()
         val response = httpClient.newCall(httpRequest).execute()
         val responseBody = response.body
         val `is` = if (response.isSuccessful) {
@@ -33,17 +38,19 @@ class HttpService(private val url: String): Service {
             throw NetworkErrorException("Invalid response received: $code; $text")
         }
 
+        val responseType = object : TypeReference<Response>(){}
+
          val result = `is`?.use {
             JsonUtil.parseJson(it, responseType)
         }
-        return Response(request.id, url, result)
+        return result
     }
 
     private fun buildHeaders(): Headers {
         return headers.toHeaders()
     }
 
-    fun addHeader(key: String, value: String) {
+    fun addHeader(key: String, value: String) = apply {
         headers[key] = value
     }
 

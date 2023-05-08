@@ -7,7 +7,7 @@ To get started, follow these steps:
 1. Open the website [https://mainnet.w3bstream.com/](https://mainnet.w3bstream.com/)
 2. Create your project on the website
 3. Generate your publisher key and token
-4. Consult the help document at [https://docs.w3bstream.com/introduction/readme](https://docs.w3bstream.com/introduction/readme)
+4. Consult the help document at [Geo-location with WASM Sample](https://iotex.larksuite.com/docx/UawQd67JPopjqHxlSZmuV9HjsEh)
 
 ### Setting up the dependency
 The latest release is available on [Maven Central](https://search.maven.org/artifact/com.w3bstream/w3bstream-android/1.0/aar).
@@ -19,38 +19,34 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
 ### Initialization
 In your app, initialize the SDK with your project values as shown below:
 ```
-    val url = "https://api.w3bstream.com/srv-applet-mgr/v0/event/yourprojectname"
-    val w3bStream by lazy {
-        W3bStream.build(HttpService(url))
-    }
+    val url = "http://dev.w3bstream.com:8889/srv-applet-mgr/v0/event/eth_0x2ee1d96cb76579e2c64c9bb045443fb3849491d2_geo_example_claim_nft"
+    val publiserToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQYXlsb2FkIjoiOTAyNTQ3MTgxNzYxMDI0NSIsImlzcyI6InczYnN0cmVhbSJ9.8uY4gGMBk4bJwyBsqTY3wGqMPnfSIggfw54k0ln6fwY"
+    val w3bStream by W3bStream.build(
+            HttpService(url)
+                .addHeader("Authorization", publisherToken)
+                .addHeader("Content-Type", "application/octet-stream")
+        )
 ```
 
 ### Make the payload
 Create the payload in JSON format and then encode it as Base64, as shown below:
 ```
-    val latitude = 31.8912140
-    val longitude = 108.7645030
-    val timestamp = System.currentTimeMillis() / 1000
-    val json = """
+    val latitude = "100"
+    val longitude = "100"
+    val timestamp = System.currentTimeMillis()
+    val walletAddress = "0x2eE1d96CB76579e2c64C9BB045443Fb3849491D2" // NFT receiving address
+    val payload = """
         {
             "latitude": latitude,
             "longitude": longitude,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            "walletAddress": walletAddress
         }
     """
-    val encodedPayload = Base64.getEncoder().encodeToString(json.toByteArray())
 ```
 
 ### Publish event to Webstream server by https
 To publish events to the W3bstream server via HTTPS, use the following code:
 ```   
-    val eventId = System.currentTimeMillis().toString() //Created by the developer
-    val eventType = "ANY" //Created by the developer.
-    val publisherId = "Your publisher id"
-    val publisherToken = "Your publisher token"
-    val pubTime = System.currentTimeMillis()
-    
-    val event = Event(Header(eventId, eventType, publisherId, pubTime, publisherToken), encodedPayload)
-
-    val response = w3bStream.publishEvent(listof<Event>())
+    val response = w3bStream.publishEvents("DEFAULT", payload) // type: Event type
 ```
