@@ -20,7 +20,7 @@ The latest release is available on [Maven Central](https://search.maven.org/arti
 In your app, initialize the SDK with your project values as shown below:
 ```
     val url = "http://dev.w3bstream.com:8889/srv-applet-mgr/v0/event/eth_0x2ee1d96cb76579e2c64c9bb045443fb3849491d2_geo_example_claim_nft"
-    val publiserToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQYXlsb2FkIjoiOTAyNTQ3MTgxNzYxMDI0NSIsImlzcyI6InczYnN0cmVhbSJ9.8uY4gGMBk4bJwyBsqTY3wGqMPnfSIggfw54k0ln6fwY"
+    val publiserToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJQYXlsb2FkIjoiNjc3ODIwMjA4Mjc0MDIyNCIsImlzcyI6InczYnN0cmVhbSJ9.sN9pPsoRP-bRfKY2i1_qw9fRyigGRK6XT5osrdJbk7A"
     val w3bStream by W3bStream.build(
             HttpService(url)
                 .addHeader("Authorization", publisherToken)
@@ -31,15 +31,17 @@ In your app, initialize the SDK with your project values as shown below:
 ### Make the payload
 Create the payload in JSON format and then encode it as Base64, as shown below:
 ```
-    val latitude = "100"
-    val longitude = "100"
-    val timestamp = System.currentTimeMillis()
+    // The following is the server-verified location information.
+    // If the uploaded location is within 100 meters of the server's location, you can mint an NFT.
+    // {"latitude": "36.702977661503", "longitude": "117.13273760933" }
+
+    val latitude = "36.7026"
+    val longitude = "117.13273760933"
     val walletAddress = "0x2eE1d96CB76579e2c64C9BB045443Fb3849491D2" // NFT receiving address
     val payload = """
         {
             "latitude": latitude,
             "longitude": longitude,
-            "timestamp": timestamp,
             "walletAddress": walletAddress
         }
     """
